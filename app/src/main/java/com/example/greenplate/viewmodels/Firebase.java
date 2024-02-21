@@ -8,4 +8,7 @@ import com.google.firebase.database.ValueEventListener;
 public class Firebase {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("https://greenplate-df836-default-rtdb.firebaseio.com/");
+
+    
+
 }
