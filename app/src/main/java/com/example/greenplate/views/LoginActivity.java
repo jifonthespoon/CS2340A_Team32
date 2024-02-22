@@ -82,12 +82,9 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    System.out.println("Something went wrong");
+                    Toast.makeText(LoginActivity.this, "Invalid input- please try again", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 }
-
-// TODO Make sure login functionality correct (and add Firebase checking)
-// TODO Check with Anya and Subha about the button designs (currently just functional, not pretty)
