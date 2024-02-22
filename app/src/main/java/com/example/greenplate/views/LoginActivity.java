@@ -66,4 +66,3 @@ public class LoginActivity extends AppCompatActivity {
 }
 
 // TODO Make sure login functionality correct (and add Firebase checking)
-// TODO Check with Anya and Subha about the button designs (currently just functional, not pretty)
