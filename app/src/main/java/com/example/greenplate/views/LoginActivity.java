@@ -82,11 +82,9 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    System.out.println("Something went wrong");
+                    Toast.makeText(LoginActivity.this, "Invalid input- please try again", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 }
-
-// TODO Make sure login functionality correct (and add Firebase checking)
