@@ -56,35 +56,39 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                CharSequence utv = usernameTextView.getText();
-                CharSequence ptv = passwordTextView.getText();
+                String username = usernameTextView.getText().toString();
+                String password = passwordTextView.getText().toString();
 
 
-                if (utv != null && ptv != null && !utv.toString().equals("") &&
-                        !ptv.toString().equals("") && !utv.toString().trim().equals("") &&
-                        !ptv.toString().trim().equals("")) {
+                if (checkInput(username) && checkInput(password)) {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     FirebaseAuth mAuth = Firebase.getAuth();
-                    mAuth.signInWithEmailAndPassword(utv.toString(), ptv.toString()).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                    mAuth.signInWithEmailAndPassword(username, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            Log.d("RegisterActivity", "createUserWithEmailAndPassword onComplete triggered");
                             if (task.isSuccessful()) {
-                                Log.d("RegisterActivity", "createUserWithEmailAndPassword successful");
                                 // Home screen
                                 System.out.println("Success");
                                 Toast.makeText(LoginActivity.this, "Account found.", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                startActivity(intent);
                             } else {
-                                Log.e("RegisterActivity", "createUserWithEmailAndPassword failed", task.getException());
                                 Toast.makeText(LoginActivity.this, "Account not found.", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
                 } else {
-                    Toast.makeText(LoginActivity.this, "Invalid input- please try again", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Fill out all fields.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
+
+    public static boolean checkInput(String text) {
+        if (text == null || text.trim().isEmpty()) {
+            return false;
+        }
+        return true;
     }
 }
