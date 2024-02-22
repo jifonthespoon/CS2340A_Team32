@@ -35,6 +35,31 @@
             android:exported="true">
         </activity>
 
+        <activity
+            android:name=".views.HomeActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".views.IngredientsActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".views.InputActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".views.RecipeActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".views.ShoppingActivity"
+            android:exported="true">
+        </activity>
+
 
     </application>
 
