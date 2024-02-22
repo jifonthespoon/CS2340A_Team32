@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         boolean userLoggedIn = Firebase.isUserLoggedIn();
         if (userLoggedIn) {
+            // Will be home activity when ready
             Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
             startActivity(intent);
         } else {
