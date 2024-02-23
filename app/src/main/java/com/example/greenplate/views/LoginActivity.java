@@ -61,8 +61,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
                 if (checkInput(username) && checkInput(password)) {
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
                     FirebaseAuth mAuth = Firebase.getAuth();
                     mAuth.signInWithEmailAndPassword(username, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override

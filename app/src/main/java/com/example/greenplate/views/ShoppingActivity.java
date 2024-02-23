@@ -11,15 +11,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class ShoppingActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.shopping_list);
 
         final ImageButton toHome = findViewById(R.id.toHomePage);
         final ImageButton toInput = findViewById(R.id.toInputPage);
-        final ImageButton toRecipe = findViewById(R.id.toRecpiePage);
+        final ImageButton toRecipe = findViewById(R.id.toRecipePage);
         final ImageButton toIngredients = findViewById(R.id.toIngredientsPage);
         final ImageButton toShopping = findViewById(R.id.toShoppingPage);
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.shopping_list);
 
         toHome.setOnClickListener(new View.OnClickListener() {
             @Override
