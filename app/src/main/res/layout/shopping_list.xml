@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-             android:layout_height="match_parent">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/imageView3"
@@ -25,7 +25,7 @@
 
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/toHomePage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@null"
@@ -33,7 +33,7 @@
         android:scaleY=".5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.942"
@@ -42,13 +42,13 @@
 
 
     <ImageButton
-        android:id="@+id/imageButton4"
+        android:id="@+id/toIngredientsPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@null"
         android:scaleX=".5"
         android:scaleY=".5"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton5"
+        app:layout_constraintEnd_toStartOf="@+id/toShoppingPage"
         app:srcCompat="@drawable/ingredients_button"
         tools:layout_editor_absoluteY="772dp" />
 
@@ -76,11 +76,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Ingredients"
-        tools:layout_editor_absoluteX="228dp"
+        tools:layout_editor_absoluteX="235dp"
         tools:layout_editor_absoluteY="856dp" />
 
     <ImageButton
-        android:id="@+id/imageButton5"
+        android:id="@+id/toShoppingPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@null"
@@ -88,7 +88,7 @@
         android:scaleY=".5"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/shopping_list_button"
-        tools:layout_editor_absoluteY="772dp" />
+        tools:layout_editor_absoluteY="777dp" />
 
     <TextView
         android:id="@+id/textView"
@@ -101,25 +101,25 @@
         tools:layout_editor_absoluteY="856dp" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/toRecpiePage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="60dp"
         android:background="@null"
         android:scaleX=".5"
         android:scaleY=".5"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton4"
+        app:layout_constraintEnd_toStartOf="@+id/toIngredientsPage"
         app:srcCompat="@drawable/red_recipe_button"
-        tools:layout_editor_absoluteY="785dp" />
+        tools:layout_editor_absoluteY="779dp" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/toInputPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@null"
         android:scaleX=".5"
         android:scaleY=".5"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton3"
+        app:layout_constraintEnd_toStartOf="@+id/toRecpiePage"
         app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/input_button"
@@ -129,16 +129,23 @@
         android:id="@+id/imageView5"
         android:layout_width="360dp"
         android:layout_height="86dp"
+        android:layout_marginTop="8dp"
         android:scaleX=".7"
         android:scaleY=".7"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.019"
         app:srcCompat="@drawable/shopping_list" />
 
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
+
