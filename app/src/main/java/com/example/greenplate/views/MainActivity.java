@@ -7,23 +7,25 @@ import android.os.Bundle;
 import com.example.greenplate.R;
 import com.example.greenplate.viewmodels.Firebase;
 import android.content.Intent;
-import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.home_page);
         boolean userLoggedIn = Firebase.isUserLoggedIn();
         if (userLoggedIn) {
             // Will be home activity when ready
-            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+            Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
             startActivity(intent);
         } else {
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
             startActivity(intent);
         }
 
     }
+
+
+
 }

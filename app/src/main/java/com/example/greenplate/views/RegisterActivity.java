@@ -1,7 +1,5 @@
 package com.example.greenplate.views;
 
-import static com.example.greenplate.views.LoginActivity.checkInput;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -47,7 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String passwordConfirmation = passwordInputConfirmation.getText().toString();
                 String name = nameInput.getText().toString();
 
-                if (!(checkInput(email) && checkInput(password) && checkInput(passwordConfirmation) && checkInput(name))) {
+                if (email == null || passwordConfirmation == null || password == null || email == null ||  email.isEmpty() || passwordConfirmation.isEmpty() || name.isEmpty() || password.isEmpty()) {
                     Toast.makeText(RegisterActivity.this, "Fill out all fields.", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -61,10 +59,15 @@ public class RegisterActivity extends AppCompatActivity {
                 mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d("RegisterActivity", "createUserWithEmailAndPassword onComplete triggered");
                         if (task.isSuccessful()) {
-                            Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
+                            Log.d("RegisterActivity", "createUserWithEmailAndPassword successful");
+                            // Home screen
+                            System.out.println("Success");
+                            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                             startActivity(intent);
                         } else {
+                            Log.e("RegisterActivity", "createUserWithEmailAndPassword failed", task.getException());
                             Toast.makeText(RegisterActivity.this, "Account creation failed.", Toast.LENGTH_SHORT).show();
                         }
                     }

@@ -24,9 +24,9 @@
         android:id="@+id/usernameEditText"
         android:layout_width="350dp"
         android:layout_height="39dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:background="#B3ECE1E1"
-        android:hint="Email"
+        android:hint="Username, email, phone"
         android:inputType="text"
         android:padding="20px"
         android:password="false"
@@ -58,9 +58,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.392" />
+        app:layout_constraintVertical_bias="0.409" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -89,8 +90,8 @@
         android:id="@+id/loginButton"
         android:layout_width="206dp"
         android:layout_height="56dp"
-        android:layout_marginStart="108dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="30dp"
         android:backgroundTint="#311E10"
         android:paddingLeft="100px"
         android:paddingRight="100px"
@@ -98,14 +99,14 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:cornerRadius="40px"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/signUpButton" />
 
     <Button
         android:id="@+id/exitButton"
         android:layout_width="206dp"
         android:layout_height="56dp"
-        android:layout_marginStart="108dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="30dp"
         android:backgroundTint="#311E10"
         android:paddingLeft="100px"
         android:paddingRight="100px"
@@ -121,6 +122,7 @@
         android:layout_width="400dp"
         android:layout_height="56dp"
         android:layout_marginStart="5dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="5dp"
         android:fontFamily="sans-serif-condensed"
         android:paddingLeft="100px"
@@ -130,10 +132,10 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#E84A4A"
         app:cornerRadius="40px"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:icon="@drawable/new_here__sign_up_now_"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/exitButton" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
