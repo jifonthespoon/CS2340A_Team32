@@ -1,4 +1,4 @@
-package com.example.greenplate.viewmodels;
+package com.example.greenplate.models;
 import androidx.annotation.NonNull;
 
 import com.example.greenplate.models.User;
@@ -12,18 +12,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class Firebase {
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("https://greenplate-df836-default-rtdb.firebaseio.com/");
-    private User user;
+public final class Firebase {
+    private static FirebaseDatabase database;
+    private static FirebaseAuth mAuth;
 
-    static FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    public static boolean isUserLoggedIn() {
-        System.out.println("Made it");
-        return mAuth.getCurrentUser() != null;
+    public Firebase() {
+        mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
     }
 
-    public static FirebaseAuth getAuth() {
+    public FirebaseAuth getAuth() {
         return mAuth;
+    }
+
+    public FirebaseDatabase getDatabase() {
+        return database;
     }
 }

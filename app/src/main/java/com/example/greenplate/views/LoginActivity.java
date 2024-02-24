@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.greenplate.R;
-import com.example.greenplate.viewmodels.Firebase;
+import com.example.greenplate.viewmodels.FirebaseViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -33,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         Button loginButton = findViewById(R.id.loginButton);
         Button signUpButton = findViewById(R.id.signUpButton);
         Button exitButton = findViewById(R.id.exitButton);
+        FirebaseViewModel fvm = new FirebaseViewModel();
 
         signUpButton.setOnClickListener(new View.OnClickListener() {
 
@@ -61,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
                 if (checkInput(username) && checkInput(password)) {
-                    FirebaseAuth mAuth = Firebase.getAuth();
+                    FirebaseAuth mAuth = fvm.getAuth();
                     mAuth.signInWithEmailAndPassword(username, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {

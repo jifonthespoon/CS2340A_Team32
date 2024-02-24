@@ -1,5 +1,7 @@
 package com.example.greenplate;
 
+import static com.example.greenplate.views.LoginActivity.checkInput;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -11,7 +13,23 @@ import static org.junit.Assert.*;
  */
 public class ExampleUnitTest {
     @Test
-    public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
+    public void testNull() {
+        assertEquals(checkInput(null), false);
+    }
+    @Test
+    public void testStrongPassword() {
+        assertEquals(checkInput("Test123!"), true);
+    }
+    @Test
+    public void testWeakPassword() {
+        assertEquals(checkInput("Hi"), true);
+    }
+    @Test
+    public void testSpacesString() {
+        assertEquals(checkInput("   "), false);
+    }
+    @Test
+    public void testEmptyString() {
+        assertEquals(checkInput(""), false);
     }
 }
