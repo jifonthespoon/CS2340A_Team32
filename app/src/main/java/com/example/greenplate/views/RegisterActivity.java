@@ -16,7 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.greenplate.R;
-import com.example.greenplate.viewmodels.Firebase;
+import com.example.greenplate.viewmodels.FirebaseViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -38,6 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
         EditText passwordInput = findViewById(R.id.passwordCreation);
         EditText passwordInputConfirmation = findViewById(R.id.passwordConfirmation);
         EditText nameInput = findViewById(R.id.fullName);
+        FirebaseViewModel fvm = new FirebaseViewModel();
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +58,7 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
-                FirebaseAuth mAuth = Firebase.getAuth();
+                FirebaseAuth mAuth = fvm.getAuth();
                 mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
