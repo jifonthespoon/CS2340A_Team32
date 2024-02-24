@@ -2,8 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/imageView3"
@@ -16,50 +16,64 @@
         tools:layout_editor_absoluteX="-20dp" />
 
     <ImageView
+        android:id="@+id/shoppingListNavButton"
+        android:layout_width="320dp"
+        android:layout_height="107dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/recipe_page_header" />
+
+
+    <ImageView
         android:id="@+id/imageView6"
-        android:layout_width="455dp"
-        android:layout_height="191dp"
+        android:layout_width="448dp"
+        android:layout_height="101dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:srcCompat="@drawable/nav_bar"
-        tools:layout_editor_absoluteX="-17dp"
-        tools:layout_editor_absoluteY="746dp" />
+        tools:layout_editor_absoluteX="-14dp" />
 
 
     <ImageButton
         android:id="@+id/toHomePage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:background="@null"
-        android:scaleX=".5"
-        android:scaleY=".5"
+        android:scaleX=".65"
+        android:scaleY=".65"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintHorizontal_bias="0.464"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.942"
+        app:layout_constraintVertical_bias="0.967"
         app:srcCompat="@drawable/red_home_nav_button" />
-
-
 
     <ImageButton
         android:id="@+id/toIngredientsPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:background="@null"
         android:scaleX=".5"
         android:scaleY=".5"
         app:layout_constraintEnd_toStartOf="@+id/toShoppingPage"
         app:srcCompat="@drawable/ingredients_button"
-        tools:layout_editor_absoluteY="772dp" />
+        tools:layout_editor_absoluteY="785dp" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="80dp"
+        android:layout_marginEnd="88dp"
         android:text="Recipe"
+        android:textColor="#D64933"
         app:layout_constraintEnd_toStartOf="@+id/textView5"
-        tools:layout_editor_absoluteY="856dp" />
+        tools:layout_editor_absoluteY="865dp" />
 
     <TextView
         android:id="@+id/textView4"
@@ -67,17 +81,17 @@
         android:layout_height="wrap_content"
         android:text="Shopping List"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.631"
+        app:layout_constraintHorizontal_bias="0.75"
         app:layout_constraintStart_toEndOf="@+id/textView5"
-        tools:layout_editor_absoluteY="856dp" />
+        tools:layout_editor_absoluteY="865dp" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Ingredients"
-        tools:layout_editor_absoluteX="235dp"
-        tools:layout_editor_absoluteY="856dp" />
+        tools:layout_editor_absoluteX="228dp"
+        tools:layout_editor_absoluteY="865dp" />
 
     <ImageButton
         android:id="@+id/toShoppingPage"
@@ -88,7 +102,7 @@
         android:scaleY=".5"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/shopping_list_button"
-        tools:layout_editor_absoluteY="777dp" />
+        tools:layout_editor_absoluteY="790dp" />
 
     <TextView
         android:id="@+id/textView"
@@ -96,9 +110,9 @@
         android:layout_height="wrap_content"
         android:text="Input"
         app:layout_constraintEnd_toStartOf="@+id/textView3"
-        app:layout_constraintHorizontal_bias="0.434"
+        app:layout_constraintHorizontal_bias="0.337"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="856dp" />
+        tools:layout_editor_absoluteY="865dp" />
 
     <ImageButton
         android:id="@+id/toRecipePage"
@@ -110,7 +124,7 @@
         android:scaleY=".5"
         app:layout_constraintEnd_toStartOf="@+id/toIngredientsPage"
         app:srcCompat="@drawable/red_recipe_button"
-        tools:layout_editor_absoluteY="779dp" />
+        tools:layout_editor_absoluteY="795dp" />
 
     <ImageButton
         android:id="@+id/toInputPage"
@@ -120,22 +134,11 @@
         android:scaleX=".5"
         android:scaleY=".5"
         app:layout_constraintEnd_toStartOf="@+id/toRecipePage"
-        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/input_button"
-        tools:layout_editor_absoluteY="777dp" />
+        tools:layout_editor_absoluteY="790dp" />
 
-    <ImageView
-        android:id="@+id/shoppingListNavButton"
-        android:layout_width="320dp"
-        android:layout_height="107dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/recipe_page_header" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
