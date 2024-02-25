@@ -34,4 +34,12 @@ public class MainActivity extends AppCompatActivity {
             }
         }).start();
     }
+
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        finish();
+        System.exit(0);
+    }
 }
