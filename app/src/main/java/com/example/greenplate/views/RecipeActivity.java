@@ -22,8 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class RecipeActivity extends AppCompatActivity {
     /**
      * Initializes the activity by setting
-     * the content view to the recipe page
-     * layout
+     * the content view to the recipe page layout
      * and configuring onClickListeners
      * for navigation buttons. These listeners enable
      * users to navigate to different
@@ -35,8 +34,8 @@ public class RecipeActivity extends AppCompatActivity {
      * the app's usability and navigation experience.
      *
      * @param savedInstanceState If the activity is being
-     *                          re-initialized after
-     *                          previously being shut down,
+     *                           re-initialized after
+     *                           previously being shut down,
      *                           this Bundle contains
      *                           the data it most recently
      *                           supplied in onSaveInstanceState(Bundle).

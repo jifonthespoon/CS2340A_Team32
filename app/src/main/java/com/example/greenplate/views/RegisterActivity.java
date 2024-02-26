@@ -23,9 +23,11 @@ import com.google.firebase.auth.FirebaseAuth;
  * RegisterActivity provides an interface for new users
  * to register an account within the application.
  * It collects user details such as email, password,
- * and name, and communicates with Firebase to create
+ * and name within the text fields,
+ * then communicates with Firebase to create
  * a new user account. Additionally, it includes
- * validation to ensure all fields are filled and passwords match.
+ * validation to ensure all fields are filled correctly and
+ * the entered passwords match.
  */
 
 public class RegisterActivity extends AppCompatActivity {
@@ -39,8 +41,8 @@ public class RegisterActivity extends AppCompatActivity {
      * creation with Firebase authentication.
      *
      * @param savedInstanceState If the activity
-     *                          is being re-initialized
-     *                          after previously being shut down,
+     *                           is being re-initialized
+     *                           after previously being shut down,
      *                           this Bundle contains
      *                           the data it most recently
      *                           supplied in onSaveInstanceState(Bundle).

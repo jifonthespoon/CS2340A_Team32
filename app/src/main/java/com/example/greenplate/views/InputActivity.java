@@ -12,12 +12,12 @@ import androidx.appcompat.app.AppCompatActivity;
  * InputActivity is designed to serve as the user interface for
  * inputting new data into the application.
  * This could include new recipes, ingredients details,
- * or other forms of input relevant to the application's functionality.
+ * or other forms of information relevant to the application's
+ * functionality.
  * The activity also includes navigation buttons to
- * other sections of the app, such as the home page,
- * recipe page,
- * ingredients page, and shopping list,
- * facilitating easy movement within the app.
+ * other pages of the app, such as the home page,
+ * recipe page, ingredients page, and the shopping page,
+ * facilitating easy movement across activities within the app.
  */
 
 public class InputActivity extends AppCompatActivity {
