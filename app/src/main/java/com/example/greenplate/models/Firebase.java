@@ -1,30 +1,53 @@
 package com.example.greenplate.models;
-import androidx.annotation.NonNull;
 
-import com.example.greenplate.models.User;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+/**
+ * Provides simplified access to Firebase authentication and database services.
+ * This class encapsulates the initialization and retrieval of FirebaseAuth
+ * and FirebaseDatabase instances to be used across the application.
+ */
 
 public final class Firebase {
+    /**
+     * Singleton instance of FirebaseDatabase used for database operations.
+     * Initialized once upon the first request to ensure
+     * efficient use of resources.
+     */
     private static FirebaseDatabase database;
+
+    /**
+     * Singleton instance of FirebaseAuth used for authentication operations.
+     * Initialized once upon the first request to manage
+     * user authentication seamlessly.
+     */
     private static FirebaseAuth mAuth;
 
+    /**
+     * Initializes new instances of FirebaseAuth and FirebaseDatabase
+     * if they have not been initialized already. This constructor ensures
+     * that Firebase services can be accessed throughout the application.
+     */
     public Firebase() {
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
     }
 
+    /**
+     * Gets the FirebaseAuth instance for managing user authentication.
+     *
+     * @return The FirebaseAuth instance for the application.
+     */
     public FirebaseAuth getAuth() {
         return mAuth;
     }
 
+    /**
+     * Gets the FirebaseDatabase instance for accessing the Firebase
+     * Realtime Database.
+     *
+     * @return The FirebaseDatabase instance for the application.
+     */
     public FirebaseDatabase getDatabase() {
         return database;
     }
