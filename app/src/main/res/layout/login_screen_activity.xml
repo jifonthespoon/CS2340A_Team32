@@ -125,7 +125,7 @@
         android:fontFamily="sans-serif-condensed"
         android:paddingLeft="100px"
         android:paddingRight="100px"
-        android:text="New Here? Sign up now."
+        android:text="---------New Here? Sign up now. ---------"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#E84A4A"
