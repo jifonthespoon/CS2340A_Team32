@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
                 Thread.sleep(1000); // Simulate loading process with a delay.
                 boolean userLoggedIn = fvm.isUserLoggedIn();
                 if (userLoggedIn) {
-                    // Will be home activity when ready
                     Intent intent = new Intent(MainActivity.this,
                             HomeActivity.class);
                     startActivity(intent);

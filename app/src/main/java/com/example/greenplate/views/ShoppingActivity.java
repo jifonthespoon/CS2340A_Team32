@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 /**
  * ShoppingActivity provides a user interface
  * for displaying and managing a shopping list.
+ * The user will be able to customize and get
+ * grocery recommendations in this activity.
  * This activity includes navigation buttons
  * that allow the user to switch between different parts of the application,
  * such as the home page, input page, recipe
@@ -24,15 +26,15 @@ public class ShoppingActivity extends AppCompatActivity {
      * Initializes the activity by inflating
      * its UI from the shopping_list layout,
      * setting up onClickListeners for
-     * navigation buttons to enable users to navigate
-     * to different sections of the
-     * application. This setup facilitates easy access to
-     * the application's features,
+     * each button within the navigation bar to
+     * enable users to navigate from one section of the
+     * application to another. This setup facilitates easy
+     * access to the application's features,
      * enhancing the user experience.
      *
      * @param savedInstanceState If the activity is being
-     *                          re-initialized after previously
-     *                          being shut down,
+     *                           re-initialized after previously
+     *                           being shut down,
      *                           this Bundle contains the
      *                           data it most recently supplied
      *                           in onSaveInstanceState(Bundle).

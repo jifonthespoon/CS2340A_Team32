@@ -23,7 +23,8 @@ public class HomeActivity extends AppCompatActivity {
      * from the home_page layout,
      * and sets up onClickListeners for navigation buttons to
      * enable users to navigate
-     * to different parts of the application.
+     * to different parts of the application,
+     * enhancing user experience.
      *
      * @param savedInstanceState If the activity is being
      *                           re-initialized after
