@@ -5,6 +5,7 @@ import  com.example.greenplate.models.User;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -67,6 +68,7 @@ public class RegisterActivity extends AppCompatActivity {
                 findViewById(R.id.passwordConfirmation);
         EditText nameInput = findViewById(R.id.fullName);
         FirebaseViewModel fvm = new FirebaseViewModel();
+        //FirebaseViewModel fvm = new ViewModelProvider(this).get(FirebaseViewModel.class);
         final User[] user = new User[1];
 
         registerButton.setOnClickListener(new View.OnClickListener() {

@@ -10,9 +10,9 @@ public class User {
      * identification and personalization purposes.
      */
     public String name;
-    public int weight;
-    public String gender;
-    public int heightInInches;
+    public int weight = 0;
+    public String gender = "";
+    public int heightInInches = 0;
     public String userId;
     public String email;
 
@@ -21,12 +21,13 @@ public class User {
      *
      * @param name The name of the user to be set during object creation.
      */
-    public User(String name, int weight, String gender, int heightInInches, String id) {
+    public User(String name, int weight, String gender, int heightInInches, String id, String email) {
         this.name = name;
         this.gender = gender;
         this.weight = weight;
         this.heightInInches = heightInInches;
         userId = id;
+        this.email = email;
     }
 
     public User(String name) {
