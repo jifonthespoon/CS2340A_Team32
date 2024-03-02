@@ -2,6 +2,8 @@ package com.example.greenplate.viewmodels;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.example.greenplate.models.Firebase;
+import com.example.greenplate.models.User;
+
 
 /**
  * ViewModel class to handle Firebase authentication operations.
@@ -37,6 +39,14 @@ public class FirebaseViewModel {
      */
     public static FirebaseAuth getAuth() {
         return firebase.getAuth();
+    }
+
+
+
+    public User createUser(String userId, String name, String email) {
+        User user = new User(name, userId, email);
+        firebase.getDatabase().getReference().child("users").child(userId).setValue(user);
+        return user;
     }
 }
 

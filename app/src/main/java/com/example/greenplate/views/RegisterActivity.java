@@ -1,6 +1,7 @@
 package com.example.greenplate.views;
 
 import static com.example.greenplate.views.LoginActivity.checkInput;
+import  com.example.greenplate.models.User;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +19,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.UUID;
 
 /**
  * RegisterActivity provides an interface for new users
@@ -64,6 +67,7 @@ public class RegisterActivity extends AppCompatActivity {
                 findViewById(R.id.passwordConfirmation);
         EditText nameInput = findViewById(R.id.fullName);
         FirebaseViewModel fvm = new FirebaseViewModel();
+        final User[] user = new User[1];
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +102,8 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            String userId = UUID.randomUUID().toString();
+                            user[0] = fvm.createUser(userId, name, email);
                             Intent intent = new Intent(RegisterActivity.this,
                                     HomeActivity.class);
                             startActivity(intent);
