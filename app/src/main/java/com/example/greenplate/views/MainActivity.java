@@ -1,6 +1,7 @@
 package com.example.greenplate.views;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 
@@ -40,10 +41,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.welcome_screen);
         FirebaseViewModel fvm = new FirebaseViewModel();
+        //FirebaseViewModel fvm = new ViewModelProvider(this).get(FirebaseViewModel.class);
         new Thread(() -> {
             try {
                 Thread.sleep(1000); // Simulate loading process with a delay.
-                boolean userLoggedIn = fvm.isUserLoggedIn();
+                boolean userLoggedIn = FirebaseViewModel.isUserLoggedIn();
                 if (userLoggedIn) {
                     Intent intent = new Intent(MainActivity.this,
                             HomeActivity.class);

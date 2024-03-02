@@ -7,6 +7,11 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
+
+import com.example.greenplate.viewmodels.FirebaseViewModel;
+import com.example.greenplate.models.User;
 
 /**
  * HomeActivity serves as the central navigation point for the application,
@@ -44,6 +49,8 @@ public class HomeActivity extends AppCompatActivity {
         final ImageButton toRecipe = findViewById(R.id.toRecipePage);
         final ImageButton toIngredients = findViewById(R.id.toIngredientsPage);
         final ImageButton toShopping = findViewById(R.id.toShoppingPage);
+
+        FirebaseViewModel fvm = new FirebaseViewModel();
 
         // Set onClickListeners for each button to start
         // the corresponding activity.

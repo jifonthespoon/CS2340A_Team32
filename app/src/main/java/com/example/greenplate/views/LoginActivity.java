@@ -2,6 +2,7 @@ package com.example.greenplate.views;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -67,6 +68,7 @@ public class LoginActivity extends AppCompatActivity {
         Button signUpButton = findViewById(R.id.signUpButton);
         Button exitButton = findViewById(R.id.exitButton);
         FirebaseViewModel fvm = new FirebaseViewModel();
+        //FirebaseViewModel fvm = new ViewModelProvider(this).get(FirebaseViewModel.class);
 
         signUpButton.setOnClickListener(new View.OnClickListener() {
 
