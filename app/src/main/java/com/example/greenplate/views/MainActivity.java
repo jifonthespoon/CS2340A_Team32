@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.welcome_screen);
         FirebaseViewModel fvm = new FirebaseViewModel();
-        //FirebaseViewModel fvm = new ViewModelProvider(this).get(FirebaseViewModel.class);
         new Thread(() -> {
             try {
                 Thread.sleep(1000); // Simulate loading process with a delay.
