@@ -13,8 +13,14 @@ import com.google.firebase.database.DatabaseError;
 
 import androidx.lifecycle.ViewModel;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -33,17 +39,24 @@ public class FirebaseViewModel extends ViewModel {
      * Constructs a new FirebaseViewModel and initializes the Firebase services.
      */
     public FirebaseViewModel() {
-        firebase = new Firebase();
+        firebase = Firebase.getInstance();
         if (firebase.getAuth().getCurrentUser() != null) {
             String email = firebase.getAuth().getCurrentUser().getEmail();
             Dictionary<String, String> userInfo = new Hashtable<>();
+            final Set<String>[] mealIds = new Set[]{new HashSet<>()};
             firebase.getDatabase().getReference().child("users").orderByChild("email").equalTo(email).addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                     for (DataSnapshot child : dataSnapshot.getChildren()) {
-                        userInfo.put(child.getKey(), child.getValue().toString());
+                        if (child.getKey().equals("meals")) {
+                            Map<String, Boolean> meals = (Map<String, Boolean>) child.getValue();
+                            mealIds[0] = meals.keySet();
+                        } else {
+                            userInfo.put(child.getKey(), child.getValue().toString());
+                        }
+
                     }
-                    user = new User(userInfo.get("name"), Integer.valueOf(userInfo.get("weight")), userInfo.get("gender"), Integer.valueOf(userInfo.get("heightInInches")), userInfo.get("userId"), userInfo.get("email"));
+                    user = new User(userInfo.get("name"), Integer.valueOf(userInfo.get("weight")), userInfo.get("gender"), Integer.valueOf(userInfo.get("heightInInches")), userInfo.get("userId"), userInfo.get("email"), mealIds[0]);
                 }
 
                 @Override
@@ -99,6 +112,10 @@ public class FirebaseViewModel extends ViewModel {
         user.weight = weight;
         user.gender = gender;
         firebase.getDatabase().getReference().child("users").child(user.userId).setValue(user);
+    }
+
+    public void addMealToUser(String mealId) {
+        firebase.getDatabase().getReference().child("users").child(user.userId).child("meals").child(mealId).setValue(true);
     }
     
     public User getUser() {

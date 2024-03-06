@@ -68,7 +68,6 @@ public class RegisterActivity extends AppCompatActivity {
                 findViewById(R.id.passwordConfirmation);
         EditText nameInput = findViewById(R.id.fullName);
         FirebaseViewModel fvm = new FirebaseViewModel();
-        //FirebaseViewModel fvm = new ViewModelProvider(this).get(FirebaseViewModel.class);
         final User[] user = new User[1];
 
         registerButton.setOnClickListener(new View.OnClickListener() {

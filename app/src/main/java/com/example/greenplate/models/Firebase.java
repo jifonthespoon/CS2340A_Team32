@@ -23,14 +23,23 @@ public final class Firebase {
      */
     private static FirebaseAuth mAuth;
 
+    private static Firebase instance;
+
     /**
      * Initializes new instances of FirebaseAuth and FirebaseDatabase
      * if they have not been initialized already. This constructor ensures
      * that Firebase services can be accessed throughout the application.
      */
-    public Firebase() {
+    private Firebase() {
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
+    }
+
+    public static Firebase getInstance() {
+        if (instance == null) {
+            instance = new Firebase();
+        }
+        return instance;
     }
 
     /**
