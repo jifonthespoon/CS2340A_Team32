@@ -52,6 +52,7 @@ public class HomeActivity extends AppCompatActivity {
         final ImageButton toRecipe = findViewById(R.id.toRecipePage);
         final ImageButton toIngredients = findViewById(R.id.toIngredientsPage);
         final ImageButton toShopping = findViewById(R.id.toShoppingPage);
+        final ImageButton toPersonalInfo = findViewById(R.id.toPersonalPage);
 
         FirebaseViewModel fvm = FirebaseViewModel.getInstance();
 
@@ -96,6 +97,14 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this,
                         ShoppingActivity.class);
+                startActivity(intent);
+            }
+        });
+        toPersonalInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this,
+                        PersonalInfoActivity.class);
                 startActivity(intent);
             }
         });
