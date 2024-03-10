@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/toInputMonthlyFo"
+        android:id="@+id/imageView3"
         android:layout_width="450dp"
         android:layout_height="96dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -15,21 +15,32 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/red_rectangle" />
+
+
     <ImageView
         android:id="@+id/imageView5"
-        android:layout_width="360dp"
-        android:layout_height="86dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="317dp"
+        android:layout_height="68dp"
+        android:layout_marginTop="16dp"
         android:scaleX="1"
         android:scaleY="1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.019"
-        app:srcCompat="@drawable/input_page_header" />
+        app:srcCompat="@drawable/personal_info_label" />
 
-
+    <ImageView
+        android:id="@+id/enter_label"
+        android:layout_width="334dp"
+        android:layout_height="81dp"
+        android:layout_marginTop="156dp"
+        android:scaleX="1"
+        android:scaleY="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.389"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/enter_info_label" />
 
     <ImageView
         android:id="@+id/imageView6"
@@ -37,8 +48,184 @@
         android:layout_height="101dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:srcCompat="@drawable/nav_bar"
-        tools:layout_editor_absoluteX="-18dp" />
+        tools:layout_editor_absoluteX="-18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
+    <TextView
+        android:id="@+id/height_label"
+        android:layout_width="71dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="88dp"
+        android:text="Height"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.073"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.332" />
+
+    <TextView
+        android:id="@+id/height_label_2"
+        android:layout_width="42dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="6dp"
+        android:text="in."
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.924"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.382" />
+
+    <EditText
+        android:id="@+id/personal_info_height_enter"
+        android:layout_width="304dp"
+        android:layout_height="45dp"
+        android:background="#EEEEEE"
+        android:hint=" EX: 68"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.225"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.378" />
+
+    <TextView
+        android:id="@+id/weight_label"
+        android:layout_width="71dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="88dp"
+        android:text="Weight"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.073"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.45" />
+
+    <TextView
+        android:id="@+id/weight_label_2"
+        android:layout_width="42dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="6dp"
+        android:text="lbs."
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.924"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/personal_info_weight_enter"
+        android:layout_width="302dp"
+        android:layout_height="46dp"
+        android:background="#EEEEEE"
+        android:hint=" EX: 118.0"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.238"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.499" />
+
+    <TextView
+        android:id="@+id/gender_label"
+        android:layout_width="71dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="88dp"
+        android:text="Gender"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.081"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.568" />
+
+    <EditText
+        android:id="@+id/personal_info_gender_enter"
+        android:layout_width="352dp"
+        android:layout_height="49dp"
+        android:background="#EEEEEE"
+        android:hint=" EX: F"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.44"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.623" />
+
+    <ImageButton
+        android:id="@+id/personal_info_save_button"
+        android:layout_width="151dp"
+        android:layout_height="33dp"
+        android:layout_marginBottom="16dp"
+
+        android:background="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.722"
+        app:srcCompat="@drawable/personal_info_save_button" />
+
+    <ImageView
+        android:id="@+id/personal_info_save_label"
+        android:layout_width="179dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="156dp"
+        android:scaleX="1"
+        android:scaleY="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.640"
+        app:layout_constraintHorizontal_bias="0.484"
+        app:srcCompat="@drawable/personal_info_save_label" />
+
+    <ImageButton
+        android:id="@+id/personal_info_cancel_button"
+        android:layout_width="151dp"
+        android:layout_height="33dp"
+        android:layout_marginBottom="16dp"
+        android:background="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.788"
+        app:srcCompat="@drawable/personal_info_cancel_button" />
+
+    <ImageView
+        android:id="@+id/personal_info_cancel_label"
+        android:layout_width="179dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="156dp"
+        android:scaleX="1"
+        android:scaleY="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.482"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.717"
+        app:srcCompat="@drawable/personal_info_cancel_label" />
 
     <ImageButton
         android:id="@+id/toHomePage"
@@ -83,194 +270,6 @@
         app:layout_constraintTop_toBottomOf="@+id/divider"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <EditText
-        android:id="@+id/input_page_meal_enter"
-        android:layout_width="310dp"
-        android:layout_height="43dp"
-        android:background="#EEEEEE"
-        android:hint=" Eggs Benedict"
-        android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.324" />
-
-    <EditText
-        android:id="@+id/input_page_calorie_enter"
-        android:layout_width="310dp"
-        android:layout_height="43dp"
-        android:background="#EEEEEE"
-        android:hint=" 700"
-        android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.485"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.437" />
-
-    <TextView
-        android:id="@+id/dayLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:layout_marginEnd="88dp"
-        android:text=" TODAY "
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.657"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.504" />
-
-    <TextView
-        android:id="@+id/caloriesNameLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:layout_marginEnd="88dp"
-        android:text="Calories"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.162"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.396" />
-
-    <TextView
-        android:id="@+id/mealNameLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:layout_marginEnd="88dp"
-        android:text="Meal Name"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.179"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.285" />
-
-    <TextView
-        android:id="@+id/userInfoLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:layout_marginEnd="88dp"
-        android:text="5’8’’ | 165lbs | Male"
-        android:textColor="#FF6961"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.221"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.181" />
-
-    <TextView
-        android:id="@+id/calorieGoalText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:layout_marginEnd="88dp"
-        android:text="2400"
-        android:textColor="#FF6961"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.157"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.24" />
-
-    <TextView
-        android:id="@+id/dailyCalorieLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:layout_marginEnd="88dp"
-        android:text="Daily Calorie Label"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.221"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.213" />
-
-    <TextView
-        android:id="@+id/userLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:layout_marginEnd="88dp"
-        android:text="User"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.152"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.154" />
-
-    <ImageButton
-        android:id="@+id/arrow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="48dp"
-        android:background="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.93"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.184"
-        app:srcCompat="@drawable/arrow" />
-
-
-    <ImageButton
-        android:id="@+id/dailybar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="48dp"
-        android:background="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.724"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.768"
-        app:srcCompat="@drawable/input_page_navigation_button" />
-
-    <ImageView
-        android:id="@+id/dailyLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/daily_label"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.27"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.76" />
-
-    <ImageButton
-        android:id="@+id/toInputMonthly"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="48dp"
-        android:background="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.889"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.764"
-        app:srcCompat="@drawable/input_page_to_monthly_button" />
-
     <ImageButton
         android:id="@+id/toRecipePage"
         android:layout_width="wrap_content"
@@ -283,7 +282,7 @@
         app:layout_constraintEnd_toStartOf="@+id/toIngredientsPage"
         app:layout_constraintTop_toBottomOf="@+id/divider"
         app:layout_constraintVertical_bias="0.567"
-        app:srcCompat="@drawable/recipe_button" />
+        app:srcCompat="@drawable/red_recipe_button" />
 
     <ImageButton
         android:id="@+id/toInputPage"
@@ -295,7 +294,7 @@
         android:scaleY=".5"
         app:layout_constraintEnd_toStartOf="@+id/toRecipePage"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/red_input_button"
+        app:srcCompat="@drawable/input_button"
         app:layout_constraintTop_toBottomOf="@+id/divider"
         app:layout_constraintBottom_toBottomOf="parent"
         />
@@ -307,6 +306,7 @@
         android:layout_marginStart="6dp"
         android:layout_marginEnd="88dp"
         android:text="Recipe"
+        android:textColor="#D64933"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/toIngredientsPage"
         app:layout_constraintHorizontal_bias="1.0"
@@ -344,7 +344,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Input"
-        android:textColor="#D64933"
         app:layout_constraintEnd_toStartOf="@+id/textView3"
         app:layout_constraintHorizontal_bias="0.337"
         app:layout_constraintStart_toStartOf="parent"
@@ -379,12 +378,7 @@
         app:layout_constraintVertical_bias=".95"
         />
 
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
-
-
-
-
