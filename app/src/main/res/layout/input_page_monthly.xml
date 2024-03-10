@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/toInputMonthlyFo"
+        android:id="@+id/imageView3"
         android:layout_width="450dp"
         android:layout_height="96dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -84,7 +84,7 @@
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <EditText
-        android:id="@+id/input_page_meal_enter"
+        android:id="@+id/input_page_monthly_meal_enter"
         android:layout_width="310dp"
         android:layout_height="43dp"
         android:background="#EEEEEE"
@@ -98,7 +98,7 @@
         app:layout_constraintVertical_bias="0.324" />
 
     <EditText
-        android:id="@+id/input_page_calorie_enter"
+        android:id="@+id/input_page_monthly_calorie_enter"
         android:layout_width="310dp"
         android:layout_height="43dp"
         android:background="#EEEEEE"
@@ -117,7 +117,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
         android:layout_marginEnd="88dp"
-        android:text="TODAY"
+        android:text=" THIS MONTH "
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -160,16 +160,16 @@
         android:id="@+id/userInfoLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
+        android:layout_marginStart="6dp"
         android:layout_marginEnd="88dp"
         android:text="5’8’’ | 165lbs | Male"
         android:textColor="#FF6961"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.006"
+        app:layout_constraintHorizontal_bias="0.221"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.18" />
+        app:layout_constraintVertical_bias="0.181" />
 
     <TextView
         android:id="@+id/calorieGoalText"
@@ -232,7 +232,7 @@
 
 
     <ImageButton
-        android:id="@+id/dailybar"
+        android:id="@+id/monthlybar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="48dp"
@@ -246,30 +246,30 @@
         app:srcCompat="@drawable/input_page_navigation_button" />
 
     <ImageView
-        android:id="@+id/dailyLabel"
+        android:id="@+id/monthlyLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/daily_label"
+        android:src="@drawable/monthly_label"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.27"
+        app:layout_constraintHorizontal_bias="0.681"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.76" />
+        app:layout_constraintVertical_bias="0.758" />
 
     <ImageButton
-        android:id="@+id/toInputMonthly"
+        android:id="@+id/toInputDaily"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="48dp"
         android:background="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.889"
+        app:layout_constraintHorizontal_bias="0.247"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.764"
-        app:srcCompat="@drawable/input_page_to_monthly_button" />
+        app:srcCompat="@drawable/input_page_to_daily_button" />
 
     <ImageButton
         android:id="@+id/toRecipePage"
