@@ -14,6 +14,7 @@ public class InputMonthlyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.input_page_monthly);
+
         final ImageButton toHome = findViewById(R.id.toHomePage);
         toHome.setOnClickListener(new View.OnClickListener() {
             @Override

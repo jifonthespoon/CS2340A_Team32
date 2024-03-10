@@ -51,6 +51,16 @@
         </activity>
 
         <activity
+            android:name=".views.InputMonthlyActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".views.PersonalInfoActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
             android:name=".views.RecipeActivity"
             android:exported="true">
         </activity>
