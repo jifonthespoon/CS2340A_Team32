@@ -2,6 +2,7 @@ package com.example.greenplate.viewmodels;
 
 import androidx.annotation.NonNull;
 
+import com.example.greenplate.models.Meal;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -178,6 +179,22 @@ public class FirebaseViewModel extends ViewModel {
     
     public User getUser() {
        return user;
+    }
+
+    public boolean saveOrUpdateMeal(Meal meal) {
+        if (meal != null && meal.mealId != null) {
+            // Using the mealId as the key to store meal information
+            firebase.getDatabase().getReference().child("meals").child(meal.mealId).setValue(meal.toMap());
+            return true;
+        }
+        return false;
+    }
+
+    // Method to delete a meal from the database
+    public void deleteMeal(String mealId) {
+        if (mealId != null) {
+            firebase.getDatabase().getReference().child("meals").child(mealId).removeValue();
+        }
     }
 }
 

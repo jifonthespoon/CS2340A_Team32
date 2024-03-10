@@ -18,7 +18,7 @@ public class User {
     public int heightInInches = 0;
     public String userId;
     public String email;
-    public ArrayList<String> meals = new ArrayList<>();
+    public ArrayList<String> mealIds = new ArrayList<>();
 
     /**
      * Constructs a new User instance with the specified name.
@@ -32,19 +32,19 @@ public class User {
         this.heightInInches = heightInInches;
         userId = id;
         this.email = email;
-        meals = new ArrayList<>();
+        mealIds = new ArrayList<>();
     }
 
-    public User(String name, int weight, String gender, int heightInInches, String id, String email, Set<String> mealIds) {
+    public User(String name, int weight, String gender, int heightInInches, String id, String email, Set<String> meals) {
         this.name = name;
         this.gender = gender;
         this.weight = weight;
         this.heightInInches = heightInInches;
         userId = id;
         this.email = email;
-        meals = new ArrayList<>();
-        for (String meal : mealIds) {
-            meals.add(meal);
+        mealIds = new ArrayList<>();
+        for (String meal : meals) {
+            mealIds.add(meal);
         }
     }
 
