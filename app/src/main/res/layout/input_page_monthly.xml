@@ -84,7 +84,7 @@
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <EditText
-        android:id="@+id/mealNameUserEnter"
+        android:id="@+id/input_page_monthly_meal_enter"
         android:layout_width="310dp"
         android:layout_height="43dp"
         android:background="#EEEEEE"
@@ -98,7 +98,7 @@
         app:layout_constraintVertical_bias="0.324" />
 
     <EditText
-        android:id="@+id/caloriesUserEnter"
+        android:id="@+id/input_page_monthly_calorie_enter"
         android:layout_width="310dp"
         android:layout_height="43dp"
         android:background="#EEEEEE"
