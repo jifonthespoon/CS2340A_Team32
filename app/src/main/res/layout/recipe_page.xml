@@ -190,7 +190,16 @@
         app:layout_constraintVertical_bias=".95"
         />
 
-
+    <ImageButton
+        android:id="@+id/toPersonalPage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="26dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/icon_button" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
