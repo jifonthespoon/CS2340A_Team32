@@ -1,29 +1,30 @@
 package com.example.greenplate.viewmodels;
 
 import androidx.lifecycle.ViewModel;
-
 import com.example.greenplate.models.Meal;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-/**
- * ViewModel class to handle Firebase operations related to meals.
- */
 public class MealViewModel extends ViewModel {
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseMeals;
 
     public MealViewModel() {
-        // Initialize Firebase DatabaseReference
-        databaseReference = FirebaseDatabase.getInstance().getReference("meals");
+        // Reference to the "meals" node in the Firebase Realtime Database
+        databaseMeals = FirebaseDatabase.getInstance().getReference("meals");
     }
 
-    public void addMeal(Meal meal) {
-        // Add or update a meal in the Firebase database
-        databaseReference.child(meal.mealId).setValue(meal.toMap());
+    // Method to add or update a meal in the database
+    public void saveOrUpdateMeal(Meal meal) {
+        if (meal != null && meal.mealId != null) {
+            // Using the mealId as the key to store meal information
+            databaseMeals.child(meal.mealId).setValue(meal);
+        }
     }
 
-    public DatabaseReference getMealReference(String mealId) {
-        // Get a reference to a specific meal by ID
-        return databaseReference.child(mealId);
+    // Method to delete a meal from the database
+    public void deleteMeal(String mealId) {
+        if (mealId != null) {
+            databaseMeals.child(mealId).removeValue();
+        }
     }
 }
