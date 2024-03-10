@@ -98,7 +98,15 @@ public class InputActivity extends AppCompatActivity {
             }
         });
 
-
+        final ImageButton toPersonalInfo = findViewById(R.id.arrow);
+        toPersonalInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(InputActivity.this,
+                        InputMonthlyActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 }

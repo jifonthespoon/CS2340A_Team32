@@ -1,5 +1,7 @@
 package com.example.greenplate.views;
 
+import static com.example.greenplate.R.id.toPersonalPage;
+
 import com.example.greenplate.R;
 import android.content.Intent;
 import android.os.Bundle;
@@ -89,6 +91,15 @@ public class IngredientsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(IngredientsActivity.this,
                         ShoppingActivity.class);
+                startActivity(intent);
+            }
+        });
+        final ImageButton toPersonalInfo = findViewById(R.id.toPersonalPage);
+        toPersonalInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(IngredientsActivity.this,
+                        PersonalInfoActivity.class);
                 startActivity(intent);
             }
         });
