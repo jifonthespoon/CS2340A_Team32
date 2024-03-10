@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
         Button loginButton = findViewById(R.id.loginButton);
         Button signUpButton = findViewById(R.id.signUpButton);
         Button exitButton = findViewById(R.id.exitButton);
-        FirebaseViewModel fvm = new FirebaseViewModel();
+        FirebaseViewModel fvm = FirebaseViewModel.getInstance();
 
         signUpButton.setOnClickListener(new View.OnClickListener() {
 
@@ -110,6 +110,7 @@ public class LoginActivity extends AppCompatActivity {
                                         Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(LoginActivity.this,
                                         HomeActivity.class);
+                                FirebaseViewModel.loadUser();
                                 startActivity(intent);
                             } else {
                                 Toast.makeText(LoginActivity.this,

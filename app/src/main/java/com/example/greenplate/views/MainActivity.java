@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.welcome_screen);
-        FirebaseViewModel fvm = new FirebaseViewModel();
+        FirebaseViewModel fvm = FirebaseViewModel.getInstance();
         new Thread(() -> {
             try {
                 Thread.sleep(1000); // Simulate loading process with a delay.

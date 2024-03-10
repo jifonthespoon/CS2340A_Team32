@@ -67,7 +67,7 @@ public class RegisterActivity extends AppCompatActivity {
         EditText passwordInputConfirmation =
                 findViewById(R.id.passwordConfirmation);
         EditText nameInput = findViewById(R.id.fullName);
-        FirebaseViewModel fvm = new FirebaseViewModel();
+        FirebaseViewModel fvm = FirebaseViewModel.getInstance();
         final User[] user = new User[1];
 
         registerButton.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +107,7 @@ public class RegisterActivity extends AppCompatActivity {
                             user[0] = fvm.createUser(userId, name, email);
                             Intent intent = new Intent(RegisterActivity.this,
                                     HomeActivity.class);
+                            FirebaseViewModel.loadUser();
                             startActivity(intent);
                         } else {
                             Toast.makeText(RegisterActivity.this,
