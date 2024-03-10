@@ -50,7 +50,7 @@ public class HomeActivity extends AppCompatActivity {
         final ImageButton toIngredients = findViewById(R.id.toIngredientsPage);
         final ImageButton toShopping = findViewById(R.id.toShoppingPage);
 
-        FirebaseViewModel fvm = new FirebaseViewModel();
+        FirebaseViewModel fvm = FirebaseViewModel.getInstance();
 
         // Set onClickListeners for each button to start
         // the corresponding activity.

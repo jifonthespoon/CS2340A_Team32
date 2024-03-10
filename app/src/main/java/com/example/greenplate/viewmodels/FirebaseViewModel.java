@@ -33,12 +33,14 @@ public class FirebaseViewModel extends ViewModel {
      * Singleton instance of Firebase to access Firebase services.
      */
     private static Firebase firebase;
-    private User user;
+    private static User user;
+
+    private static FirebaseViewModel viewModel;
 
     /**
      * Constructs a new FirebaseViewModel and initializes the Firebase services.
      */
-    public FirebaseViewModel() {
+    private FirebaseViewModel() {
         firebase = Firebase.getInstance();
         if (firebase.getAuth().getCurrentUser() != null) {
             String email = firebase.getAuth().getCurrentUser().getEmail();
@@ -82,6 +84,54 @@ public class FirebaseViewModel extends ViewModel {
         }
     }
 
+    public static FirebaseViewModel getInstance() {
+        if (viewModel == null) {
+            viewModel = new FirebaseViewModel();
+        }
+        return viewModel;
+    }
+
+    public static void loadUser() {
+        String email = firebase.getAuth().getCurrentUser().getEmail();
+        Dictionary<String, String> userInfo = new Hashtable<>();
+        final Set<String>[] mealIds = new Set[]{new HashSet<>()};
+        firebase.getDatabase().getReference().child("users").orderByChild("email").equalTo(email).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    if (child.getKey().equals("meals")) {
+                        Map<String, Boolean> meals = (Map<String, Boolean>) child.getValue();
+                        mealIds[0] = meals.keySet();
+                    } else {
+                        userInfo.put(child.getKey(), child.getValue().toString());
+                    }
+
+                }
+                user = new User(userInfo.get("name"), Integer.valueOf(userInfo.get("weight")), userInfo.get("gender"), Integer.valueOf(userInfo.get("heightInInches")), userInfo.get("userId"), userInfo.get("email"), mealIds[0]);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
+                System.out.println(dataSnapshot.getKey());
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                System.out.println(dataSnapshot.getKey());
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {
+                System.out.println(dataSnapshot.getKey());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                System.out.println(error);
+            }
+        });
+    }
+
     /**
      * Checks if a user is currently logged in.
      *
@@ -112,6 +162,14 @@ public class FirebaseViewModel extends ViewModel {
         user.weight = weight;
         user.gender = gender;
         firebase.getDatabase().getReference().child("users").child(user.userId).setValue(user);
+    }
+
+    public String getPersonalInformation() {
+        if (user.heightInInches != 0 && !user.gender.isEmpty() && user.weight != 0) {
+            return "" + user.getHeight() + " | " + user.weight + "lbs | " + user.gender;
+        } else {
+            return "Fill out personal information";
+        }
     }
 
     public void addMealToUser(String mealId) {
