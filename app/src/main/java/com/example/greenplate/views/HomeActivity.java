@@ -10,8 +10,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 
+import com.example.greenplate.models.Meal;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
 import com.example.greenplate.models.User;
+
+import java.util.UUID;
 
 /**
  * HomeActivity serves as the central navigation point for the application,
@@ -57,6 +60,8 @@ public class HomeActivity extends AppCompatActivity {
         toHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Meal meal = new Meal(UUID.randomUUID().toString(), "Pizza", 200);
+                //boolean worked = fvm.saveOrUpdateMeal(meal);
                 Intent intent = new Intent(HomeActivity.this,
                         HomeActivity.class);
                 startActivity(intent);
