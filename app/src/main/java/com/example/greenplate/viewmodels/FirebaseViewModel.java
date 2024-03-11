@@ -162,10 +162,6 @@ public class FirebaseViewModel extends ViewModel {
         user.heightInInches = heightInInches;
         user.weight = weight;
         user.gender = gender;
-        // For Men:
-        // BMR=(4.536×weight in pounds)+(15.88×height in inches)+5
-        // For women:
-        // BMR=(4.536×weight in pounds)+(15.88×height in inches)−161
         firebase.getDatabase().getReference().child("users").child(user.userId).setValue(user);
     }
 

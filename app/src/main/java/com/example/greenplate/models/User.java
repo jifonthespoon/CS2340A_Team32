@@ -67,6 +67,10 @@ public class User {
 
     public int getDailyCalorieIntake() {
         int calories = 0;
+        // For Men:
+        // BMR=(4.536×weight in pounds)+(15.88×height in inches)+5
+        // For women:
+        // BMR=(4.536×weight in pounds)+(15.88×height in inches)−161
         if (gender.equals("Male")) {
             calories = (int) (weight * 4.536 + 15.88 * heightInInches + 5);
         } else {
