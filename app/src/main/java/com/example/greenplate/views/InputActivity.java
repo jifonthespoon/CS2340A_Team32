@@ -1,13 +1,11 @@
 package com.example.greenplate.views;
 
 import com.example.greenplate.R;
-import com.example.greenplate.viewmodels.FirebaseViewModel;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -47,11 +45,6 @@ public class InputActivity extends AppCompatActivity {
         setContentView(R.layout.input_page);
         // Initialize navigation buttons and set their onClickListeners.
         final ImageButton toHome = findViewById(R.id.toHomePage);
-        FirebaseViewModel fvm = FirebaseViewModel.getInstance();
-        TextView userInfo = findViewById(R.id.userInfoLabel);
-
-        userInfo.setText(fvm.getPersonalInformation());
-
         toHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,6 +99,13 @@ public class InputActivity extends AppCompatActivity {
             }
         });
 
+        final ImageButton submit = findViewById(R.id.input_page_submit_button);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // to implement
+            }
+        });
 
 
     }

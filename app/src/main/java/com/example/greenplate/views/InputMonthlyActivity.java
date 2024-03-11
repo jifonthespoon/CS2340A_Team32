@@ -2,7 +2,9 @@ package com.example.greenplate.views;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +16,7 @@ public class InputMonthlyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.input_page_monthly);
+
         final ImageButton toHome = findViewById(R.id.toHomePage);
         toHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +73,13 @@ public class InputMonthlyActivity extends AppCompatActivity {
             }
         });
 
-
+        final ImageButton submit = findViewById(R.id.input_page_monthly_submit_button);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // to implement
+            }
+        });
 
     }
 }
