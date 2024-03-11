@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -76,7 +79,20 @@ public class PersonalInfoActivity extends AppCompatActivity{
             }
         });
 
+        RadioGroup radioGroup = findViewById(R.id.radioGroup);
+        RadioButton radioButtonMale = findViewById(R.id.radioButtonMale);
+        RadioButton radioButtonFemale = findViewById(R.id.radioButtonFemale);
+        RadioButton radioButtonOther = findViewById(R.id.radioButtonOther);
 
-
+        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.radioButtonMale) {
+                // if male checked
+            } else if (checkedId == R.id.radioButtonFemale) {
+                // if female checked
+            } else if (checkedId == R.id.radioButtonOther) {
+                // if other checked
+            }
+        });
     }
+
 }

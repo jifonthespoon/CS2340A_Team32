@@ -81,5 +81,16 @@ public class InputMonthlyActivity extends AppCompatActivity {
             }
         });
 
+        final ImageButton arrow = findViewById(R.id.arrow);
+        arrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(InputMonthlyActivity.this,
+                        PersonalInfoActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 }
