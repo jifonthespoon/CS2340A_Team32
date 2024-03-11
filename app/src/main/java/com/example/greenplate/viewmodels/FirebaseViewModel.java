@@ -162,12 +162,24 @@ public class FirebaseViewModel extends ViewModel {
         user.heightInInches = heightInInches;
         user.weight = weight;
         user.gender = gender;
+        // For Men:
+        // BMR=(4.536×weight in pounds)+(15.88×height in inches)+5
+        // For women:
+        // BMR=(4.536×weight in pounds)+(15.88×height in inches)−161
         firebase.getDatabase().getReference().child("users").child(user.userId).setValue(user);
     }
 
     public String getPersonalInformation() {
         if (user.heightInInches != 0 && !user.gender.isEmpty() && user.weight != 0) {
             return "" + user.getHeight() + " | " + user.weight + "lbs | " + user.gender;
+        } else {
+            return "Fill out personal information";
+        }
+    }
+
+    public String getCalorieGoal() {
+        if (user.heightInInches != 0 && !user.gender.isEmpty() && user.weight != 0) {
+            return "" + user.getDailyCalorieIntake();
         } else {
             return "Fill out personal information";
         }

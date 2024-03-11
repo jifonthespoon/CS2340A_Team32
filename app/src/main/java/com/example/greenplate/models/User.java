@@ -20,6 +20,7 @@ public class User {
     public String email;
     public ArrayList<String> mealIds = new ArrayList<>();
 
+
     /**
      * Constructs a new User instance with the specified name.
      *
@@ -62,5 +63,16 @@ public class User {
         int feet = heightInInches / 12;
         int inches = heightInInches -  ((heightInInches / 12) * 12);
         return "" + feet + "' " + inches + "\"";
+    }
+
+    public int getDailyCalorieIntake() {
+        int calories = 0;
+        if (gender.equals("Male")) {
+            calories = (int) (weight * 4.536 + 15.88 * heightInInches + 5);
+        } else {
+            calories = (int) (weight * 4.536 + 15.88 * heightInInches - 161);
+        }
+
+        return calories;
     }
 }
