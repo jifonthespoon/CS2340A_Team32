@@ -1,16 +1,23 @@
 package com.example.greenplate.views;
 
 import com.example.greenplate.R;
+import com.example.greenplate.models.Meal;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.UUID;
 
 /**
  * InputActivity is designed to serve as the user interface for
@@ -47,6 +54,8 @@ public class InputActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.input_page);
         // Initialize navigation buttons and set their onClickListeners.
+        final EditText mealNameInput = findViewById(R.id.input_page_meal_enter);
+        final EditText caloriesInput = findViewById(R.id.input_page_calorie_enter);
         final ImageButton toHome = findViewById(R.id.toHomePage);
         FirebaseViewModel fvm = FirebaseViewModel.getInstance();
         TextView userInfo = findViewById(R.id.userInfoLabel);
@@ -112,7 +121,20 @@ public class InputActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // to implement
+                String mealName = mealNameInput.getText().toString().trim();
+                int calories = Integer.parseInt(caloriesInput.getText().toString().trim());
+                String dateAdded = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+
+                // Create a Meal object
+                Meal meal = new Meal(UUID.randomUUID().toString(), mealName, calories, dateAdded);
+
+                // Use FirebaseViewModel to save the meal
+                FirebaseViewModel fvm = FirebaseViewModel.getInstance();
+                fvm.saveOrUpdateMeal(meal);
+
+                // Optionally, clear the input fields or navigate away after saving
+                mealNameInput.setText("");
+                caloriesInput.setText("");
             }
         });
 
