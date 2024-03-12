@@ -96,8 +96,6 @@ public class InputMonthlyActivity extends AppCompatActivity {
                 // Use FirebaseViewModel to save the meal
                 FirebaseViewModel fvm = FirebaseViewModel.getInstance();
                 fvm.saveOrUpdateMeal(meal);
-
-                // Optionally, clear the input fields or navigate away after saving
                 mealNameInput.setText("");
                 caloriesInput.setText("");
             }
