@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +29,12 @@ public class InputMonthlyActivity extends AppCompatActivity {
         final EditText mealNameInput = findViewById(R.id.input_page_monthly_meal_enter);
         final EditText caloriesInput = findViewById(R.id.input_page_monthly_calorie_enter);
         final ImageButton toHome = findViewById(R.id.toHomePage);
+        FirebaseViewModel fvm = FirebaseViewModel.getInstance();
+        TextView userInfo = findViewById(R.id.userInfoLabel);
+        TextView calorieGoal = findViewById(R.id.calorieGoalText);
+
+        userInfo.setText(fvm.getPersonalInformation());
+        calorieGoal.setText(fvm.getCalorieGoal());
         toHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
