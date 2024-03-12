@@ -6,8 +6,11 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import com.example.greenplate.models.Meal;
 import com.example.greenplate.models.User;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
+
+import java.util.HashMap;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -46,5 +49,22 @@ public class ExampleUnitTest {
     public void testFemaleCalorieCount() {
         User user = new User("Test User", 110, "Female", 64, "test-user", "test@gmail.com");
         assertEquals(user.getDailyCalorieIntake(), 1354);
+    }
+
+    @Test
+    public void testHeight() {
+        User user = new User("Test User", 110, "Female", 64, "test-user", "test@gmail.com");
+        assertEquals(user.getHeight(), "5' 4" + "\"");
+    }
+
+    @Test
+    public void testMealMap() {
+        Meal meal = new Meal("testID", "testName", 500, "03-12-2024");
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("mealId", "testID");
+        result.put("name", "testName");
+        result.put("calories", 500);
+        result.put("dateAdded", "03-12-2024");
+        assertEquals(meal.toMap(), result);
     }
 }
