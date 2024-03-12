@@ -13,6 +13,7 @@ import com.example.greenplate.models.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import androidx.lifecycle.ViewModel;
 
@@ -22,6 +23,7 @@ import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -221,6 +223,47 @@ public class FirebaseViewModel extends ViewModel {
         if (mealId != null) {
             firebase.getDatabase().getReference().child("meals").child(mealId).removeValue();
         }
+    }
+    public void queryMealsByDate(String date, final FirebaseCallback<List<Meal>> callback) {
+        firebase.getDatabase().getReference().child("meals")
+                .orderByChild("dateAdded").equalTo(date)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        List<Meal> meals = new ArrayList<>();
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            Meal meal = snapshot.getValue(Meal.class);
+                            meals.add(meal);
+                        }
+                        callback.onCallback(meals);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.w("FirebaseViewModel", "loadMeal:onCancelled", databaseError.toException());
+                    }
+                });
+    }
+    public void queryMealsByMonth(String month, final FirebaseCallback<List<Meal>> callback) {
+        firebase.getDatabase().getReference().child("meals")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        List<Meal> meals = new ArrayList<>();
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            Meal meal = snapshot.getValue(Meal.class);
+                            if (meal != null && meal.getDateAdded().startsWith(month)) {
+                                meals.add(meal);
+                            }
+                        }
+                        callback.onCallback(meals);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.w("FirebaseViewModel", "loadMeal:onCancelled", databaseError.toException());
+                    }
+                });
     }
 }
 

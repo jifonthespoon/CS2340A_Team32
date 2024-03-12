@@ -34,7 +34,9 @@ public class Meal {
         result.put("dateAdded", dateAdded);
         return result;
     }
-
+    public String getDateAdded() {
+        return dateAdded;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
