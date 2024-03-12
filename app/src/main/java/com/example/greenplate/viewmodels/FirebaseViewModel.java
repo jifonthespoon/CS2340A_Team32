@@ -173,6 +173,14 @@ public class FirebaseViewModel extends ViewModel {
         }
     }
 
+    public String getCalorieGoal() {
+        if (user.heightInInches != 0 && !user.gender.isEmpty() && user.weight != 0) {
+            return "" + user.getDailyCalorieIntake();
+        } else {
+            return "Fill out personal information";
+        }
+    }
+
     public void addMealToUser(String mealId) {
         firebase.getDatabase().getReference().child("users").child(user.userId).child("meals").child(mealId).setValue(true);
     }
