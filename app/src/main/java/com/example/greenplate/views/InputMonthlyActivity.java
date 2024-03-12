@@ -17,11 +17,17 @@ import com.example.greenplate.models.Meal;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.UUID;
 
 public class InputMonthlyActivity extends AppCompatActivity {
+
+    private TextView monthLabel;
+    private Calendar calendar;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,5 +132,43 @@ public class InputMonthlyActivity extends AppCompatActivity {
         });
 
 
+
+        monthLabel = findViewById(R.id.monthLabel);
+        calendar = Calendar.getInstance();
+        updateDate();
+
+
+        final ImageButton backwards_time = findViewById(R.id.left_arrow_input_monthly_page);
+        backwards_time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                calendar.add(Calendar.MONTH, -1); // Subtract one month
+                updateDate();
+                updateVisualization();
+            }
+        });
+
+        final ImageButton forwards_time = findViewById(R.id.right_arrow_input_monthly_page);
+        forwards_time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                calendar.add(Calendar.MONTH, 1); // Add one month
+                updateDate();
+                updateVisualization();
+            }
+        });
+
+    }
+
+    private void updateDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM yyyy", Locale.getDefault());
+        String formattedDate = sdf.format(calendar.getTime());
+        monthLabel.setText(formattedDate);
+    }
+
+    private void updateVisualization() {
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        // to implement
     }
 }
