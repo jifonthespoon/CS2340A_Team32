@@ -168,10 +168,18 @@ public class FirebaseViewModel extends ViewModel {
     }
 
     public String getPersonalInformation() {
-        if (user.heightInInches != 0 && !user.gender.isEmpty() && user.weight != 0) {
+        if (user != null && user.heightInInches != 0 && !user.gender.isEmpty() && user.weight != 0) {
             return "" + user.getHeight() + " | " + user.weight + "lbs | " + user.gender;
         } else {
             return "Fill out personal information";
+        }
+    }
+
+    public String[] getPersonalInformationArray() {
+        if (user != null && user.heightInInches != 0 && !user.gender.isEmpty() && user.weight != 0) {
+            return new String[] {String.valueOf(user.heightInInches), String.valueOf(user.weight), user.gender};
+        } else {
+            return null;
         }
     }
 
@@ -199,6 +207,7 @@ public class FirebaseViewModel extends ViewModel {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
+                        addMealToUser(meal.mealId);
                         Log.d("Meal Save", "Meal successfully saved to Firebase");
                     } else {
                         Log.d("Meal Save", "Failed to save meal to Firebase");
