@@ -148,7 +148,8 @@ public class InputActivity extends AppCompatActivity {
         BarChart mBarChart;
         mBarChart = findViewById(R.id.barChart);
         int totalCaloriesConsumed = 894;
-        int recommendedTotalDailyCalorie = 1620;
+        String calorieGoalString = calorieGoal.getText().toString();
+        int recommendedTotalDailyCalorie = Integer.parseInt(calorieGoalString);
         // Inside onCreate or another appropriate method
         ArrayList<BarEntry> entries = new ArrayList<>();
 
