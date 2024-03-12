@@ -192,6 +192,7 @@ public class FirebaseViewModel extends ViewModel {
     }
 
     public boolean saveOrUpdateMeal(Meal meal) {
+
         if (meal != null && meal.mealId != null && !meal.name.isEmpty()) {
             // Using the mealId as the key to store meal information
             firebase.getDatabase().getReference().child("meals").child(meal.mealId).setValue(meal.toMap()).addOnCompleteListener(new OnCompleteListener<Void>() {
