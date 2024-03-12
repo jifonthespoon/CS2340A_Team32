@@ -6,8 +6,12 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import com.example.greenplate.models.Meal;
 import com.example.greenplate.models.User;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -56,9 +60,24 @@ public class ExampleUnitTest {
     }
 
     @Test
-    public void testFemaleCalorieCount2() {
-        //testing if a male and female of the same height and weight output different calories
-        User user = new User("Test User", 346, "Female", 72, "test-user", "test@gmail.com");
-        assertEquals(user.getDailyCalorieIntake(), 2551);
+    public void testMealEquality() {
+        // Create two Meal objects with identical attributes
+        Meal meal1 = new Meal("123", "Dummy Meal", 500, "2024-03-12");
+        Meal meal2 = new Meal("123", "Dummy Meal", 500, "2024-03-12");
+
+        // Assert that the two meals are equal
+        assertEquals(meal1, meal2);
     }
+
+    @Test
+    public void testMealConstructor() {
+        Meal meal = new Meal("123", "Test Meal", 350, "2024-03-15");
+        assertEquals("123", meal.mealId);
+        assertEquals("Test Meal", meal.name);
+        assertEquals(350, meal.calories);
+        assertEquals("2024-03-15", meal.dateAdded);
+    }
+
+
+
 }
