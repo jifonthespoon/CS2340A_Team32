@@ -13,6 +13,9 @@ import com.example.greenplate.models.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import androidx.lifecycle.ViewModel;
@@ -252,7 +255,7 @@ public class FirebaseViewModel extends ViewModel {
                         List<Meal> meals = new ArrayList<>();
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Meal meal = snapshot.getValue(Meal.class);
-                            if (meal != null && meal.getDateAdded().startsWith(month)) {
+                            if (meal != null && meal.getMealDateAdded().startsWith(month)) {
                                 meals.add(meal);
                             }
                         }
@@ -265,5 +268,31 @@ public class FirebaseViewModel extends ViewModel {
                     }
                 });
     }
+    public void queryCaloriesByDate(String date, final FirebaseCallback<Integer> callback) {
+        DatabaseReference mealsRef = FirebaseDatabase.getInstance().getReference().child("meals");
+
+        // Query meals by date
+        Query query = mealsRef.orderByChild("dateAdded").equalTo(date);
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int totalCalories = 0;
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Meal meal = snapshot.getValue(Meal.class);
+                    if (meal != null) {
+                        totalCalories += meal.getMealCalories();
+                    }
+                }
+                callback.onCallback(totalCalories);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("FirebaseViewModel", "loadMeal:onCancelled", databaseError.toException());
+            }
+        });
+    }
+
 }
 
