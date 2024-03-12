@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.UUID;
@@ -50,6 +51,10 @@ public class InputActivity extends AppCompatActivity {
      *                           bundle can be used to recreate the activity
      *                           as it was prior to being paused or stopped.
      */
+
+    private TextView dateLabel;
+    private Calendar calendar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -153,6 +158,42 @@ public class InputActivity extends AppCompatActivity {
             }
         });
 
+        dateLabel = findViewById(R.id.dayLabel);
+        calendar = Calendar.getInstance();
+        updateDateLabel();
+
+        final ImageButton backwards_time = findViewById(R.id.left_arrow_input_page);
+        backwards_time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                calendar.add(Calendar.DAY_OF_MONTH, -1);
+                updateDateLabel();
+                updateVisualization();
+            }
+        });
+
+        final ImageButton forwards_time = findViewById(R.id.right_arrow_input_page);
+        forwards_time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                calendar.add(Calendar.DAY_OF_MONTH, 1);
+                updateDateLabel();
+                updateVisualization();
+            }
+        });
 
     }
+
+    private void updateDateLabel() {
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd", Locale.getDefault());
+        String formattedDate = sdf.format(calendar.getTime());
+        dateLabel.setText(formattedDate);
+    }
+    private void updateVisualization() {
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        System.out.println(day);
+    }
+
 }
