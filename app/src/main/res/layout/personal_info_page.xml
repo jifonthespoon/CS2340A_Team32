@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="450dp"
@@ -145,7 +146,7 @@
         android:layout_height="25dp"
         android:layout_marginStart="6dp"
         android:layout_marginEnd="88dp"
-        android:text="Gender"
+        android:text="Sex:"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -154,78 +155,41 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.568" />
 
-    <EditText
-        android:id="@+id/personal_info_gender_enter"
-        android:layout_width="352dp"
-        android:layout_height="49dp"
-        android:background="#EEEEEE"
-        android:hint=" EX: F"
-        android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.44"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.623" />
-
-    <ImageButton
-        android:id="@+id/personal_info_save_button"
-        android:layout_width="151dp"
-        android:layout_height="33dp"
-        android:layout_marginBottom="16dp"
-
-        android:background="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.484"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.722"
-        app:srcCompat="@drawable/personal_info_save_button" />
-
-    <ImageView
-        android:id="@+id/personal_info_save_label"
-        android:layout_width="179dp"
-        android:layout_height="23dp"
-        android:layout_marginTop="156dp"
-        android:scaleX="1"
-        android:scaleY="1"
+    <Button
+        android:id="@+id/save"
+        android:layout_width="167dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="139dp"
+        android:layout_marginBottom="236dp"
+        android:backgroundTint="#311E10"
+        android:drawablePadding="0px"
+        android:paddingLeft="100px"
+        android:paddingRight="100px"
+        android:text="Save"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:cornerRadius="40px"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.640"
-        app:layout_constraintHorizontal_bias="0.484"
-        app:srcCompat="@drawable/personal_info_save_label" />
+        app:layout_constraintTop_toBottomOf="@+id/personal_info_weight_enter" />
 
-    <ImageButton
-        android:id="@+id/personal_info_cancel_button"
-        android:layout_width="151dp"
-        android:layout_height="33dp"
-        android:layout_marginBottom="16dp"
-        android:background="@null"
+    <Button
+        android:id="@+id/cancel"
+        android:layout_width="167dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="195dp"
+        android:layout_marginBottom="180dp"
+        android:backgroundTint="#311E10"
+        android:drawablePadding="0px"
+        android:paddingLeft="100px"
+        android:paddingRight="100px"
+        android:text="Cancel"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:cornerRadius="40px"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.788"
-        app:srcCompat="@drawable/personal_info_cancel_button" />
-
-    <ImageView
-        android:id="@+id/personal_info_cancel_label"
-        android:layout_width="179dp"
-        android:layout_height="23dp"
-        android:layout_marginTop="156dp"
-        android:scaleX="1"
-        android:scaleY="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.482"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.717"
-        app:srcCompat="@drawable/personal_info_cancel_label" />
+        app:layout_constraintTop_toBottomOf="@+id/personal_info_weight_enter" />
 
     <ImageButton
         android:id="@+id/toHomePage"
@@ -282,7 +246,7 @@
         app:layout_constraintEnd_toStartOf="@+id/toIngredientsPage"
         app:layout_constraintTop_toBottomOf="@+id/divider"
         app:layout_constraintVertical_bias="0.567"
-        app:srcCompat="@drawable/red_recipe_button" />
+        app:srcCompat="@drawable/recipe_button" />
 
     <ImageButton
         android:id="@+id/toInputPage"
@@ -306,7 +270,6 @@
         android:layout_marginStart="6dp"
         android:layout_marginEnd="88dp"
         android:text="Recipe"
-        android:textColor="#D64933"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/toIngredientsPage"
         app:layout_constraintHorizontal_bias="1.0"
@@ -378,7 +341,30 @@
         app:layout_constraintVertical_bias=".95"
         />
 
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias=".62"
+        app:layout_constraintHorizontal_bias="0.10">
 
+        <RadioButton
+            android:id="@+id/radioButtonMale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Male  " />
+
+        <RadioButton
+            android:id="@+id/radioButtonFemale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Female" />
+    </RadioGroup>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

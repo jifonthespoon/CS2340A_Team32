@@ -6,6 +6,7 @@ import com.example.greenplate.viewmodels.FirebaseViewModel;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -49,9 +50,10 @@ public class InputActivity extends AppCompatActivity {
         final ImageButton toHome = findViewById(R.id.toHomePage);
         FirebaseViewModel fvm = FirebaseViewModel.getInstance();
         TextView userInfo = findViewById(R.id.userInfoLabel);
+        TextView calorieGoal = findViewById(R.id.calorieGoalText);
 
         userInfo.setText(fvm.getPersonalInformation());
-
+        calorieGoal.setText(fvm.getCalorieGoal());
         toHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,6 +108,23 @@ public class InputActivity extends AppCompatActivity {
             }
         });
 
+        final ImageButton submit = findViewById(R.id.input_page_submit_button);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // to implement
+            }
+        });
+
+        final ImageButton arrow = findViewById(R.id.arrow);
+        arrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(InputActivity.this,
+                        PersonalInfoActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
     }
