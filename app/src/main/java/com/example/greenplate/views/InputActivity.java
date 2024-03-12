@@ -177,7 +177,11 @@ public class InputActivity extends AppCompatActivity {
             }
         });
 
- dailycaloriesgraph
+        calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = dateFormat.format(calendar);
+
+
         BarChart mBarChart;
         mBarChart = findViewById(R.id.barChart);
         int totalCaloriesConsumed = 894;
@@ -205,7 +209,6 @@ public class InputActivity extends AppCompatActivity {
 
 
         dateLabel = findViewById(R.id.dayLabel);
-        calendar = Calendar.getInstance();
         updateDateLabel();
 
         final ImageButton backwards_time = findViewById(R.id.left_arrow_input_page);
@@ -214,7 +217,6 @@ public class InputActivity extends AppCompatActivity {
             public void onClick(View v) {
                 calendar.add(Calendar.DAY_OF_MONTH, -1);
                 updateDateLabel();
-                updateVisualization();
             }
         });
 
@@ -224,10 +226,9 @@ public class InputActivity extends AppCompatActivity {
             public void onClick(View v) {
                 calendar.add(Calendar.DAY_OF_MONTH, 1);
                 updateDateLabel();
-                updateVisualization();
             }
         });
- main
+
 
     }
 
@@ -235,12 +236,6 @@ public class InputActivity extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("MMM dd", Locale.getDefault());
         String formattedDate = sdf.format(calendar.getTime());
         dateLabel.setText(formattedDate);
-    }
-    private void updateVisualization() {
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        System.out.println(day);
     }
 
 }
