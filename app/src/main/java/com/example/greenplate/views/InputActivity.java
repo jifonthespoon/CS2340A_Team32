@@ -1,6 +1,7 @@
 package com.example.greenplate.views;
 
 import com.example.greenplate.R;
+import com.example.greenplate.models.Meal;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
@@ -16,10 +17,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.UUID;
 
 /**
  * InputActivity is designed to serve as the user interface for
@@ -51,11 +60,17 @@ public class InputActivity extends AppCompatActivity {
      *                           bundle can be used to recreate the activity
      *                           as it was prior to being paused or stopped.
      */
+
+    private TextView dateLabel;
+    private Calendar calendar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.input_page);
         // Initialize navigation buttons and set their onClickListeners.
+        final EditText mealNameInput = findViewById(R.id.input_page_meal_enter);
+        final EditText caloriesInput = findViewById(R.id.input_page_calorie_enter);
         final ImageButton toHome = findViewById(R.id.toHomePage);
         FirebaseViewModel fvm = FirebaseViewModel.getInstance();
         TextView userInfo = findViewById(R.id.userInfoLabel);
@@ -131,7 +146,24 @@ public class InputActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // to implement
+                String mealName = mealNameInput.getText().toString().trim();
+                String caloriesString = String.valueOf(caloriesInput.getText()).trim();
+                int calories = Integer.parseInt(caloriesInput.getText().toString().trim());
+                if (mealName.isEmpty() || caloriesString.isEmpty()) {
+                    // Show an error message or a toast to inform the user to input valid values
+                    Toast.makeText(InputActivity.this, "Please enter valid meal name and calories.", Toast.LENGTH_LONG).show();
+                    return; // Stop further execution
+                }
+                String dateAdded = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+
+                // Create a Meal object
+                Meal meal = new Meal(UUID.randomUUID().toString(), mealName, calories, dateAdded);
+
+                // Use FirebaseViewModel to save the meal
+                fvm.saveOrUpdateMeal(meal);
+                //clears input boxes
+                mealNameInput.setText("");
+                caloriesInput.setText("");
             }
         });
 
@@ -145,6 +177,7 @@ public class InputActivity extends AppCompatActivity {
             }
         });
 
+ dailycaloriesgraph
         BarChart mBarChart;
         mBarChart = findViewById(R.id.barChart);
         int totalCaloriesConsumed = 894;
@@ -171,5 +204,43 @@ public class InputActivity extends AppCompatActivity {
 
 
 
+        dateLabel = findViewById(R.id.dayLabel);
+        calendar = Calendar.getInstance();
+        updateDateLabel();
+
+        final ImageButton backwards_time = findViewById(R.id.left_arrow_input_page);
+        backwards_time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                calendar.add(Calendar.DAY_OF_MONTH, -1);
+                updateDateLabel();
+                updateVisualization();
+            }
+        });
+
+        final ImageButton forwards_time = findViewById(R.id.right_arrow_input_page);
+        forwards_time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                calendar.add(Calendar.DAY_OF_MONTH, 1);
+                updateDateLabel();
+                updateVisualization();
+            }
+        });
+ main
+
     }
+
+    private void updateDateLabel() {
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd", Locale.getDefault());
+        String formattedDate = sdf.format(calendar.getTime());
+        dateLabel.setText(formattedDate);
+    }
+    private void updateVisualization() {
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        System.out.println(day);
+    }
+
 }
