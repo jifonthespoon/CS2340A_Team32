@@ -101,7 +101,6 @@ public class InputMonthlyActivity extends AppCompatActivity {
                 Meal meal = new Meal(UUID.randomUUID().toString(), mealName, calories, dateAdded);
 
                 // Use FirebaseViewModel to save the meal
-                FirebaseViewModel fvm = FirebaseViewModel.getInstance();
                 fvm.saveOrUpdateMeal(meal);
                 //clears input boxes
                 mealNameInput.setText("");
