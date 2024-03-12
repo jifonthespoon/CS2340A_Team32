@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -122,16 +123,21 @@ public class InputActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String mealName = mealNameInput.getText().toString().trim();
+                String caloriesString = String.valueOf(caloriesInput.getText()).trim();
                 int calories = Integer.parseInt(caloriesInput.getText().toString().trim());
+                if (mealName.isEmpty() || caloriesString.isEmpty()) {
+                    // Show an error message or a toast to inform the user to input valid values
+                    Toast.makeText(InputActivity.this, "Please enter valid meal name and calories.", Toast.LENGTH_LONG).show();
+                    return; // Stop further execution
+                }
                 String dateAdded = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
-// Create a Meal object
+                // Create a Meal object
                 Meal meal = new Meal(UUID.randomUUID().toString(), mealName, calories, dateAdded);
 
-// Use FirebaseViewModel to save the meal
-                FirebaseViewModel fvm = FirebaseViewModel.getInstance();
+                // Use FirebaseViewModel to save the meal
                 fvm.saveOrUpdateMeal(meal);
-//clears input boxes
+                //clears input boxes
                 mealNameInput.setText("");
                 caloriesInput.setText("");
             }
