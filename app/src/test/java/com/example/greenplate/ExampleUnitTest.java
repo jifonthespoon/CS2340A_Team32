@@ -79,7 +79,6 @@ public class ExampleUnitTest {
     public void testMealEquality() {
         Meal meal1 = new Meal("123", "Dummy Meal", 500, "2024-03-12");
         Meal meal2 = new Meal("123", "Dummy Meal", 500, "2024-03-12");
-
         assertEquals(meal1, meal2);
     }
 
