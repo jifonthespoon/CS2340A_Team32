@@ -268,30 +268,49 @@ public class FirebaseViewModel extends ViewModel {
                     }
                 });
     }
-    public void queryCaloriesByDate(String date, final FirebaseCallback<Integer> callback) {
-        DatabaseReference mealsRef = FirebaseDatabase.getInstance().getReference().child("meals");
-
-        // Query meals by date
-        Query query = mealsRef.orderByChild("dateAdded").equalTo(date);
-
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                int totalCalories = 0;
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Meal meal = snapshot.getValue(Meal.class);
-                    if (meal != null) {
-                        totalCalories += meal.getMealCalories();
+    public void queryMealsByDateCalories(String date, final FirebaseCallback<Integer> callback) {
+        firebase.getDatabase().getReference().child("meals")
+                .orderByChild("dateAdded").equalTo(date)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        int totalCalories = 0;
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            Meal meal = snapshot.getValue(Meal.class);
+                            if (meal != null) {
+                                totalCalories += meal.calories; // Assume 'calories' is an int field in Meal
+                            }
+                        }
+                        callback.onCallback(totalCalories);
                     }
-                }
-                callback.onCallback(totalCalories);
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w("FirebaseViewModel", "loadMeal:onCancelled", databaseError.toException());
-            }
-        });
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.w("FirebaseViewModel", "loadMeal:onCancelled", databaseError.toException());
+                    }
+                });
+    }
+
+    public void queryMealsByMonthCalories(String month, final FirebaseCallback<Integer> callback) {
+        firebase.getDatabase().getReference().child("meals")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        int totalCalories = 0;
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            Meal meal = snapshot.getValue(Meal.class);
+                            if (meal != null && meal.getDateAdded().startsWith(month)) {
+                                totalCalories += meal.calories;
+                            }
+                        }
+                        callback.onCallback(totalCalories);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.w("FirebaseViewModel", "loadMeal:onCancelled", databaseError.toException());
+                    }
+                });
     }
 
 }
