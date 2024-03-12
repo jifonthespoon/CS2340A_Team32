@@ -2,6 +2,15 @@ package com.example.greenplate.views;
 
 import com.example.greenplate.R;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import java.util.ArrayList;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
+
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -107,6 +116,16 @@ public class InputActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        final ImageButton toInputDaily = findViewById(R.id.toInputDaily);
+        toInputDaily.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(InputActivity.this,
+                        InputMonthlyActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
         final ImageButton submit = findViewById(R.id.input_page_submit_button);
         submit.setOnClickListener(new View.OnClickListener() {
@@ -125,6 +144,31 @@ public class InputActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        BarChart mBarChart;
+        mBarChart = findViewById(R.id.barChart);
+        int totalCaloriesConsumed = 894;
+        int recommendedTotalDailyCalorie = 1620;
+        // Inside onCreate or another appropriate method
+        ArrayList<BarEntry> entries = new ArrayList<>();
+
+        entries.add(new BarEntry(1f, new float[]{totalCaloriesConsumed}));
+        entries.add(new BarEntry(2f, new float[]{recommendedTotalDailyCalorie}));
+
+        BarDataSet dataSet = new BarDataSet(entries, "Calories");
+        dataSet.setColors(ColorTemplate.rgb("#D64933")); // Setting color to red
+        BarData barData = new BarData(dataSet);
+        mBarChart.setData(barData);
+
+
+        // Customize X-axis
+        XAxis xAxis = mBarChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); // Position of X-axis labels
+        xAxis.setGranularity(1.45f); // Interval between each label
+        xAxis.setCenterAxisLabels(true); // Center the labels between the bars
+        xAxis.setAxisMinimum(0.5f); // Adjust the minimum value to center the first bar
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{"Calories Consumed", "Calorie Goal"})); // Customizing labels
+
 
 
     }
