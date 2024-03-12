@@ -15,6 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/red_rectangle" />
+
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="360dp"
@@ -30,14 +31,13 @@
         app:srcCompat="@drawable/input_page_header" />
 
 
-
     <ImageView
         android:id="@+id/imageView6"
         android:layout_width="448dp"
         android:layout_height="101dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:srcCompat="@drawable/nav_bar"
-        tools:layout_editor_absoluteX="-18dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/nav_bar" />
 
 
     <ImageButton
@@ -117,7 +117,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
         android:layout_marginEnd="88dp"
-        android:text=" TODAY "
+        android:text="MAR 21"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -125,6 +125,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.56" />
+
+    <ImageButton
+        android:id="@+id/right_arrow_input_page"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="48dp"
+        android:background="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.667"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.56"
+        app:srcCompat="@drawable/right_move_arrow" />
+
+    <ImageButton
+        android:id="@+id/left_arrow_input_page"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="48dp"
+        android:background="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.465"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.56"
+        app:srcCompat="@drawable/left_move_arrow" />
 
     <TextView
         android:id="@+id/caloriesNameLabel"
@@ -160,13 +188,13 @@
         android:id="@+id/userInfoLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
+        android:layout_marginStart="50dp"
         android:layout_marginEnd="88dp"
         android:text="5’8’’ | 165lbs | Male"
         android:textColor="#FF6961"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.221"
+        app:layout_constraintHorizontal_bias="0.006"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.181" />
@@ -175,16 +203,16 @@
         android:id="@+id/calorieGoalText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
+        android:layout_marginStart="50dp"
         android:layout_marginEnd="88dp"
         android:text="2400"
         android:textColor="#FF6961"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.157"
+        app:layout_constraintHorizontal_bias="0.004"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.24" />
+        app:layout_constraintVertical_bias="0.25" />
 
     <TextView
         android:id="@+id/dailyCalorieLabel"
@@ -295,7 +323,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.758" />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/toInputDaily"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -416,6 +444,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias=".95"
         />
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/barChart"
+        android:layout_width="388dp"
+        android:layout_height="118dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="470dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="235dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.565" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

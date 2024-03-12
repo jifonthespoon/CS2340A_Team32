@@ -1,6 +1,8 @@
 package com.example.greenplate.models;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -12,13 +14,14 @@ public class User {
      * The name of the user. This field stores the user's name for
      * identification and personalization purposes.
      */
-    public String name;
-    public int weight = 0;
-    public String gender = "";
-    public int heightInInches = 0;
-    public String userId;
-    public String email;
-    public ArrayList<String> mealIds = new ArrayList<>();
+    private String name;
+    private int weight = 0;
+    private String gender = "";
+    private int heightInInches = 0;
+    private String userId;
+    private String email;
+    private ArrayList<String> mealIds = new ArrayList<>();
+
 
     /**
      * Constructs a new User instance with the specified name.
@@ -62,5 +65,54 @@ public class User {
         int feet = heightInInches / 12;
         int inches = heightInInches -  ((heightInInches / 12) * 12);
         return "" + feet + "' " + inches + "\"";
+    }
+
+    public int getDailyCalorieIntake() {
+        int calories = 0;
+        // For Men:
+        // BMR=(4.536×weight in pounds)+(15.88×height in inches)+5
+        // For women:
+        // BMR=(4.536×weight in pounds)+(15.88×height in inches)−161
+        if (gender.equals("Male")) {
+            calories = (int) (weight * 4.536 + 15.88 * heightInInches + 5);
+        } else {
+            calories = (int) (weight * 4.536 + 15.88 * heightInInches - 161);
+        }
+
+        return calories;
+    }
+
+    public void addPersonalInformation(int h, int w, String g) {
+        heightInInches = h;
+        weight = w;
+        gender = g;
+    }
+
+    public Map<String, Object> getUserMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("name", name);
+        result.put("weight", weight);
+        result.put("gender", gender);
+        result.put("heightInInches", heightInInches);
+        result.put("userId", userId);
+        result.put("email", email);
+        result.put("mealIds", mealIds);
+        return result;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public int getHeightInInches() {
+        return heightInInches;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public String getUserId() {
+        return userId;
     }
 }
