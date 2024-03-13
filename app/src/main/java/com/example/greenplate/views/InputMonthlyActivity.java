@@ -129,22 +129,25 @@ public class InputMonthlyActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String mealName = mealNameInput.getText().toString().trim();
                 String caloriesString = String.valueOf(caloriesInput.getText()).trim();
-                int calories = Integer.parseInt(caloriesInput.getText().toString().trim());
-                if (mealName.isEmpty() || caloriesString.isEmpty()) {
-                    // Show an error message or a toast to inform the user to input valid values
-                    Toast.makeText(InputMonthlyActivity.this, "Please enter valid meal name and calories.", Toast.LENGTH_LONG).show();
-                    return; // Stop further execution
+                if (caloriesString.isEmpty()) {
+                    Toast.makeText(InputMonthlyActivity.this, "Please enter valid meal name and calories.", Toast.LENGTH_SHORT).show();
+                } else {
+                    int calories = Integer.parseInt(caloriesInput.getText().toString().trim());
+                    if (mealName.isEmpty()) {
+                        // Show an error message or a toast to inform the user to input valid values
+                        Toast.makeText(InputMonthlyActivity.this, "Please enter valid meal name and calories.", Toast.LENGTH_SHORT).show();
+                    }
+                    SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+                    String dateAdded = formatDate.format(calendar.getTime());
+                    // Create a Meal object
+                    Meal meal = new Meal(UUID.randomUUID().toString(), mealName, calories, dateAdded);
+
+                    // Use FirebaseViewModel to save the meal
+                    fvm.saveOrUpdateMeal(meal);
+                    //clears input boxes
+                    mealNameInput.setText("");
+                    caloriesInput.setText("");
                 }
-                String dateAdded = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-
-                // Create a Meal object
-                Meal meal = new Meal(UUID.randomUUID().toString(), mealName, calories, dateAdded);
-
-                // Use FirebaseViewModel to save the meal
-                fvm.saveOrUpdateMeal(meal);
-                //clears input boxes
-                mealNameInput.setText("");
-                caloriesInput.setText("");
             }
         });
 
