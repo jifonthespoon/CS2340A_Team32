@@ -224,6 +224,8 @@ public class InputMonthlyActivity extends AppCompatActivity {
         monthLabel = findViewById(R.id.monthLabel);
         calendar = Calendar.getInstance();
         updateDate();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = dateFormat.format(calendar.getTime());
 
 
         final ImageButton backwards_time = findViewById(R.id.left_arrow_input_monthly_page);
