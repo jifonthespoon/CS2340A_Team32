@@ -299,7 +299,7 @@ public class FirebaseViewModel extends ViewModel {
                         int totalCalories = 0;
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Meal meal = snapshot.getValue(Meal.class);
-                            if (meal != null && meal.getDateAdded().startsWith(month)) {
+                            if (meal != null && meal.getMealDateAdded().startsWith(month)) {
                                 totalCalories += meal.calories;
                             }
                         }
