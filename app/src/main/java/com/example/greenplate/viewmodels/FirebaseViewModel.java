@@ -186,7 +186,7 @@ public class FirebaseViewModel extends ViewModel {
     }
 
     public String getCalorieGoal() {
-        if (user.getHeightInInches() != 0 && !user.getGender().isEmpty() && user.getWeight() != 0) {
+        if (user != null && user.getHeightInInches() != 0 && !user.getGender().isEmpty() && user.getWeight() != 0) {
             return "" + user.getDailyCalorieIntake();
         } else {
             return "Fill out personal information";
