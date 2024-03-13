@@ -186,7 +186,7 @@ public class FirebaseViewModel extends ViewModel {
     }
 
     public String getCalorieGoal() {
-        if (user.getHeightInInches() != 0 && !user.getGender().isEmpty() && user.getWeight() != 0) {
+        if (user != null && user.getHeightInInches() != 0 && !user.getGender().isEmpty() && user.getWeight() != 0) {
             return "" + user.getDailyCalorieIntake();
         } else {
             return "Fill out personal information";
@@ -299,7 +299,7 @@ public class FirebaseViewModel extends ViewModel {
                         int totalCalories = 0;
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Meal meal = snapshot.getValue(Meal.class);
-                            if (meal != null && meal.getDateAdded().startsWith(month)) {
+                            if (meal != null && meal.getMealDateAdded().startsWith(month)) {
                                 totalCalories += meal.calories;
                             }
                         }

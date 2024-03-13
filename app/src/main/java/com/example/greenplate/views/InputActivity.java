@@ -179,7 +179,7 @@ public class InputActivity extends AppCompatActivity {
 
         calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String formattedDate = dateFormat.format(calendar);
+        String formattedDate = dateFormat.format(dateFormat);
 
 
         BarChart mBarChart;
