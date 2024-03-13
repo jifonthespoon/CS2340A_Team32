@@ -129,26 +129,23 @@ public class InputMonthlyActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String mealName = mealNameInput.getText().toString().trim();
                 String caloriesString = String.valueOf(caloriesInput.getText()).trim();
-                if (caloriesString.isEmpty()) {
-                    Toast.makeText(InputMonthlyActivity.this, "Please enter valid meal name and calories.", Toast.LENGTH_SHORT).show();
-                } else {
+                if (!caloriesString.isEmpty()) {
                     int calories = Integer.parseInt(caloriesInput.getText().toString().trim());
-                    if (mealName.isEmpty()) {
-                        // Show an error message or a toast to inform the user to input valid values
-                        Toast.makeText(InputMonthlyActivity.this, "Please enter valid meal name and calories.", Toast.LENGTH_SHORT).show();
+                    if (mealName.isEmpty() || caloriesString.isEmpty()) {
+                        Toast.makeText(InputMonthlyActivity.this, "Please enter valid meal name and calories.", Toast.LENGTH_LONG).show();
+                        return; // Stop further execution
                     }
-                    SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
-                    String dateAdded = formatDate.format(calendar.getTime());
-                    // Create a Meal object
+                    String dateAdded = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
                     Meal meal = new Meal(UUID.randomUUID().toString(), mealName, calories, dateAdded);
-
-                    // Use FirebaseViewModel to save the meal
                     fvm.saveOrUpdateMeal(meal);
-                    //clears input boxes
                     mealNameInput.setText("");
                     caloriesInput.setText("");
+                } else {
+                    Toast.makeText(InputMonthlyActivity.this, "Please enter valid meal name and calories.", Toast.LENGTH_LONG).show();
+                    return;
                 }
             }
+
         });
 
         final ImageButton arrow = findViewById(R.id.arrow);
@@ -212,16 +209,6 @@ public class InputMonthlyActivity extends AppCompatActivity {
 
             YAxis leftAxis = mChart.getAxisLeft();
             String caloriesGoalString = calorieGoal.getText().toString();
-            int recommendedDailyTotalCalories = Integer.parseInt(caloriesGoalString);
-
-
-            LimitLine ll = new LimitLine(recommendedDailyTotalCalories, "Recommended total calories");
-            ll.setLineColor(Color.RED);
-            ll.setLineWidth(2f);
-            ll.setTextColor(Color.BLACK);
-            ll.setTextSize(9f);
-
-            leftAxis.addLimitLine(ll);
         }
 
         monthLabel = findViewById(R.id.monthLabel);
@@ -229,8 +216,6 @@ public class InputMonthlyActivity extends AppCompatActivity {
         updateDate();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = dateFormat.format(calendar.getTime());
-
-        // ADD HERE
 
         final ImageButton backwards_time = findViewById(R.id.left_arrow_input_monthly_page);
         backwards_time.setOnClickListener(new View.OnClickListener() {
