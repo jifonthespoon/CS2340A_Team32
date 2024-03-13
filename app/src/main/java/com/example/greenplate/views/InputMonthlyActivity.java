@@ -132,18 +132,12 @@ public class InputMonthlyActivity extends AppCompatActivity {
                 if (!caloriesString.isEmpty()) {
                     int calories = Integer.parseInt(caloriesInput.getText().toString().trim());
                     if (mealName.isEmpty() || caloriesString.isEmpty()) {
-                        // Show an error message or a toast to inform the user to input valid values
                         Toast.makeText(InputMonthlyActivity.this, "Please enter valid meal name and calories.", Toast.LENGTH_LONG).show();
                         return; // Stop further execution
                     }
                     String dateAdded = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-
-                    // Create a Meal object
                     Meal meal = new Meal(UUID.randomUUID().toString(), mealName, calories, dateAdded);
-
-                    // Use FirebaseViewModel to save the meal
                     fvm.saveOrUpdateMeal(meal);
-                    //clears input boxes
                     mealNameInput.setText("");
                     caloriesInput.setText("");
                 } else {
@@ -215,7 +209,6 @@ public class InputMonthlyActivity extends AppCompatActivity {
 
             YAxis leftAxis = mChart.getAxisLeft();
             String caloriesGoalString = calorieGoal.getText().toString();
-
         }
 
         monthLabel = findViewById(R.id.monthLabel);
@@ -223,8 +216,6 @@ public class InputMonthlyActivity extends AppCompatActivity {
         updateDate();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = dateFormat.format(calendar.getTime());
-
-        // ADD HERE
 
         final ImageButton backwards_time = findViewById(R.id.left_arrow_input_monthly_page);
         backwards_time.setOnClickListener(new View.OnClickListener() {

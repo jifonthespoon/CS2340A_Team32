@@ -10,7 +10,9 @@ import com.example.greenplate.models.Meal;
 import com.example.greenplate.models.User;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -37,6 +39,17 @@ public class ExampleUnitTest {
     @Test
     public void testEmptyString() {
         assertEquals(checkInput(""), false);
+    }
+
+        @Test
+    public void testNullEmail() {
+        assertEquals(checkInput(null), false);
+    }
+    
+    @Test
+    public void testUserCreation() {
+        User user = new User("Test User", 150, "Male", 70, "test-user", "test@gmail.com");
+        assertNotNull(user);
     }
 
     @Test
@@ -89,6 +102,28 @@ public class ExampleUnitTest {
         assertEquals("Test Meal", meal.name);
         assertEquals(350, meal.calories);
         assertEquals("2024-03-15", meal.dateAdded);
+    }
+
+    public void updateUserPersonalInformation_updatesInfoCorrectly() {
+        User user = new User("Jane Doe", "user123", "jane.doe@example.com");
+        user.addPersonalInformation(65, 130, "Female");
+
+        assertEquals(65, user.getHeightInInches());
+        assertEquals(130, user.getWeight());
+        assertEquals("Female", user.getGender());
+    }
+    public void getUserMap_outputsCorrectMap() {
+        User user = new User("Jane Doe", 130, "Female", 65, "user123", "jane.doe@example.com");
+        Map<String, Object> userMap = user.getUserMap();
+
+        assertEquals("Jane Doe", userMap.get("name"));
+        assertEquals(130, userMap.get("weight"));
+        assertEquals("Female", userMap.get("gender"));
+        assertEquals(65, userMap.get("heightInInches"));
+        assertEquals("user123", userMap.get("userId"));
+        assertEquals("jane.doe@example.com", userMap.get("email"));
+        // Assuming mealIds is an empty list initially
+        assertTrue(((ArrayList)userMap.get("mealIds")).isEmpty());
     }
 
 
