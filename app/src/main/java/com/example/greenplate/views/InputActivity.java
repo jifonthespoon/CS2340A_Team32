@@ -2,7 +2,6 @@ package com.example.greenplate.views;
 
 import com.example.greenplate.R;
 import com.example.greenplate.models.Meal;
-import com.example.greenplate.viewmodels.FirebaseCallback;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
@@ -77,20 +76,6 @@ public class InputActivity extends AppCompatActivity {
         TextView userInfo = findViewById(R.id.userInfoLabel);
         TextView calorieGoal = findViewById(R.id.calorieGoalText);
 
-        dateLabel = findViewById(R.id.dayLabel);
-        calendar = Calendar.getInstance();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String formattedDate = dateFormat.format(calendar.getTime());
-        updateDateLabel();
-
-
-
-
-
-        //
-
-
-
         userInfo.setText(fvm.getPersonalInformation());
         calorieGoal.setText(fvm.getCalorieGoal());
         toHome.setOnClickListener(new View.OnClickListener() {
@@ -163,16 +148,15 @@ public class InputActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String mealName = mealNameInput.getText().toString().trim();
                 String caloriesString = String.valueOf(caloriesInput.getText()).trim();
-                if (caloriesString.isEmpty()) {
-                    Toast.makeText(InputActivity.this, "Please enter valid meal name and calories.", Toast.LENGTH_SHORT).show();
-                } else {
+                if (!caloriesString.isEmpty()){
                     int calories = Integer.parseInt(caloriesInput.getText().toString().trim());
                     if (mealName.isEmpty()) {
                         // Show an error message or a toast to inform the user to input valid values
-                        Toast.makeText(InputActivity.this, "Please enter valid meal name and calories.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(InputActivity.this, "Please enter valid meal name and calories.", Toast.LENGTH_LONG).show();
+                        return; // Stop further execution
                     }
-                    SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
-                    String dateAdded = formatDate.format(calendar.getTime());
+                    String dateAdded = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+
                     // Create a Meal object
                     Meal meal = new Meal(UUID.randomUUID().toString(), mealName, calories, dateAdded);
 
@@ -181,7 +165,12 @@ public class InputActivity extends AppCompatActivity {
                     //clears input boxes
                     mealNameInput.setText("");
                     caloriesInput.setText("");
+                } else {
+                    Toast.makeText(InputActivity.this, "Please enter valid meal name and calories.", Toast.LENGTH_LONG).show();
+                    return;
                 }
+
+
             }
         });
 
@@ -196,43 +185,38 @@ public class InputActivity extends AppCompatActivity {
         });
 
 
-        /*BarChart mBarChart;
+        BarChart mBarChart;
         mBarChart = findViewById(R.id.barChart);
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-        String dateMonthYear = dateFormatter.format(calendar.getTime());
-        fvm.queryMealsByDateCalories(dateMonthYear, new FirebaseCallback<Integer>() {
-            @Override
-            public void onCallback(Integer data) {
-                int totalCaloriesConsumed = data;
-                String calorieGoalString = calorieGoal.getText().toString();
-                int recommendedTotalDailyCalorie = Integer.parseInt(calorieGoalString);
-                // Inside onCreate or another appropriate method
-                ArrayList<BarEntry> entries = new ArrayList<>();
+        int totalCaloriesConsumed = 894;
+        String calorieGoalString = calorieGoal.getText().toString();
+        int recommendedTotalDailyCalorie = Integer.parseInt(calorieGoalString);
+// Inside onCreate or another appropriate method
+        ArrayList<BarEntry> entries = new ArrayList<>();
 
-                entries.add(new BarEntry(1f, new float[]{totalCaloriesConsumed}));
-                entries.add(new BarEntry(2f, new float[]{recommendedTotalDailyCalorie}));
+        entries.add(new BarEntry(1f, new float[]{totalCaloriesConsumed}));
+        entries.add(new BarEntry(2f, new float[]{recommendedTotalDailyCalorie}));
 
-                BarDataSet dataSet = new BarDataSet(entries, "Calories");
-                dataSet.setColors(ColorTemplate.rgb("#D64933")); // Setting color to red
-                BarData barData = new BarData(dataSet);
-                mBarChart.setData(barData);
+        BarDataSet dataSet = new BarDataSet(entries, "Calories");
+        dataSet.setColors(ColorTemplate.rgb("#D64933")); // Setting color to red
+        BarData barData = new BarData(dataSet);
+        mBarChart.setData(barData);
 
 
-                // Customize X-axis
-                XAxis xAxis = mBarChart.getXAxis();
-                xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); // Position of X-axis labels
-                xAxis.setGranularity(1.45f); // Interval between each label
-                xAxis.setCenterAxisLabels(true); // Center the labels between the bars
-                xAxis.setAxisMinimum(0.5f); // Adjust the minimum value to center the first bar
-                xAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{"Calories Consumed", "Calorie Goal"})); // Customizing labels
-            }
-        });*/
+        // Customize X-axis
+        XAxis xAxis = mBarChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); // Position of X-axis labels
+        xAxis.setGranularity(1.45f); // Interval between each label
+        xAxis.setCenterAxisLabels(true); // Center the labels between the bars
+        xAxis.setAxisMinimum(0.5f); // Adjust the minimum value to center the first bar
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{"Calories Consumed", "Calorie Goal"})); // Customizing labels
 
-        /*dateLabel = findViewById(R.id.dayLabel);
+
+
+        dateLabel = findViewById(R.id.dayLabel);
         calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = dateFormat.format(calendar.getTime());
-        updateDateLabel();*/
+        updateDateLabel();
 
         // ADD HERE
 
@@ -242,37 +226,7 @@ public class InputActivity extends AppCompatActivity {
             public void onClick(View v) {
                 calendar.add(Calendar.DAY_OF_MONTH, -1);
                 updateDateLabel();
-                BarChart mBarChart;
-                mBarChart = findViewById(R.id.barChart);
-                SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-                String dateMonthYear = dateFormatter.format(calendar.getTime());
-                fvm.queryMealsByDateCalories(dateMonthYear, new FirebaseCallback<Integer>() {
-                    @Override
-                    public void onCallback(Integer data) {
-                        int totalCaloriesConsumed = data;
-                        String calorieGoalString = calorieGoal.getText().toString();
-                        int recommendedTotalDailyCalorie = Integer.parseInt(calorieGoalString);
-                        // Inside onCreate or another appropriate method
-                        ArrayList<BarEntry> entries = new ArrayList<>();
-
-                        entries.add(new BarEntry(1f, new float[]{totalCaloriesConsumed}));
-                        entries.add(new BarEntry(2f, new float[]{recommendedTotalDailyCalorie}));
-
-                        BarDataSet dataSet = new BarDataSet(entries, "Calories");
-                        dataSet.setColors(ColorTemplate.rgb("#D64933")); // Setting color to red
-                        BarData barData = new BarData(dataSet);
-                        mBarChart.setData(barData);
-
-
-                        // Customize X-axis
-                        XAxis xAxis = mBarChart.getXAxis();
-                        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); // Position of X-axis labels
-                        xAxis.setGranularity(1.45f); // Interval between each label
-                        xAxis.setCenterAxisLabels(true); // Center the labels between the bars
-                        xAxis.setAxisMinimum(0.5f); // Adjust the minimum value to center the first bar
-                        xAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{"Calories Consumed", "Calorie Goal"})); // Customizing labels
-                    }
-                });
+                updateVisualization();
             }
         });
 
@@ -282,42 +236,9 @@ public class InputActivity extends AppCompatActivity {
             public void onClick(View v) {
                 calendar.add(Calendar.DAY_OF_MONTH, 1);
                 updateDateLabel();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                String formattedDate = dateFormat.format(calendar.getTime());
-                BarChart mBarChart;
-                mBarChart = findViewById(R.id.barChart);
-                SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-                String dateMonthYear = dateFormatter.format(calendar.getTime());
-                fvm.queryMealsByDateCalories(dateMonthYear, new FirebaseCallback<Integer>() {
-                    @Override
-                    public void onCallback(Integer data) {
-                        int totalCaloriesConsumed = data;
-                        String calorieGoalString = calorieGoal.getText().toString();
-                        int recommendedTotalDailyCalorie = Integer.parseInt(calorieGoalString);
-                        // Inside onCreate or another appropriate method
-                        ArrayList<BarEntry> entries = new ArrayList<>();
-
-                        entries.add(new BarEntry(1f, new float[]{totalCaloriesConsumed}));
-                        entries.add(new BarEntry(2f, new float[]{recommendedTotalDailyCalorie}));
-
-                        BarDataSet dataSet = new BarDataSet(entries, "Calories");
-                        dataSet.setColors(ColorTemplate.rgb("#D64933")); // Setting color to red
-                        BarData barData = new BarData(dataSet);
-                        mBarChart.setData(barData);
-
-
-                        // Customize X-axis
-                        XAxis xAxis = mBarChart.getXAxis();
-                        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); // Position of X-axis labels
-                        xAxis.setGranularity(1.45f); // Interval between each label
-                        xAxis.setCenterAxisLabels(true); // Center the labels between the bars
-                        xAxis.setAxisMinimum(0.5f); // Adjust the minimum value to center the first bar
-                        xAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{"Calories Consumed", "Calorie Goal"})); // Customizing labels
-                    }
-                });
+                updateVisualization();
             }
         });
-
 
     }
 
@@ -333,6 +254,7 @@ public class InputActivity extends AppCompatActivity {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = dateFormat.format(calendar.getTime());
+        // ADD HERE
     }
 
 }
