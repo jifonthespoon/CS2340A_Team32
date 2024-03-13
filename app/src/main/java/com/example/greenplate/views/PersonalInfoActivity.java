@@ -26,7 +26,20 @@ public class PersonalInfoActivity extends AppCompatActivity{
         final int[] genderSelection = {0};
         EditText heightText = findViewById(R.id.personal_info_height_enter);
         EditText weightText = findViewById(R.id.personal_info_weight_enter);
+        RadioGroup radioGroup = findViewById(R.id.radioGroup);
+        RadioButton radioButtonMale = findViewById(R.id.radioButtonMale);
+        RadioButton radioButtonFemale = findViewById(R.id.radioButtonFemale);
         FirebaseViewModel fvm = FirebaseViewModel.getInstance();
+        String[] info = fvm.getPersonalInformationArray();
+        if (info != null) {
+            heightText.setText(info[0]);
+            weightText.setText(info[1]);
+            if (info[2].equals("Male")) {
+                radioButtonMale.toggle();
+            } else {
+                radioButtonFemale.toggle();
+            }
+        }
         toHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,9 +109,7 @@ public class PersonalInfoActivity extends AppCompatActivity{
             }
         });
 
-        RadioGroup radioGroup = findViewById(R.id.radioGroup);
-        RadioButton radioButtonMale = findViewById(R.id.radioButtonMale);
-        RadioButton radioButtonFemale = findViewById(R.id.radioButtonFemale);
+
 
         radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId == R.id.radioButtonMale) {

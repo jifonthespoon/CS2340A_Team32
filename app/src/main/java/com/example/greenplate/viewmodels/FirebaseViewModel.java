@@ -1,5 +1,7 @@
 package com.example.greenplate.viewmodels;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.example.greenplate.models.Meal;
@@ -153,28 +155,33 @@ public class FirebaseViewModel extends ViewModel {
 
     public User createUser(String userId, String name, String email) {
         user = new User(name, userId, email);
-        firebase.getDatabase().getReference().child("users").child(userId).setValue(user);
+        firebase.getDatabase().getReference().child("users").child(userId).setValue(user.getUserMap());
         return user;
     }
 
     public void addPersonalInformation(int weight, String gender, int heightInInches) {
-        String email = firebase.getAuth().getCurrentUser().getEmail();
-        user.heightInInches = heightInInches;
-        user.weight = weight;
-        user.gender = gender;
-        firebase.getDatabase().getReference().child("users").child(user.userId).setValue(user);
+        user.addPersonalInformation(heightInInches, weight, gender);
+        firebase.getDatabase().getReference().child("users").child(user.getUserId()).setValue(user.getUserMap());
     }
 
     public String getPersonalInformation() {
-        if (user.heightInInches != 0 && !user.gender.isEmpty() && user.weight != 0) {
-            return "" + user.getHeight() + " | " + user.weight + "lbs | " + user.gender;
+        if (user != null && user.getHeightInInches() != 0 && !user.getGender().isEmpty() && user.getWeight() != 0) {
+            return "" + user.getHeight() + " | " + user.getWeight() + "lbs | " + user.getGender();
         } else {
             return "Fill out personal information";
         }
     }
 
+    public String[] getPersonalInformationArray() {
+        if (user != null && user.getHeightInInches() != 0 && !user.getGender().isEmpty() && user.getWeight() != 0) {
+            return new String[] {String.valueOf(user.getHeightInInches()), String.valueOf(user.getWeight()), user.getGender()};
+        } else {
+            return null;
+        }
+    }
+
     public String getCalorieGoal() {
-        if (user.heightInInches != 0 && !user.gender.isEmpty() && user.weight != 0) {
+        if (user.getHeightInInches() != 0 && !user.getGender().isEmpty() && user.getWeight() != 0) {
             return "" + user.getDailyCalorieIntake();
         } else {
             return "Fill out personal information";
@@ -182,7 +189,7 @@ public class FirebaseViewModel extends ViewModel {
     }
 
     public void addMealToUser(String mealId) {
-        firebase.getDatabase().getReference().child("users").child(user.userId).child("meals").child(mealId).setValue(true);
+        firebase.getDatabase().getReference().child("users").child(user.getUserId()).child("meals").child(mealId).setValue(true);
     }
     
     public User getUser() {
@@ -190,9 +197,20 @@ public class FirebaseViewModel extends ViewModel {
     }
 
     public boolean saveOrUpdateMeal(Meal meal) {
-        if (meal != null && meal.mealId != null) {
+
+        if (meal != null && meal.mealId != null && !meal.name.isEmpty()) {
             // Using the mealId as the key to store meal information
-            firebase.getDatabase().getReference().child("meals").child(meal.mealId).setValue(meal.toMap());
+            firebase.getDatabase().getReference().child("meals").child(meal.mealId).setValue(meal.toMap()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        addMealToUser(meal.mealId);
+                        Log.d("Meal Save", "Meal successfully saved to Firebase");
+                    } else {
+                        Log.d("Meal Save", "Failed to save meal to Firebase");
+                    }
+                }
+            });
             return true;
         }
         return false;
