@@ -35,6 +35,12 @@ public class Meal {
         return result;
     }
 
+    public String getMealDateAdded() {
+        return dateAdded;
+    }
+
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -44,5 +50,9 @@ public class Meal {
                 Objects.equals(mealId, meal.mealId) &&
                 Objects.equals(name, meal.name) &&
                 Objects.equals(dateAdded, meal.dateAdded);
+    }
+
+    public int getMealCalories() {
+        return calories;
     }
 }
