@@ -224,7 +224,10 @@ public class InputMonthlyActivity extends AppCompatActivity {
         monthLabel = findViewById(R.id.monthLabel);
         calendar = Calendar.getInstance();
         updateDate();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = dateFormat.format(calendar.getTime());
 
+        // ADD HERE
 
         final ImageButton backwards_time = findViewById(R.id.left_arrow_input_monthly_page);
         backwards_time.setOnClickListener(new View.OnClickListener() {
@@ -257,6 +260,8 @@ public class InputMonthlyActivity extends AppCompatActivity {
     private void updateVisualization() {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
-        // to implement
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = dateFormat.format(calendar.getTime());
+        // ADD HERE
     }
 }
