@@ -40,6 +40,16 @@ public class ExampleUnitTest {
     }
 
     @Test
+    public void testNullEmail() {
+        assertEquals(checkInput(null), false);
+    }
+    @Test
+    public void testUserCreation() {
+        User user = new User("Test User", 150, "Male", 70, "test-user", "test@gmail.com");
+        assertNotNull(user);
+    }
+
+    @Test
     public void testMaleCalorieCount() {
         User user = new User("Test User", 120, "Male", 68, "test-user", "test@gmail.com");
         assertEquals(user.getDailyCalorieIntake(), 1629);
