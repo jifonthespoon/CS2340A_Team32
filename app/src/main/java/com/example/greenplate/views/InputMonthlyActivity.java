@@ -257,6 +257,9 @@ public class InputMonthlyActivity extends AppCompatActivity {
     private void updateVisualization() {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = dateFormat.format(calendar.getTime());
+
         // to implement
     }
 }
