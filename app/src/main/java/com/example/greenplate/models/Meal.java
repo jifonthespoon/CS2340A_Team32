@@ -8,10 +8,10 @@ import java.util.Objects;
  * Represents a meal with basic information for logging and tracking in the application.
  */
 public class Meal {
-    public String mealId; // Unique ID for Firebase operations
-    public String name; // Name of the meal
-    public int calories; // Estimated calorie count of the meal
-    public String dateAdded; // The date the meal was added
+    private String mealId; // Unique ID for Firebase operations
+    private String name; // Name of the meal
+    private int calories; // Estimated calorie count of the meal
+    private String dateAdded; // The date the meal was added
 
     // Default constructor for Firebase
     public Meal() {
@@ -52,7 +52,15 @@ public class Meal {
                 Objects.equals(dateAdded, meal.dateAdded);
     }
 
-    public int getMealCalories() {
+    public int getCalories() {
         return calories;
+    }
+
+    public String getMealId() {
+        return mealId;
+    }
+
+    public String getName() {
+        return name;
     }
 }
