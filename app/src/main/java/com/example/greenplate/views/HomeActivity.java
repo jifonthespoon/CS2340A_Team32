@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelStoreOwner;
 import com.example.greenplate.models.Meal;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
 import com.example.greenplate.models.User;
+import com.example.greenplate.viewmodels.IngredientsViewModel;
 
 import java.util.UUID;
 
@@ -63,6 +64,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Meal meal = new Meal(UUID.randomUUID().toString(), "Pizza", 200);
                 //boolean worked = fvm.saveOrUpdateMeal(meal);
+                //IngredientsViewModel.addIngredient("Bacon", 160, 12, "4/10/2024");
                 Intent intent = new Intent(HomeActivity.this,
                         HomeActivity.class);
                 startActivity(intent);
@@ -71,6 +73,7 @@ public class HomeActivity extends AppCompatActivity {
         toInput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //IngredientsViewModel.fetchIngredients(FirebaseViewModel.getInstance().getUser());
                 Intent intent = new Intent(HomeActivity.this,
                         InputActivity.class);
                 startActivity(intent);
@@ -79,6 +82,8 @@ public class HomeActivity extends AppCompatActivity {
         toRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //System.out.println(FirebaseViewModel.getInstance().getUser().getIngredients().get(0));
+                //FirebaseViewModel.getInstance().getUser().getIngredients().get(0).decreaseQuantity();
                 Intent intent = new Intent(HomeActivity.this,
                         RecipeActivity.class);
                 startActivity(intent);

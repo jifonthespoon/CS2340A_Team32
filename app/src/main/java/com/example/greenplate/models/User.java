@@ -1,5 +1,8 @@
 package com.example.greenplate.models;
 
+import com.example.greenplate.viewmodels.IngredientsViewModel;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +25,8 @@ public class User {
     private String email;
     private ArrayList<String> mealIds = new ArrayList<>();
 
+    private ArrayList<Ingredient> ingredients = new ArrayList<>();
+
 
     /**
      * Constructs a new User instance with the specified name.
@@ -35,10 +40,9 @@ public class User {
         this.heightInInches = heightInInches;
         userId = id;
         this.email = email;
-        mealIds = new ArrayList<>();
     }
 
-    public User(String name, int weight, String gender, int heightInInches, String id, String email, Set<String> meals) {
+    public User(String name, int weight, String gender, int heightInInches, String id, String email, ArrayList<String> meals) {
         this.name = name;
         this.gender = gender;
         this.weight = weight;
@@ -114,5 +118,25 @@ public class User {
 
     public String getUserId() {
         return userId;
+    }
+
+    public void addMeal(String mealId) {
+        mealIds.add(mealId);
+    }
+
+    public void addIngredient(Ingredient i) {
+        ingredients.add(i);
+    }
+
+    public ArrayList<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void removeIngredient(String name) {
+        for (int i = 0; i < ingredients.size(); i++) {
+            if (ingredients.get(i).getName().toLowerCase().equals(name.toLowerCase())) {
+                ingredients.remove(i);
+            }
+        }
     }
 }
