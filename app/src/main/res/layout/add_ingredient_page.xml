@@ -28,20 +28,142 @@
         app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ingredient_page_header" />
+        app:srcCompat="@drawable/add_ingredient_label" />
 
-    <ImageButton
-        android:id="@+id/to_add_ingredient_page"
+
+    <TextView
+        android:id="@+id/name_label"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="111dp"
-        android:layout_marginEnd="36dp"
-        android:background="@android:color/transparent"
+        android:layout_height="25dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="88dp"
+        android:text="Name:"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.113"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ingredients_page_to_add_ingredient" />
+        app:layout_constraintVertical_bias="0.13" />
+
+    <EditText
+        android:id="@+id/ingredient_name_enter"
+        android:layout_width="355dp"
+        android:layout_height="46dp"
+        android:background="#EEEEEE"
+        android:hint=" Banana"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.589"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.175" />
+
+    <TextView
+        android:id="@+id/quantity_label"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="88dp"
+        android:text="Quantity:"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.113"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.24" />
+
+
+    <EditText
+        android:id="@+id/ingredient_quantity_enter"
+        android:layout_width="355dp"
+        android:layout_height="46dp"
+        android:background="#EEEEEE"
+        android:hint=" 2"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.589"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.285" />
+
+    <TextView
+        android:id="@+id/calories_per_quantity_label"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="88dp"
+        android:text="Calories Per Quantity:"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.225"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.35" />
+
+    <EditText
+        android:id="@+id/ingredient_calories_enter"
+        android:layout_width="355dp"
+        android:layout_height="46dp"
+        android:background="#EEEEEE"
+        android:hint=" 120"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.589"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.395" />
+
+    <TextView
+        android:id="@+id/expiration_label"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="88dp"
+        android:text="Expiration Date (Optional):"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.361"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.46" />
+
+    <EditText
+        android:id="@+id/ingredient_expiration_enter"
+        android:layout_width="355dp"
+        android:layout_height="46dp"
+        android:background="#EEEEEE"
+        android:hint=" 03/21/2024"
+        android:inputType="date"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.589"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.505" />
+
+    <Button
+        android:id="@+id/save"
+        android:layout_width="167dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="139dp"
+        android:layout_marginBottom="236dp"
+        android:backgroundTint="#311E10"
+        android:drawablePadding="0px"
+        android:paddingLeft="100px"
+        android:paddingRight="100px"
+        android:text="Save"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:cornerRadius="40px"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/imageView6"
