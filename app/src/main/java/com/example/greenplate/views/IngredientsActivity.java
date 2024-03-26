@@ -6,7 +6,10 @@ import com.example.greenplate.R;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,6 +27,10 @@ import androidx.appcompat.app.AppCompatActivity;
  */
 
 public class IngredientsActivity extends AppCompatActivity {
+
+    private String itemString[] = {"ingredient 1", "ingredient 2", "ingredient 3", "ingredient 4",
+            "ingredient 5", "ingredient 6", "ingredient 7", "ingredient 8",
+            "ingredient 9", "ingredient 10", "ingredient 11", "ingredient 12"};
     /**
      * Called when the activity is starting.
      * This method handles the initialization of the activity,
@@ -48,6 +55,26 @@ public class IngredientsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ingredient_page);
+
+        // add code here
+        ListView listView = findViewById(R.id.ingredients_list);
+        ArrayAdapter<String> arrayAdapter = new
+                ArrayAdapter<>(IngredientsActivity.this ,
+                android.R.layout.simple_list_item_1, itemString);
+        listView.setAdapter(arrayAdapter);
+
+
+        listView.setAdapter(arrayAdapter);
+        listView.setOnItemClickListener((adapterView, view, i, l) -> {
+            String item = (String) adapterView.getItemAtPosition(i);
+            Toast.makeText(IngredientsActivity.this, "Selected" + item,
+                    Toast.LENGTH_SHORT).show();
+
+            // can implement add ingredients here
+        });
+
+
+
         // Initialize navigation buttons and set their onClickListeners.
         final ImageButton toHome = findViewById(R.id.toHomePage);
         toHome.setOnClickListener(new View.OnClickListener() {
