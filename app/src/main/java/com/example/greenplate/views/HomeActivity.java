@@ -10,11 +10,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 
+import com.example.greenplate.models.Ingredient;
 import com.example.greenplate.models.Meal;
+import com.example.greenplate.models.Recipe;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
 import com.example.greenplate.models.User;
 import com.example.greenplate.viewmodels.IngredientsViewModel;
+import com.example.greenplate.viewmodels.RecipeViewModel;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 /**
@@ -68,6 +72,27 @@ public class HomeActivity extends AppCompatActivity {
                 IngredientsViewModel.addIngredient("Cheese Slices", 60, 10, "4/10/2024");
                 IngredientsViewModel.addIngredient("Potatoes", 80, 4, "4/10/2024");
                 IngredientsViewModel.addIngredient("Chicken Breasts", 200, 2, "4/10/2024");
+                // Create ingredients list for the first recipe
+                ArrayList<Ingredient> margheritaIngredients = new ArrayList<>();
+                margheritaIngredients.add(new Ingredient("Tomato Sauce", 50, 1, "", FirebaseViewModel.getInstance().getUser().getUserId()));
+                margheritaIngredients.add(new Ingredient("Mozzarella Cheese", 200, 2, "", FirebaseViewModel.getInstance().getUser().getUserId()));
+                margheritaIngredients.add(new Ingredient("Basil Leaves", 5, 10, "", FirebaseViewModel.getInstance().getUser().getUserId()));
+
+                // Create the first preset recipe
+                Recipe margheritaPizza = new Recipe("Margherita Pizza", margheritaIngredients, FirebaseViewModel.getInstance().getUser().getUserId());
+                RecipeViewModel.addRecipe(margheritaPizza);
+
+                // Create ingredients list for the second recipe
+                ArrayList<Ingredient> carbonaraIngredients = new ArrayList<>();
+                carbonaraIngredients.add(new Ingredient("Spaghetti", 100, 1, "", FirebaseViewModel.getInstance().getUser().getUserId()));
+                carbonaraIngredients.add(new Ingredient("Pancetta", 250, 1, "", FirebaseViewModel.getInstance().getUser().getUserId()));
+                carbonaraIngredients.add(new Ingredient("Parmesan Cheese", 100, 1, "", FirebaseViewModel.getInstance().getUser().getUserId()));
+                carbonaraIngredients.add(new Ingredient("Eggs", 70, 4, "", FirebaseViewModel.getInstance().getUser().getUserId()));
+
+                // Create the second preset recipe
+                Recipe carbonaraSpaghetti = new Recipe("Spaghetti Carbonara", carbonaraIngredients, FirebaseViewModel.getInstance().getUser().getUserId());
+                RecipeViewModel.addRecipe(carbonaraSpaghetti);
+
                 Intent intent = new Intent(HomeActivity.this,
                         HomeActivity.class);
                 startActivity(intent);
