@@ -66,9 +66,10 @@ public class Ingredient {
         IngredientsViewModel.updateIngredient(this);
     }
 
-    public void decreaseQuantity() {
+    public int decreaseQuantity() {
         quantity--;
         IngredientsViewModel.updateIngredient(this);
+        return quantity;
     }
 
     public void setId(String id) {

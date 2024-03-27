@@ -64,7 +64,10 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Meal meal = new Meal(UUID.randomUUID().toString(), "Pizza", 200);
                 //boolean worked = fvm.saveOrUpdateMeal(meal);
-                //IngredientsViewModel.addIngredient("Bacon", 160, 12, "4/10/2024");
+                IngredientsViewModel.addIngredient("Bacon", 120, 2, "4/10/2024");
+                IngredientsViewModel.addIngredient("Cheese Slices", 60, 10, "4/10/2024");
+                IngredientsViewModel.addIngredient("Potatoes", 80, 4, "4/10/2024");
+                IngredientsViewModel.addIngredient("Chicken Breasts", 200, 2, "4/10/2024");
                 Intent intent = new Intent(HomeActivity.this,
                         HomeActivity.class);
                 startActivity(intent);
