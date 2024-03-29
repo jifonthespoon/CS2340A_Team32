@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.greenplate.models.Ingredient;
 import com.example.greenplate.models.Meal;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -20,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import androidx.lifecycle.ViewModel;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Dictionary;
@@ -51,44 +53,7 @@ public class FirebaseViewModel extends ViewModel {
     private FirebaseViewModel() {
         firebase = Firebase.getInstance();
         if (firebase.getAuth().getCurrentUser() != null) {
-            String email = firebase.getAuth().getCurrentUser().getEmail();
-            Dictionary<String, String> userInfo = new Hashtable<>();
-            final Set<String>[] mealIds = new Set[]{new HashSet<>()};
-            firebase.getDatabase().getReference().child("users").orderByChild("email").equalTo(email).addChildEventListener(new ChildEventListener() {
-                @Override
-                public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                    for (DataSnapshot child : dataSnapshot.getChildren()) {
-                        if (child.getKey().equals("meals")) {
-                            Map<String, Boolean> meals = (Map<String, Boolean>) child.getValue();
-                            mealIds[0] = meals.keySet();
-                        } else {
-                            userInfo.put(child.getKey(), child.getValue().toString());
-                        }
-
-                    }
-                    user = new User(userInfo.get("name"), Integer.valueOf(userInfo.get("weight")), userInfo.get("gender"), Integer.valueOf(userInfo.get("heightInInches")), userInfo.get("userId"), userInfo.get("email"), mealIds[0]);
-                }
-
-                @Override
-                public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
-                    System.out.println(dataSnapshot.getKey());
-                }
-
-                @Override
-                public void onChildRemoved(DataSnapshot dataSnapshot) {
-                    System.out.println(dataSnapshot.getKey());
-                }
-
-                @Override
-                public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {
-                    System.out.println(dataSnapshot.getKey());
-                }
-
-                @Override
-                public void onCancelled(DatabaseError error) {
-                    System.out.println(error);
-                }
-            });
+            loadUser();
         }
     }
 
@@ -102,20 +67,25 @@ public class FirebaseViewModel extends ViewModel {
     public static void loadUser() {
         String email = firebase.getAuth().getCurrentUser().getEmail();
         Dictionary<String, String> userInfo = new Hashtable<>();
-        final Set<String>[] mealIds = new Set[]{new HashSet<>()};
+        ArrayList<String> mealIds = new ArrayList();
+        ArrayList<String> ingredientIds = new ArrayList<>();
         firebase.getDatabase().getReference().child("users").orderByChild("email").equalTo(email).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    if (child.getKey().equals("meals")) {
-                        Map<String, Boolean> meals = (Map<String, Boolean>) child.getValue();
-                        mealIds[0] = meals.keySet();
-                    } else {
+                    if (child.getKey().equals("mealIds")) {
+                        //System.out.println(child.getValue());
+                        //Map<Integer, String> meals = (Map<Integer, String>) child.getValue();
+                        for (String mealId : ((HashMap<String, String>) child.getValue()).values()) {
+                            mealIds.add(String.valueOf(mealId));
+                        }
+                    }  else {
                         userInfo.put(child.getKey(), child.getValue().toString());
                     }
 
                 }
-                user = new User(userInfo.get("name"), Integer.valueOf(userInfo.get("weight")), userInfo.get("gender"), Integer.valueOf(userInfo.get("heightInInches")), userInfo.get("userId"), userInfo.get("email"), mealIds[0]);
+                user = new User(userInfo.get("name"), Integer.valueOf(userInfo.get("weight")), userInfo.get("gender"), Integer.valueOf(userInfo.get("heightInInches")), userInfo.get("userId"), userInfo.get("email"), mealIds);
+                IngredientsViewModel.fetchIngredients(user);
             }
 
             @Override
@@ -194,7 +164,8 @@ public class FirebaseViewModel extends ViewModel {
     }
 
     public void addMealToUser(String mealId) {
-        firebase.getDatabase().getReference().child("users").child(user.getUserId()).child("meals").child(mealId).setValue(true);
+        user.addMeal(mealId);
+        firebase.getDatabase().getReference().child("users").child(user.getUserId()).child("mealIds").push().setValue(mealId);
     }
     
     public User getUser() {
@@ -203,13 +174,13 @@ public class FirebaseViewModel extends ViewModel {
 
     public boolean saveOrUpdateMeal(Meal meal) {
 
-        if (meal != null && meal.mealId != null && !meal.name.isEmpty()) {
+        if (meal != null && meal.getMealId() != null && !meal.getName().isEmpty()) {
             // Using the mealId as the key to store meal information
-            firebase.getDatabase().getReference().child("meals").child(meal.mealId).setValue(meal.toMap()).addOnCompleteListener(new OnCompleteListener<Void>() {
+            firebase.getDatabase().getReference().child("meals").child(meal.getMealId()).setValue(meal.toMap()).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
-                        addMealToUser(meal.mealId);
+                        addMealToUser(meal.getMealId());
                         Log.d("Meal Save", "Meal successfully saved to Firebase");
                     } else {
                         Log.d("Meal Save", "Failed to save meal to Firebase");
@@ -278,7 +249,7 @@ public class FirebaseViewModel extends ViewModel {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Meal meal = snapshot.getValue(Meal.class);
                             if (meal != null) {
-                                totalCalories += meal.calories; // Assume 'calories' is an int field in Meal
+                                totalCalories += meal.getCalories(); // Assume 'calories' is an int field in Meal
                             }
                         }
                         callback.onCallback(totalCalories);
@@ -300,7 +271,7 @@ public class FirebaseViewModel extends ViewModel {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Meal meal = snapshot.getValue(Meal.class);
                             if (meal != null && meal.getMealDateAdded().startsWith(month)) {
-                                totalCalories += meal.calories;
+                                totalCalories += meal.getCalories();
                             }
                         }
                         callback.onCallback(totalCalories);

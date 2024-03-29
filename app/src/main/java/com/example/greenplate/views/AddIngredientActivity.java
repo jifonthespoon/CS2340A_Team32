@@ -3,45 +3,16 @@ package com.example.greenplate.views;
 import static com.example.greenplate.R.id.toPersonalPage;
 
 import com.example.greenplate.R;
-import com.example.greenplate.models.Ingredient;
-import com.example.greenplate.models.MyCustomAdapter;
-import com.example.greenplate.viewmodels.FirebaseViewModel;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
-
-/**
- * IngredientsActivity is responsible for displaying
- * the ingredients page within the app,
- * allowing users to access and view various
- * ingredients needed for cooking. It also includes
- * navigation options to other primary features
- * of the app like the home page, input page,
- * recipe page, shopping list, and the
- * ingredients page itself for refresh purposes.
- * This activity serves as a central point
- * for ingredient management and navigation.
- */
-
-public class IngredientsActivity extends AppCompatActivity {
-
-    private ListView mListview;
-    private ArrayList<Ingredient> mArrData = FirebaseViewModel.getInstance().getUser().getIngredients();
-    private MyCustomAdapter mAdapter;
-
-    private String itemString[] = {"ingredient 1", "ingredient 2", "ingredient 3", "ingredient 4",
-            "ingredient 5", "ingredient 6", "ingredient 7", "ingredient 8",
-            "ingredient 9", "ingredient 10", "ingredient 11", "ingredient 12"};
+public class AddIngredientActivity extends AppCompatActivity{
     /**
      * Called when the activity is starting.
      * This method handles the initialization of the activity,
@@ -65,35 +36,13 @@ public class IngredientsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ingredient_page);
-
-
-        mListview = (ListView) findViewById(R.id.ingredients_list);
-
-        mAdapter = new MyCustomAdapter(mArrData, IngredientsActivity.this);
-        mListview.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
-
-
-//        // add code here
-//        ListView listView = findViewById(R.id.ingredients_list);
-//        ArrayAdapter<String> arrayAdapter = new
-//                ArrayAdapter<>(IngredientsActivity.this ,
-//                android.R.layout.simple_list_item_1, itemString);
-//        listView.setAdapter(arrayAdapter);
-//
-//
-//        listView.setAdapter(arrayAdapter);
-
-
-
-
+        setContentView(R.layout.add_ingredient_page);
         // Initialize navigation buttons and set their onClickListeners.
         final ImageButton toHome = findViewById(R.id.toHomePage);
         toHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(IngredientsActivity.this,
+                Intent intent = new Intent(AddIngredientActivity.this,
                         HomeActivity.class);
                 startActivity(intent);
             }
@@ -102,7 +51,7 @@ public class IngredientsActivity extends AppCompatActivity {
         toInput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(IngredientsActivity.this,
+                Intent intent = new Intent(AddIngredientActivity.this,
                         InputActivity.class);
                 startActivity(intent);
             }
@@ -111,7 +60,7 @@ public class IngredientsActivity extends AppCompatActivity {
         toRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(IngredientsActivity.this,
+                Intent intent = new Intent(AddIngredientActivity.this,
                         RecipeActivity.class);
                 startActivity(intent);
             }
@@ -120,7 +69,7 @@ public class IngredientsActivity extends AppCompatActivity {
         toIngredients.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(IngredientsActivity.this,
+                Intent intent = new Intent(AddIngredientActivity.this,
                         IngredientsActivity.class);
                 startActivity(intent);
             }
@@ -129,7 +78,7 @@ public class IngredientsActivity extends AppCompatActivity {
         toShopping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(IngredientsActivity.this,
+                Intent intent = new Intent(AddIngredientActivity.this,
                         ShoppingActivity.class);
                 startActivity(intent);
             }
@@ -138,21 +87,24 @@ public class IngredientsActivity extends AppCompatActivity {
         toPersonalInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(IngredientsActivity.this,
+                Intent intent = new Intent(AddIngredientActivity.this,
                         PersonalInfoActivity.class);
                 startActivity(intent);
             }
         });
 
-        final ImageButton toAddIngredientActivity = findViewById(R.id.to_add_ingredient_page);
-        toAddIngredientActivity.setOnClickListener(new View.OnClickListener() {
+
+        final Button saveButton = findViewById(R.id.save);
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(IngredientsActivity.this,
-                        AddIngredientActivity.class);
-                startActivity(intent);
+                // to implement
+
+
             }
         });
+
+
 
     }
 }

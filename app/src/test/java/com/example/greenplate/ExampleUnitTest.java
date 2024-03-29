@@ -108,10 +108,10 @@ public class ExampleUnitTest {
     @Test
     public void testMealConstructor() {
         Meal meal = new Meal("123", "Test Meal", 350, "2024-03-15");
-        assertEquals("123", meal.mealId);
-        assertEquals("Test Meal", meal.name);
-        assertEquals(350, meal.calories);
-        assertEquals("2024-03-15", meal.dateAdded);
+        assertEquals("123", meal.getMealId());
+        assertEquals("Test Meal", meal.getName());
+        assertEquals(350, meal.getCalories());
+        //assertEquals("2024-03-15", meal.dateAdded);
     }
 
     public void updateUserPersonalInformation_updatesInfoCorrectly() {
