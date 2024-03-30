@@ -1,15 +1,31 @@
 package com.example.greenplate.views;
 
 import com.example.greenplate.R;
+import com.example.greenplate.models.Ingredient;
+import com.example.greenplate.models.MyCustomAdapter;
+import com.example.greenplate.models.Recipe;
+import com.example.greenplate.viewmodels.FirebaseViewModel;
+import com.example.greenplate.viewmodels.RecipeViewModel;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * RecipeActivity serves as the primary interface
@@ -54,22 +70,8 @@ public class RecipeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_page);
 
-        // add code here
-        ListView listView = findViewById(R.id.recipe_list);
-        ArrayAdapter<String> arrayAdapter = new
-                ArrayAdapter<>(RecipeActivity.this ,
-                android.R.layout.simple_list_item_1, itemString);
-        listView.setAdapter(arrayAdapter);
-
-
-        listView.setAdapter(arrayAdapter);
-        listView.setOnItemClickListener((adapterView, view, i, l) -> {
-            String item = (String) adapterView.getItemAtPosition(i);
-            Toast.makeText(RecipeActivity.this, "Selected" + item,
-                    Toast.LENGTH_SHORT).show();
-
-            // can implement add ingredients here
-        });
+        ArrayList<String> recipeNames = new ArrayList<>();
+        fetchRecipes(recipeNames);
 
         final ImageButton toHome = findViewById(R.id.toHomePage);
         final ImageButton toInput = findViewById(R.id.toInputPage);
@@ -160,5 +162,42 @@ public class RecipeActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    public void fetchRecipes(ArrayList<String> recipeNames) {
+        RecipeViewModel.fetchRecipes(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                recipeNames.clear();
+
+                for (DataSnapshot recipeSnapshot: snapshot.getChildren()) {
+                    String recipeName = (String) recipeSnapshot.child("recipeName").getValue();
+                    recipeNames.add(recipeName);
+                }
+                handleFetchedRecipes(recipeNames);
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                System.out.println("Something went wrong");
+            }
+        });
+    }
+
+    public void handleFetchedRecipes(ArrayList<String> recipeNames) {
+        System.out.println("The fetched recipes are " + recipeNames);
+        ListView listView = findViewById(R.id.recipe_list);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(RecipeActivity.this,
+                android.R.layout.simple_list_item_1, recipeNames);
+        listView.setAdapter(arrayAdapter);
+
+        // Set item click listener for ListView
+        listView.setOnItemClickListener((adapterView, view, i, l) -> {
+            String selectedItem = recipeNames.get(i);
+            Toast.makeText(RecipeActivity.this, "Selected: " + selectedItem,
+                    Toast.LENGTH_SHORT).show();
+        });
     }
 }
