@@ -114,6 +114,13 @@ public class ExampleUnitTest {
     }
 
     @Test
+    public void testMaleCalorieCount2() {
+        //testing if a male and female of the same height and weight output different calories
+        User user = new User("Test User", 346, "Male", 72, "test-user", "test@gmail.com");
+        assertEquals(user.getDailyCalorieIntake(), 2717);
+    }
+
+    @Test
     public void testFemaleCalorieCount2() {
         //testing if a male and female of the same height and weight output different calories
         User user = new User("Test User", 346, "Female", 72, "test-user", "test@gmail.com");
