@@ -20,7 +20,7 @@ public class AddIngredientActivity extends AppCompatActivity{
      * Called when the activity is starting.
      * This method handles the initialization of the activity,
      * setting the content view from a layout resource defined
-     * in R.layout.ingredient_page. It also
+     * in R.layout.add_ingredient_page. It also
      * initializes each navigation button in the navigation
      * bar and sets onClickListeners to them, enabling navigation to
      * different parts of the application based on user interaction.
