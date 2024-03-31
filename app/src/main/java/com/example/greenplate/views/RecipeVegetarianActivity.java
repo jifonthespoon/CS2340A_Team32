@@ -11,6 +11,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.greenplate.R;
+import com.example.greenplate.models.SortingStrategy;
+import com.example.greenplate.viewmodels.SortByName;
+import com.example.greenplate.viewmodels.SortByReverseName;
 
 /**
  * RecipeActivity serves as the primary interface
@@ -24,10 +27,11 @@ import com.example.greenplate.R;
  */
 
 public class RecipeVegetarianActivity extends AppCompatActivity {
+    private SortingStrategy sortingStrategy;
 
-    private String itemString[] = {"recipe 1", "recipe 2", "recipe 3", "recipe 4",
-            "recipe 5", "recipe 6", "recipe 7", "recipe 8",
-            "recipe 9", "recipe 10", "recipe 11", "recipe 12"};
+    private String itemString[] = {"Margherita Pizza", "Chicken Parmesan", "Apple Pie", "PB&J",
+            "Spaghetti Carbonara", "Birthday Cake", "Orange Chicken", "Braised Beef",
+            "Tikki Masala", "Grilled Chicken Breast", "Calamari", "Smoked Salmon"};
 
     /**
      * Initializes the activity by setting
@@ -55,11 +59,14 @@ public class RecipeVegetarianActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_page_vegetarian);
 
+        sortingStrategy = new SortByReverseName();
+        String[] recipeList = sortingStrategy.sortRecipes(itemString);
+
         // add code here
         ListView listView = findViewById(R.id.recipe_list);
         ArrayAdapter<String> arrayAdapter = new
                 ArrayAdapter<>(RecipeVegetarianActivity.this ,
-                android.R.layout.simple_list_item_1, itemString);
+                android.R.layout.simple_list_item_1, recipeList);
         listView.setAdapter(arrayAdapter);
 
 
@@ -158,5 +165,8 @@ public class RecipeVegetarianActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+    public void setSortingStrategy(SortingStrategy sortingStrategy) {
+        this.sortingStrategy = sortingStrategy;
     }
 }

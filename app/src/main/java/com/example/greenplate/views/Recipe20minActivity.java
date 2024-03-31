@@ -25,9 +25,7 @@ import com.example.greenplate.R;
 
 public class Recipe20minActivity extends AppCompatActivity {
 
-    private String itemString[] = {"recipe 1", "recipe 2", "recipe 3", "recipe 4",
-            "recipe 5", "recipe 6", "recipe 7", "recipe 8",
-            "recipe 9", "recipe 10", "recipe 11", "recipe 12"};
+    private String itemString[] = {"PB&J", "Apple Pie", "Birthday Cake"};
 
     /**
      * Initializes the activity by setting
