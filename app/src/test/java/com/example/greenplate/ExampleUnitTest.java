@@ -9,6 +9,8 @@ import static org.junit.Assert.*;
 import com.example.greenplate.models.Meal;
 import com.example.greenplate.models.User;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
+import com.example.greenplate.models.Recipe;
+import com.example.greenplate.models.Ingredient;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,7 +43,7 @@ public class ExampleUnitTest {
         assertEquals(checkInput(""), false);
     }
 
-        @Test
+    @Test
     public void testNullEmail() {
         assertEquals(checkInput(null), false);
     }
@@ -50,6 +52,36 @@ public class ExampleUnitTest {
     public void testUserCreation() {
         User user = new User("Test User", 150, "Male", 70, "test-user", "test@gmail.com");
         assertNotNull(user);
+    }
+
+    @Test
+    public void testValidIngredientName() {
+        assertEquals(checkInput("Tomato"), true);
+    }
+
+    @Test
+    public void testInvalidIngredientNameWithWhitespace() {
+        assertEquals(checkInput("   "), false);
+    }
+
+    @Test
+    public void testValidQuantity() {
+        assertEquals(checkQuantity("2"), true);
+    }
+
+    @Test
+    public void testInvalidQuantityWithNonNumeric() {
+        assertEquals(checkQuantity("abc"), false);
+    }
+
+    @Test
+    public void testValidDate() {
+        assertEquals(checkDateFormat("2024-03-12"), true);
+    }
+
+    @Test
+    public void testInvalidDateWithWrongFormat() {
+        assertEquals(checkDateFormat("12-03-2024"), false);
     }
 
     @Test
@@ -80,6 +112,7 @@ public class ExampleUnitTest {
         result.put("dateAdded", "03-12-2024");
         assertEquals(meal.toMap(), result);
     }
+
     @Test
     public void testMaleCalorieCount2() {
         //testing if a male and female of the same height and weight output different calories
@@ -132,5 +165,20 @@ public class ExampleUnitTest {
         assertTrue(((ArrayList)userMap.get("mealIds")).isEmpty());
     }
 
+
+    public static boolean checkQuantity(String quantity) {
+        try {
+            int qty = Integer.parseInt(quantity);
+            // Quantity must be a positive integer
+            return qty > 0;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    public static boolean checkDateFormat(String date) {
+        // Check if the date matches the expected format (YYYY-MM-DD)
+        return date.matches("\\d{4}-\\d{2}-\\d{2}");
+    }
 
 }
