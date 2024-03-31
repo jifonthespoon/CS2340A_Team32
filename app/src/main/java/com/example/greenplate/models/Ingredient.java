@@ -63,12 +63,10 @@ public class Ingredient {
 
     public void increaseQuantity() {
         quantity++;
-        IngredientsViewModel.updateIngredient(this);
     }
 
     public int decreaseQuantity() {
         quantity--;
-        IngredientsViewModel.updateIngredient(this);
         return quantity;
     }
 

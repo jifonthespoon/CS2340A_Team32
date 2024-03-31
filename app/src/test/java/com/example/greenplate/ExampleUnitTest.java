@@ -11,6 +11,7 @@ import com.example.greenplate.models.User;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
 import com.example.greenplate.models.Recipe;
 import com.example.greenplate.models.Ingredient;
+import com.example.greenplate.viewmodels.IngredientsViewModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -181,4 +182,33 @@ public class ExampleUnitTest {
         return date.matches("\\d{4}-\\d{2}-\\d{2}");
     }
 
+
+
+
+
+    // SPRINT 3 UNIT TESTS
+
+    // AUSTIN
+    @Test
+    public void decreaseIngredientQuantityWithReturn() {
+        Ingredient potatoes = new Ingredient("Potatoes", 120, 2, "94h98vb3-bvgevfi2-ef34g");
+        assertEquals(potatoes.decreaseQuantity(), 1);
+    }
+
+    @Test
+    public void increaseIngredientQuantity() {
+        Ingredient potatoes = new Ingredient("Potatoes", 120, 2, "94h98vb3-bvgevfi2-ef34g");
+        potatoes.increaseQuantity();
+        assertEquals(potatoes.getQuantity(), 3);
+    }
+
+    // ANYA
+
+    // SUBHA
+
+    // NATHAN
+
+    // DANIEL
+
+    // KUSHAL
 }
