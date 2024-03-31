@@ -54,7 +54,26 @@ public class InputMonthlyActivity extends AppCompatActivity {
     private TextView monthLabel;
     private Calendar calendar;
 
-
+    /**
+     * Called when the activity is starting.
+     * This method handles the initialization of the activity,
+     * setting the content view from a layout resource defined
+     * in R.layout.input_page_monthly. It also
+     * initializes each navigation button in the navigation
+     * bar and sets onClickListeners to them, enabling navigation to
+     * different parts of the application based on user interaction.
+     *
+     * @param savedInstanceState If the activity is being
+     *                           re-initialized after previously
+     *                           being shut down,
+     *                           this Bundle contains the
+     *                           data it most recently
+     *                           supplied in onSaveInstanceState(Bundle).
+     *                           Otherwise, it is null.
+     *                           This bundle can be used
+     *                           to reconstruct the activity
+     *                           to its previous state if necessary.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
