@@ -13,7 +13,9 @@ import com.example.greenplate.models.Recipe;
 import com.example.greenplate.models.Ingredient;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,18 +28,22 @@ public class ExampleUnitTest {
     public void testNull() {
         assertEquals(checkInput(null), false);
     }
+
     @Test
     public void testStrongPassword() {
         assertEquals(checkInput("Test123!"), true);
     }
+
     @Test
     public void testWeakPassword() {
         assertEquals(checkInput("Hi"), true);
     }
+
     @Test
     public void testSpacesString() {
         assertEquals(checkInput("   "), false);
     }
+
     @Test
     public void testEmptyString() {
         assertEquals(checkInput(""), false);
@@ -47,7 +53,7 @@ public class ExampleUnitTest {
     public void testNullEmail() {
         assertEquals(checkInput(null), false);
     }
-    
+
     @Test
     public void testUserCreation() {
         User user = new User("Test User", 150, "Male", 70, "test-user", "test@gmail.com");
@@ -151,6 +157,7 @@ public class ExampleUnitTest {
         assertEquals(130, user.getWeight());
         assertEquals("Female", user.getGender());
     }
+
     public void getUserMap_outputsCorrectMap() {
         User user = new User("Jane Doe", 130, "Female", 65, "user123", "jane.doe@example.com");
         Map<String, Object> userMap = user.getUserMap();
@@ -162,10 +169,10 @@ public class ExampleUnitTest {
         assertEquals("user123", userMap.get("userId"));
         assertEquals("jane.doe@example.com", userMap.get("email"));
         // Assuming mealIds is an empty list initially
-        assertTrue(((ArrayList)userMap.get("mealIds")).isEmpty());
+        assertTrue(((ArrayList) userMap.get("mealIds")).isEmpty());
     }
 
-
+    // sprint 3
     public static boolean checkQuantity(String quantity) {
         try {
             int qty = Integer.parseInt(quantity);
@@ -181,4 +188,27 @@ public class ExampleUnitTest {
         return date.matches("\\d{4}-\\d{2}-\\d{2}");
     }
 
+
+    @Test
+    public void testIngredient() {
+        Ingredient ingredient = new Ingredient("Tomato", 25, 3, "2024-12-31", "user123", "ingredient123");
+        assertEquals("Tomato", ingredient.getName());
+        assertEquals(25, ingredient.getCalories());
+        assertEquals(3, ingredient.getQuantity());
+        assertEquals("user123", ingredient.getUserId());
+        assertEquals("ingredient123", ingredient.getId());
+    }
+
+    @Test
+    public void testRecipe() {
+        List<Ingredient> ingredients = new ArrayList<>();
+        ingredients.add(new Ingredient("Ingredient1", 100, 2, "2024-12-31", "user123"));
+        ingredients.add(new Ingredient("Ingredient2", 200, 3, "2024-12-31", "user123"));
+
+        Recipe recipe = new Recipe("TestRecipe", ingredients, "user123");
+
+        assertEquals("TestRecipe", recipe.getRecipeName());
+        assertEquals(ingredients, recipe.getIngredients());
+        assertEquals("user123", recipe.getUserId());
+    }
 }
