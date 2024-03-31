@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class RecipeViewModel {
+public class RecipeViewModel implements RecipeNamesCallback{
     private static Firebase firebase = Firebase.getInstance();
 
     public static void addRecipe(Recipe recipe) {
@@ -29,6 +29,31 @@ public class RecipeViewModel {
         DatabaseReference recipesRef = firebase.getDatabase().getReference().child("cookbook");
         recipesRef.addListenerForSingleValueEvent(listener);
     }
+    public String[] onRecipeNamesFetched(String[] recipeNames) {
+        return recipeNames;
+    }
+    public static void getRecipeNames(RecipeNamesCallback callback) {
+        fetchRecipes(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<String> recipeNames = new ArrayList<>();
+                for (DataSnapshot recipeSnapshot : dataSnapshot.getChildren()) {
+                    String recipeName = recipeSnapshot.child("name").getValue(String.class);
+                    recipeNames.add(recipeName);
+                }
+
+                // Convert List to Array before passing it to the callback
+                String[] recipeNamesArray = recipeNames.toArray(new String[0]);
+                callback.onRecipeNamesFetched(recipeNamesArray);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.err.println("Listener was cancelled, error: " + databaseError.getMessage());
+            }
+        });
+    }
+
 
     public static void removeRecipe(String recipeId) {
         firebase.getDatabase().getReference().child("cookbook").child(recipeId).removeValue();
