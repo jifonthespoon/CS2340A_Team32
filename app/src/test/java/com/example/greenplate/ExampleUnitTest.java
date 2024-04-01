@@ -11,9 +11,11 @@ import com.example.greenplate.models.User;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
 import com.example.greenplate.models.Recipe;
 import com.example.greenplate.models.Ingredient;
+import com.example.greenplate.viewmodels.IngredientsViewModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -181,4 +183,49 @@ public class ExampleUnitTest {
         return date.matches("\\d{4}-\\d{2}-\\d{2}");
     }
 
+
+
+
+
+    // SPRINT 3 UNIT TESTS
+
+    // AUSTIN
+    @Test
+    public void decreaseIngredientQuantityWithReturn() {
+        Ingredient potatoes = new Ingredient("Potatoes", 120, 2, "94h98vb3-bvgevfi2-ef34g");
+        assertEquals(potatoes.decreaseQuantity(), 1);
+    }
+
+    @Test
+    public void increaseIngredientQuantity() {
+        Ingredient potatoes = new Ingredient("Potatoes", 120, 2, "94h98vb3-bvgevfi2-ef34g");
+        potatoes.increaseQuantity();
+        assertEquals(potatoes.getQuantity(), 3);
+    }
+
+    // ANYA
+
+    // SUBHA
+
+    // NATHAN
+
+    // DANIEL
+
+    // KUSHAL
+    @Test public void testIngredient() {
+        Ingredient ingredient = new Ingredient("Tomato", 25, 3, "2024-12-31", "user123", "ingredient123");
+        assertEquals("Tomato", ingredient.getName());
+        assertEquals(25, ingredient.getCalories());
+        assertEquals(3, ingredient.getQuantity());
+        assertEquals("user123", ingredient.getUserId());
+        assertEquals("ingredient123", ingredient.getId());
+    }
+    @Test public void testRecipe() {
+        List<Ingredient> ingredients = new ArrayList<>();
+        ingredients.add(new Ingredient("Ingredient1", 100, 2, "2024-12-31", "user123"));
+        ingredients.add(new Ingredient("Ingredient2", 200, 3, "2024-12-31", "user123"));
+        Recipe recipe = new Recipe("TestRecipe", ingredients, "user123");
+        assertEquals("TestRecipe", recipe.getRecipeName());
+        assertEquals(ingredients, recipe.getIngredients());
+        assertEquals("user123", recipe.getUserId()); }
 }

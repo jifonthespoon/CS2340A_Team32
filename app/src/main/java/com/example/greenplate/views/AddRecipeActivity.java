@@ -101,6 +101,16 @@ public class AddRecipeActivity extends AppCompatActivity {
             }
         });
 
+        final ImageButton to_add_ingredient_page = findViewById(R.id.to_add_ingredient_page);
+        to_add_ingredient_page.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddRecipeActivity.this,
+                        AddIngredientActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         final Button saveButton = findViewById(R.id.save);
         saveButton.setOnClickListener(new View.OnClickListener() {

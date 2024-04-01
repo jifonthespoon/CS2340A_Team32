@@ -10,6 +10,7 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.example.greenplate.R;
+import com.example.greenplate.viewmodels.IngredientsViewModel;
 
 import java.util.ArrayList;
 
@@ -60,6 +61,7 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter {
             @Override
             public void onClick(View v) {
                 list.get(position).increaseQuantity();
+                IngredientsViewModel.updateIngredient(list.get(position));
                 ingredientQuantity.setText(String.valueOf(list.get(position).getQuantity()));
             }
         });
@@ -68,6 +70,7 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter {
             @Override
             public void onClick(View v) {
                 int newQuantity = list.get(position).decreaseQuantity();
+                IngredientsViewModel.updateIngredient(list.get(position));
                 if (newQuantity > 0) {
                     ingredientQuantity.setText(String.valueOf(list.get(position).getQuantity()));
                 } else {
