@@ -39,8 +39,9 @@ public class IngredientsActivity extends AppCompatActivity {
     private MyCustomAdapter mAdapter;
 
     private String[] itemString = {"ingredient 1", "ingredient 2", "ingredient 3", "ingredient 4",
-            "ingredient 5", "ingredient 6", "ingredient 7", "ingredient 8",
-            "ingredient 9", "ingredient 10", "ingredient 11", "ingredient 12"};
+                                   "ingredient 5", "ingredient 6", "ingredient 7", "ingredient 8",
+                                   "ingredient 9", "ingredient 10", "ingredient 11",
+                                   "ingredient 12"};
     /**
      * Called when the activity is starting.
      * This method handles the initialization of the activity,
@@ -74,14 +75,6 @@ public class IngredientsActivity extends AppCompatActivity {
         mAdapter.notifyDataSetChanged();
 
 
-//        // add code here
-//        ListView listView = findViewById(R.id.ingredients_list);
-//        ArrayAdapter<String> arrayAdapter = new
-//                ArrayAdapter<>(IngredientsActivity.this ,
-//                android.R.layout.simple_list_item_1, itemString);
-//        listView.setAdapter(arrayAdapter);
-//
-//
 
 
 

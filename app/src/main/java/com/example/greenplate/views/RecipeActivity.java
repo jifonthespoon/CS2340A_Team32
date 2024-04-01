@@ -42,8 +42,9 @@ public class RecipeActivity extends AppCompatActivity {
     private SortingStrategy sortingStrategy;
 
     private String[] itemString = {"Margherita Pizza", "Chicken Parmesan", "Apple Pie", "PB&J",
-            "Spaghetti Carbonara", "Birthday Cake", "Orange Chicken", "Braised Beef",
-            "Tikki Masala", "Grilled Chicken Breast", "Calamari", "Smoked Salmon"};
+                                   "Spaghetti Carbonara", "Birthday Cake", "Orange Chicken",
+                                   "Braised Beef", "Tikki Masala", "Grilled Chicken Breast",
+                                   "Calamari", "Smoked Salmon"};
 
     /**
      * Initializes the activity by setting
