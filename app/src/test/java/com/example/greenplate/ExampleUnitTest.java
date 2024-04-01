@@ -7,11 +7,14 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import com.example.greenplate.models.Meal;
+import com.example.greenplate.models.SortingStrategy;
 import com.example.greenplate.models.User;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
 import com.example.greenplate.models.Recipe;
 import com.example.greenplate.models.Ingredient;
 import com.example.greenplate.viewmodels.IngredientsViewModel;
+import com.example.greenplate.viewmodels.SortByName;
+import com.example.greenplate.viewmodels.SortByReverseName;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -208,6 +211,27 @@ public class ExampleUnitTest {
     // SUBHA
 
     // NATHAN
+    @Test
+    public void testSorting() {
+        String[] testList = {"C", "B", "A", "D"};
+        SortingStrategy testSort = new SortByName();
+        String[] sortedList = testSort.sortRecipes(testList);
+        assertEquals("A", sortedList[0]);
+        assertEquals("B", sortedList[1]);
+        assertEquals("C", sortedList[2]);
+        assertEquals("D", sortedList[3]);
+    }
+
+    @Test
+    public void testReverseSorting() {
+        String[] testList = {"C", "B", "A", "D"};
+        SortingStrategy testSort = new SortByReverseName();
+        String[] sortedList = testSort.sortRecipes(testList);
+        assertEquals("D", sortedList[0]);
+        assertEquals("C", sortedList[1]);
+        assertEquals("B", sortedList[2]);
+        assertEquals("A", sortedList[3]);
+    }
 
     // DANIEL
 
