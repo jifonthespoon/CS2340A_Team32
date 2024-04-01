@@ -1,7 +1,5 @@
 package com.example.greenplate.models;
 
-import com.example.greenplate.viewmodels.IngredientsViewModel;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -75,7 +73,8 @@ public class Ingredient {
     }
 
     public String toString() {
-        return "You have " + quantity + " " + name + " and each are " + calories + " calories." + " " + id + " " + userId + " " + expirationDate;
+        return "You have " + quantity + " " + name + " and each are " + calories + " calories."
+                + " " + id + " " + userId + " " + expirationDate;
     }
 
     public String getId() {
