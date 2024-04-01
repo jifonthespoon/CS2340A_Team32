@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.greenplate.R;
 import com.example.greenplate.models.SortingStrategy;
-import com.example.greenplate.viewmodels.SortByName;
+
 import com.example.greenplate.viewmodels.SortByReverseName;
 
 /**
@@ -29,9 +29,10 @@ import com.example.greenplate.viewmodels.SortByReverseName;
 public class RecipeVegetarianActivity extends AppCompatActivity {
     private SortingStrategy sortingStrategy;
 
-    private String itemString[] = {"Margherita Pizza", "Chicken Parmesan", "Apple Pie", "PB&J",
-            "Spaghetti Carbonara", "Birthday Cake", "Orange Chicken", "Braised Beef",
-            "Tikki Masala", "Grilled Chicken Breast", "Calamari", "Smoked Salmon"};
+    private String[] itemString = {"Margherita Pizza", "Chicken Parmesan", "Apple Pie", "PB&J",
+                                   "Spaghetti Carbonara", "Birthday Cake", "Orange Chicken",
+                                   "Braised Beef", "Tikki Masala", "Grilled Chicken Breast",
+                                   "Calamari", "Smoked Salmon"};
 
     /**
      * Initializes the activity by setting
@@ -65,7 +66,7 @@ public class RecipeVegetarianActivity extends AppCompatActivity {
         // add code here
         ListView listView = findViewById(R.id.recipe_list);
         ArrayAdapter<String> arrayAdapter = new
-                ArrayAdapter<>(RecipeVegetarianActivity.this ,
+                ArrayAdapter<>(RecipeVegetarianActivity.this,
                 android.R.layout.simple_list_item_1, recipeList);
         listView.setAdapter(arrayAdapter);
 

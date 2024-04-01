@@ -9,9 +9,12 @@ import static org.junit.Assert.*;
 import com.example.greenplate.models.Meal;
 import com.example.greenplate.models.SortingStrategy;
 import com.example.greenplate.models.User;
+import com.example.greenplate.models.SortingStrategy;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
 import com.example.greenplate.models.Recipe;
 import com.example.greenplate.models.Ingredient;
+import com.example.greenplate.viewmodels.SortByName;
+import com.example.greenplate.viewmodels.SortByReverseName;
 import com.example.greenplate.viewmodels.IngredientsViewModel;
 import com.example.greenplate.viewmodels.SortByName;
 import com.example.greenplate.viewmodels.SortByReverseName;
@@ -209,6 +212,24 @@ public class ExampleUnitTest {
     // ANYA
 
     // SUBHA
+    @Test public void testRecipeConstructor() {
+        List<Ingredient> ingredients = new ArrayList<>();
+        ingredients.add(new Ingredient("Bread", 150, 2, "2023-12-30", "subha"));
+        ingredients.add(new Ingredient("cheese", 200, 1, "2023-12-30", "subha"));
+        Recipe recipe = new Recipe("Grilled cheese", ingredients, "subha");
+        assertEquals("Grilled cheese", recipe.getRecipeName());
+        assertEquals(ingredients, recipe.getIngredients());
+        assertEquals("subha", recipe.getUserId());
+    }
+
+    @Test public void testIngredientConstructor() {
+        Ingredient ingredient = new Ingredient("Milk", 50, 4, "2023-06-30", "subha", "milk");
+        assertEquals("Milk", ingredient.getName());
+        assertEquals(50, ingredient.getCalories());
+        assertEquals(4, ingredient.getQuantity());
+        assertEquals("subha", ingredient.getUserId());
+        assertEquals("milk", ingredient.getId());
+    }
 
     // NATHAN
     @Test

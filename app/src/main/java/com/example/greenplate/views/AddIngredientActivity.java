@@ -1,6 +1,5 @@
 package com.example.greenplate.views;
 
-import static com.example.greenplate.R.id.toPersonalPage;
 
 import com.example.greenplate.R;
 import com.example.greenplate.viewmodels.IngredientsViewModel;
@@ -15,7 +14,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class AddIngredientActivity extends AppCompatActivity{
+public class AddIngredientActivity extends AppCompatActivity {
     /**
      * Called when the activity is starting.
      * This method handles the initialization of the activity,
@@ -120,13 +119,16 @@ public class AddIngredientActivity extends AppCompatActivity{
                     calories = Integer.parseInt(caloriesStr);
                 } catch (NumberFormatException e) {
                     // Handle the case where either quantity or calories isn't a valid integer
-                    Toast.makeText(AddIngredientActivity.this, "Quantity and Calories must be valid numbers.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddIngredientActivity.this, "Quantity and Calories "
+                            + "must be valid numbers.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 // Validate the input (e.g., check if name is empty, quantity is positive, etc.)
                 if (name.isEmpty() || quantity <= 0) {
-                    Toast.makeText(AddIngredientActivity.this, "Please fill out the name and make sure quantity is positive.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddIngredientActivity.this, "Please fill out the "
+                            + "name and make sure quantity is positive.",
+                            Toast.LENGTH_SHORT).show();
                     return;
                 }
                 IngredientsViewModel.addIngredient(name, calories, quantity, expirationDate);
@@ -136,7 +138,8 @@ public class AddIngredientActivity extends AppCompatActivity{
                 caloriesEditText.setText("");
                 expirationDateEditText.setText("");
 
-                Toast.makeText(AddIngredientActivity.this, "Ingredient saved!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddIngredientActivity.this, "Ingredient saved!",
+                        Toast.LENGTH_SHORT).show();
             }
         });
 

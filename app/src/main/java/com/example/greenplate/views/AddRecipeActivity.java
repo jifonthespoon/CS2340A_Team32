@@ -86,14 +86,14 @@ public class AddRecipeActivity extends AppCompatActivity {
         // A HashMap to store the dish name and its corresponding ingredients and quantities
         final HashMap<String, List<Pair<String, Integer>>> dishIngredientsMap = new HashMap<>();
 
-        final ImageButton to_add_ingredient_button = findViewById(R.id.to_add_ingredient_page);
-        to_add_ingredient_button.setOnClickListener(new View.OnClickListener() {
+        final ImageButton toAddIngredientPage = findViewById(R.id.to_add_ingredient_page);
+        toAddIngredientPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Retrieve the dish name and ingredients and quantities
-                EditText dishNameEditText = (EditText)findViewById(R.id.ingredient_name_enter);
-                EditText ingredientEditText = (EditText)findViewById(R.id.ingredient_quantity_enter);
-                EditText quantityEditText = (EditText)findViewById(R.id.ingredient_calories_enter);
+                EditText dishNameEditText = findViewById(R.id.ingredient_name_enter);
+                EditText ingredientEditText = findViewById(R.id.ingredient_quantity_enter);
+                EditText quantityEditText = findViewById(R.id.ingredient_calories_enter);
 
                 String dishName = dishNameEditText.getText().toString();
                 String ingredient = ingredientEditText.getText().toString();
@@ -163,9 +163,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                 }
 
                 // Create the Recipe object
-                String userId = FirebaseViewModel.getInstance().getUser().getUserId(); // Replace with actual user ID retrieval logic
-                // Create the Recipe object
-                Recipe newRecipe = new Recipe(dishName, ingredientsForThisDish, userId);
+                Recipe newRecipe = new Recipe(dishName, ingredientsForThisDish, FirebaseViewModel.getInstance().getUser().getUserId());
 
                 // Use RecipeViewModel to add the recipe to the database
                 RecipeViewModel.addRecipe(newRecipe);
