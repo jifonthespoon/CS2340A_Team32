@@ -63,36 +63,6 @@ public class ExampleUnitTest {
     }
 
     @Test
-    public void testValidIngredientName() {
-        assertEquals(checkInput("Tomato"), true);
-    }
-
-    @Test
-    public void testInvalidIngredientNameWithWhitespace() {
-        assertEquals(checkInput("   "), false);
-    }
-
-    @Test
-    public void testValidQuantity() {
-        assertEquals(checkQuantity("2"), true);
-    }
-
-    @Test
-    public void testInvalidQuantityWithNonNumeric() {
-        assertEquals(checkQuantity("abc"), false);
-    }
-
-    @Test
-    public void testValidDate() {
-        assertEquals(checkDateFormat("2024-03-12"), true);
-    }
-
-    @Test
-    public void testInvalidDateWithWrongFormat() {
-        assertEquals(checkDateFormat("12-03-2024"), false);
-    }
-
-    @Test
     public void testMaleCalorieCount() {
         User user = new User("Test User", 120, "Male", 68, "test-user", "test@gmail.com");
         assertEquals(user.getDailyCalorieIntake(), 1629);
@@ -174,21 +144,6 @@ public class ExampleUnitTest {
     }
 
 
-    public static boolean checkQuantity(String quantity) {
-        try {
-            int qty = Integer.parseInt(quantity);
-            // Quantity must be a positive integer
-            return qty > 0;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
-
-    public static boolean checkDateFormat(String date) {
-        // Check if the date matches the expected format (YYYY-MM-DD)
-        return date.matches("\\d{4}-\\d{2}-\\d{2}");
-    }
-
 
 
 
@@ -210,6 +165,52 @@ public class ExampleUnitTest {
     }
 
     // ANYA
+    
+    @Test
+    public void testValidIngredientName() {
+        assertEquals(checkInput("Tomato"), true);
+    }
+
+    @Test
+    public void testInvalidIngredientNameWithWhitespace() {
+        assertEquals(checkInput("   "), false);
+    }
+
+    @Test
+    public void testValidQuantity() {
+        assertEquals(checkQuantity("2"), true);
+    }
+
+    @Test
+    public void testInvalidQuantityWithNonNumeric() {
+        assertEquals(checkQuantity("abc"), false);
+    }
+
+    @Test
+    public void testValidDate() {
+        assertEquals(checkDateFormat("2024-03-12"), true);
+    }
+
+    @Test
+    public void testInvalidDateWithWrongFormat() {
+        assertEquals(checkDateFormat("12-03-2024"), false);
+    }
+    
+    public static boolean checkQuantity(String quantity) {
+        try {
+            int qty = Integer.parseInt(quantity);
+            // Quantity must be a positive integer
+            return qty > 0;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    public static boolean checkDateFormat(String date) {
+        // Check if the date matches the expected format (YYYY-MM-DD)
+        return date.matches("\\d{4}-\\d{2}-\\d{2}");
+    }
+
 
     // SUBHA
     @Test public void testRecipeConstructor() {
