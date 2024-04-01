@@ -81,8 +81,8 @@ public class AddRecipeActivity extends AppCompatActivity {
             }
         });
 
-        final ImageButton to_add_ingredient_page = findViewById(R.id.to_add_ingredient_page);
-        to_add_ingredient_page.setOnClickListener(new View.OnClickListener() {
+        final ImageButton toAddIngredientPage = findViewById(R.id.to_add_ingredient_page);
+        toAddIngredientPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AddRecipeActivity.this,
@@ -98,8 +98,10 @@ public class AddRecipeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Assuming EditTexts for recipe name and ingredient are present
                 EditText recipeNameEditText = findViewById(R.id.ingredient_name_enter);
-                EditText ingredientNameEditText = findViewById(R.id.ingredient_quantity_enter); // For demonstration, assuming one ingredient
-                EditText quantityEditText = findViewById(R.id.ingredient_calories_enter); // Assuming this is for quantity input
+                EditText ingredientNameEditText = findViewById(R.id.ingredient_quantity_enter);
+                // For demonstration, assuming one ingredient
+                EditText quantityEditText = findViewById(R.id.ingredient_calories_enter);
+                // Assuming this is for quantity input
 
                 String recipeName = recipeNameEditText.getText().toString().trim();
                 String ingredientName = ingredientNameEditText.getText().toString().trim();
@@ -108,12 +110,14 @@ public class AddRecipeActivity extends AppCompatActivity {
                 try {
                     quantity = Integer.parseInt(quantityStr);
                 } catch (NumberFormatException e) {
-                    Toast.makeText(AddRecipeActivity.this, "Invalid quantity", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddRecipeActivity.this, "Invalid quantity",
+                            Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if(recipeName.isEmpty() || ingredientName.isEmpty() || quantity <= 0) {
-                    Toast.makeText(AddRecipeActivity.this, "Please fill all the fields correctly", Toast.LENGTH_SHORT).show();
+                if (recipeName.isEmpty() || ingredientName.isEmpty() || quantity <= 0) {
+                    Toast.makeText(AddRecipeActivity.this,
+                            "Please fill all the fields correctly", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -121,7 +125,8 @@ public class AddRecipeActivity extends AppCompatActivity {
 
                 List<Ingredient> ingredientsList = new ArrayList<>();
                 ingredientsList.add(newIngredient);
-                Recipe newRecipe = new Recipe(recipeName, ingredientsList, FirebaseViewModel.getInstance().getUser().getUserId());
+                Recipe newRecipe = new Recipe(recipeName, ingredientsList,
+                        FirebaseViewModel.getInstance().getUser().getUserId());
 
                 RecipeViewModel.addRecipe(newRecipe);
 
@@ -129,7 +134,8 @@ public class AddRecipeActivity extends AppCompatActivity {
                 ingredientNameEditText.setText("");
                 quantityEditText.setText("");
 
-                Toast.makeText(AddRecipeActivity.this, "Recipe saved successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddRecipeActivity.this, "Recipe saved successfully",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }

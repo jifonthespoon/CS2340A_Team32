@@ -1,33 +1,19 @@
 package com.example.greenplate.views;
 
 import com.example.greenplate.R;
-import com.example.greenplate.models.Ingredient;
-import com.example.greenplate.models.MyCustomAdapter;
-import com.example.greenplate.models.Recipe;
-import com.example.greenplate.models.SortingStrategy;
-import com.example.greenplate.viewmodels.FirebaseViewModel;
-import com.example.greenplate.viewmodels.RecipeViewModel;
-import com.example.greenplate.viewmodels.SortByName;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
+
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
+import android.view.View;
+
+import android.widget.ImageButton;
+
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.AbstractMap;
-import java.util.ArrayList;
-import java.util.Map;
+
 
 /**
  * RecipeActivity serves as the primary interface

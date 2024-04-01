@@ -2,50 +2,43 @@ package com.example.greenplate.views;
 
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
-import android.graphics.drawable.Drawable;
+
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
+
 import android.view.View;
-import android.widget.Button;
+
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.anychart.core.cartesian.series.Line;
+
 import com.example.greenplate.R;
-import com.example.greenplate.models.Firebase;
+
 import com.example.greenplate.models.Meal;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.LimitLine;
-import com.github.mikephil.charting.components.XAxis;
+
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.highlight.Highlight;
+
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.github.mikephil.charting.utils.Utils;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+
 
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
+
 import java.util.Locale;
 import java.util.UUID;
 
@@ -132,16 +125,22 @@ public class InputMonthlyActivity extends AppCompatActivity {
                 if (!caloriesString.isEmpty()) {
                     int calories = Integer.parseInt(caloriesInput.getText().toString().trim());
                     if (mealName.isEmpty() || caloriesString.isEmpty()) {
-                        Toast.makeText(InputMonthlyActivity.this, "Please enter valid meal name and calories.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(InputMonthlyActivity.this,
+                                "Please enter valid meal name and calories.",
+                                Toast.LENGTH_LONG).show();
                         return; // Stop further execution
                     }
-                    String dateAdded = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-                    Meal meal = new Meal(UUID.randomUUID().toString(), mealName, calories, dateAdded);
+                    String dateAdded = new SimpleDateFormat("yyyy-MM-dd",
+                            Locale.getDefault()).format(new Date());
+                    Meal meal = new Meal(UUID.randomUUID().toString(), mealName, calories,
+                            dateAdded);
                     fvm.saveOrUpdateMeal(meal);
                     mealNameInput.setText("");
                     caloriesInput.setText("");
                 } else {
-                    Toast.makeText(InputMonthlyActivity.this, "Please enter valid meal name and calories.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(InputMonthlyActivity.this,
+                            "Please enter valid meal name and calories.",
+                            Toast.LENGTH_LONG).show();
                     return;
                 }
             }
@@ -178,8 +177,8 @@ public class InputMonthlyActivity extends AppCompatActivity {
         values.add(new Entry(13, 1960));
         values.add(new Entry(14, 1990));
         LineDataSet set1;
-        if (mChart.getData() != null &&
-                mChart.getData().getDataSetCount() > 0) {
+        if (mChart.getData() != null
+                && mChart.getData().getDataSetCount() > 0) {
             set1 = (LineDataSet) mChart.getData().getDataSetByIndex(0);
             set1.setValues(values);
             set1.setDrawValues(false);
@@ -217,8 +216,8 @@ public class InputMonthlyActivity extends AppCompatActivity {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = dateFormat.format(calendar.getTime());
 
-        final ImageButton backwards_time = findViewById(R.id.left_arrow_input_monthly_page);
-        backwards_time.setOnClickListener(new View.OnClickListener() {
+        final ImageButton backwardsTime = findViewById(R.id.left_arrow_input_monthly_page);
+        backwardsTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 calendar.add(Calendar.MONTH, -1); // Subtract one month
@@ -227,8 +226,8 @@ public class InputMonthlyActivity extends AppCompatActivity {
             }
         });
 
-        final ImageButton forwards_time = findViewById(R.id.right_arrow_input_monthly_page);
-        forwards_time.setOnClickListener(new View.OnClickListener() {
+        final ImageButton forwardsTime = findViewById(R.id.right_arrow_input_monthly_page);
+        forwardsTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 calendar.add(Calendar.MONTH, 1); // Add one month

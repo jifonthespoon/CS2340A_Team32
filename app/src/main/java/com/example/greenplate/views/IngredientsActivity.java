@@ -1,6 +1,5 @@
 package com.example.greenplate.views;
 
-import static com.example.greenplate.R.id.toPersonalPage;
 
 import com.example.greenplate.R;
 import com.example.greenplate.models.Ingredient;
@@ -10,11 +9,10 @@ import com.example.greenplate.viewmodels.FirebaseViewModel;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
+
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Toast;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -36,10 +34,11 @@ import java.util.ArrayList;
 public class IngredientsActivity extends AppCompatActivity {
 
     private ListView mListview;
-    private ArrayList<Ingredient> mArrData = FirebaseViewModel.getInstance().getUser().getIngredients();
+    private ArrayList<Ingredient> mArrData = FirebaseViewModel.getInstance().getUser()
+            .getIngredients();
     private MyCustomAdapter mAdapter;
 
-    private String itemString[] = {"ingredient 1", "ingredient 2", "ingredient 3", "ingredient 4",
+    private String[] itemString = {"ingredient 1", "ingredient 2", "ingredient 3", "ingredient 4",
             "ingredient 5", "ingredient 6", "ingredient 7", "ingredient 8",
             "ingredient 9", "ingredient 10", "ingredient 11", "ingredient 12"};
     /**
@@ -83,8 +82,6 @@ public class IngredientsActivity extends AppCompatActivity {
 //        listView.setAdapter(arrayAdapter);
 //
 //
-//        listView.setAdapter(arrayAdapter);
-
 
 
 
