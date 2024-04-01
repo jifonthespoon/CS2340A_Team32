@@ -16,7 +16,6 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -148,17 +147,20 @@ public class InputActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String mealName = mealNameInput.getText().toString().trim();
                 String caloriesString = String.valueOf(caloriesInput.getText()).trim();
-                if (!caloriesString.isEmpty()){
+                if (!caloriesString.isEmpty()) {
                     int calories = Integer.parseInt(caloriesInput.getText().toString().trim());
                     if (mealName.isEmpty() || caloriesString.isEmpty()) {
                         // Show an error message or a toast to inform the user to input valid values
-                        Toast.makeText(InputActivity.this, "Please enter valid meal name and calories.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(InputActivity.this, "Please enter valid meal "
+                                + "name " + "and calories.", Toast.LENGTH_LONG).show();
                         return; // Stop further execution
                     }
-                    String dateAdded = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+                    String dateAdded = new SimpleDateFormat("yyyy-MM-dd",
+                            Locale.getDefault()).format(new Date());
 
                     // Create a Meal object
-                    Meal meal = new Meal(UUID.randomUUID().toString(), mealName, calories, dateAdded);
+                    Meal meal = new Meal(UUID.randomUUID().toString(), mealName, calories,
+                            dateAdded);
 
                     // Use FirebaseViewModel to save the meal
                     fvm.saveOrUpdateMeal(meal);
@@ -166,7 +168,9 @@ public class InputActivity extends AppCompatActivity {
                     mealNameInput.setText("");
                     caloriesInput.setText("");
                 } else {
-                    Toast.makeText(InputActivity.this, "Please enter valid meal name and calories.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(InputActivity.this,
+                            "Please enter valid meal name and calories.",
+                            Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -206,7 +210,8 @@ public class InputActivity extends AppCompatActivity {
         xAxis.setGranularity(1.45f); // Interval between each label
         xAxis.setCenterAxisLabels(true); // Center the labels between the bars
         xAxis.setAxisMinimum(0.5f); // Adjust the minimum value to center the first bar
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(new String[]{"Calories Consumed", "Calorie Goal"})); // Customizing labels
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(
+                new String[]{"Calories Consumed", "Calorie Goal"})); // Customizing labels
 
 
 
@@ -218,8 +223,8 @@ public class InputActivity extends AppCompatActivity {
 
         // ADD HERE
 
-        final ImageButton backwards_time = findViewById(R.id.left_arrow_input_page);
-        backwards_time.setOnClickListener(new View.OnClickListener() {
+        final ImageButton backwardsTime = findViewById(R.id.left_arrow_input_page);
+        backwardsTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 calendar.add(Calendar.DAY_OF_MONTH, -1);
@@ -228,8 +233,8 @@ public class InputActivity extends AppCompatActivity {
             }
         });
 
-        final ImageButton forwards_time = findViewById(R.id.right_arrow_input_page);
-        forwards_time.setOnClickListener(new View.OnClickListener() {
+        final ImageButton forwardsTime = findViewById(R.id.right_arrow_input_page);
+        forwardsTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 calendar.add(Calendar.DAY_OF_MONTH, 1);
