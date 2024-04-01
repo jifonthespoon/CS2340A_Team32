@@ -234,7 +234,37 @@ public class ExampleUnitTest {
     }
 
     // DANIEL
+    @Test
+    public void testRecipeToMapIncludesAllIngredients() {
+        Ingredient ingredient1 = new Ingredient("Salt", 0, 1, "2024-12-31", "user123", "ingredient1");
+        Ingredient ingredient2 = new Ingredient("Pepper", 0, 2, "2024-12-31", "user123", "ingredient2");
+        List<Ingredient> ingredients = new ArrayList<>();
+        ingredients.add(ingredient1);
+        ingredients.add(ingredient2);
+        Recipe recipe = new Recipe("Seasoning Mix", ingredients, "user123");
 
+        Map<String, Object> recipeMap = recipe.toMap();
+
+        assertEquals("Seasoning Mix", recipeMap.get("recipeName"));
+        Map<String, String> ingredientsMap = (Map<String, String>) recipeMap.get("ingredients");
+        assertNotNull(ingredientsMap);
+        assertEquals("1", ingredientsMap.get("Salt"));
+        assertEquals("2", ingredientsMap.get("Pepper"));
+    }
+
+    @Test
+    public void testAddingIngredientUpdatesRecipe() {
+        Ingredient ingredient1 = new Ingredient("Sugar", 15, 1, "2024-12-31", "user123", "ingredient1");
+        List<Ingredient> ingredients = new ArrayList<>();
+        ingredients.add(ingredient1);
+        Recipe recipe = new Recipe("Sweet Mix", ingredients, "user123");
+
+        Ingredient ingredient2 = new Ingredient("Cinnamon", 5, 1, "2024-12-31", "user123", "ingredient2");
+        recipe.getIngredients().add(ingredient2);
+        assertEquals(2, recipe.getIngredients().size());
+        assertTrue(recipe.getIngredients().contains(ingredient1));
+        assertTrue(recipe.getIngredients().contains(ingredient2));
+    }
     // KUSHAL
     @Test public void testIngredient() {
         Ingredient ingredient = new Ingredient("Tomato", 25, 3, "2024-12-31", "user123", "ingredient123");
