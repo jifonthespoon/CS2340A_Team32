@@ -81,12 +81,17 @@ public class RecipeActivity extends AppCompatActivity {
                 android.R.layout.simple_list_item_1, recipeList);
         listView.setAdapter(arrayAdapter);
 
+
         // Set item click listener for ListView
         listView.setOnItemClickListener((adapterView, view, i, l) -> {
             String item = (String) adapterView.getItemAtPosition(i);
             Toast.makeText(RecipeActivity.this, "Selected: " + item,
                     Toast.LENGTH_SHORT).show();
+
+            // Move onClick method outside of lambda expression
+            onClickItem();
         });
+
 
         final ImageButton toHome = findViewById(R.id.toHomePage);
         final ImageButton toInput = findViewById(R.id.toInputPage);
@@ -179,7 +184,51 @@ public class RecipeActivity extends AppCompatActivity {
 
     }
 
+
     public void setSortingStrategy(SortingStrategy sortingStrategy) {
         this.sortingStrategy = sortingStrategy;
     }
+
+    public void fetchRecipes(ArrayList<String> recipeNames) {
+        RecipeViewModel.fetchRecipes(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                recipeNames.clear();
+
+                for (DataSnapshot recipeSnapshot: snapshot.getChildren()) {
+                    String recipeName = (String) recipeSnapshot.child("recipeName").getValue();
+                    recipeNames.add(recipeName);
+                }
+                handleFetchedRecipes(recipeNames);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                System.out.println("Something went wrong");
+            }
+        });
+    }
+    public void handleFetchedRecipes(ArrayList<String> recipeNames) {
+        System.out.println("The fetched recipes are " + recipeNames);
+        ListView listView = findViewById(R.id.recipe_list);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(RecipeActivity.this,
+                android.R.layout.simple_list_item_1, recipeNames);
+        listView.setAdapter(arrayAdapter);
+
+        // Set item click listener for ListView
+        listView.setOnItemClickListener((adapterView, view, i, l) -> {
+            String selectedItem = recipeNames.get(i);
+            Toast.makeText(RecipeActivity.this, "Selected: " + selectedItem,
+                    Toast.LENGTH_SHORT).show();
+        });
+    }
+    // Define onClick method outside of lambda expression
+    public void onClickItem() {
+        Intent intent = new Intent(RecipeActivity.this, ViewRecipeActivity.class);
+        startActivity(intent);
+    }
+
+
 }
+

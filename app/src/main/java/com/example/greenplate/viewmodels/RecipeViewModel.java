@@ -16,17 +16,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class RecipeViewModel implements RecipeNamesCallback{
+public class RecipeViewModel implements RecipeNamesCallback {
     private static Firebase firebase = Firebase.getInstance();
 
     public static void addRecipe(Recipe recipe) {
-        DatabaseReference recipesRef = firebase.getDatabase().getReference().child("cookbook").push();
+        DatabaseReference recipesRef = firebase.getDatabase().getReference()
+                .child("cookbook").push();
         recipesRef.setValue(recipe.toMap());
         recipe.setId(recipesRef.getKey());
     }
 
     public static void fetchRecipes(ValueEventListener listener) {
-        DatabaseReference recipesRef = firebase.getDatabase().getReference().child("cookbook");
+        DatabaseReference recipesRef = firebase.getDatabase().getReference()
+                .child("cookbook");
         recipesRef.addListenerForSingleValueEvent(listener);
     }
     public String[] onRecipeNamesFetched(String[] recipeNames) {
@@ -68,7 +70,8 @@ public class RecipeViewModel implements RecipeNamesCallback{
 
                 // Convert the user's ingredients list to a map for easier comparison
                 for (Ingredient userIngredient : user.getIngredients()) {
-                    userIngredientsQuantities.put(userIngredient.getName().toLowerCase(), userIngredient.getQuantity());
+                    userIngredientsQuantities.put(userIngredient.getName().toLowerCase(),
+                            userIngredient.getQuantity());
                 }
 
                 for (DataSnapshot recipeSnapshot : snapshot.getChildren()) {
@@ -79,18 +82,21 @@ public class RecipeViewModel implements RecipeNamesCallback{
                         String ingredientName = ingredient.getName().toLowerCase();
                         int requiredQuantity = ingredient.getQuantity();
 
-                        if (!userIngredientsQuantities.containsKey(ingredientName) ||
-                                userIngredientsQuantities.get(ingredientName) < requiredQuantity) {
+                        if (!userIngredientsQuantities.containsKey(ingredientName)
+                                || userIngredientsQuantities.get(ingredientName)
+                                < requiredQuantity) {
                             hasAllIngredients = false;
                             break;
                         }
                     }
 
-                    // Optionally, use a custom object to hold the recipe and indication of ingredient sufficiency
+                    // Optionally, use a custom object to hold the recipe and indication of
+                    // ingredient sufficiency
                     if (hasAllIngredients) {
                         recipesWithIndication.add(recipe);
                     }
-                    // If you wish to show all recipes but mark those the user can cook, add all to list but mark them differently
+                    // If you wish to show all recipes but mark those the user can cook, add all
+                    // to list but mark them differently
                 }
 
                 listener.onDataChange(snapshot); // Replace with passing recipesWithIndication to UI
