@@ -155,24 +155,28 @@ public class AddRecipeActivity extends AppCompatActivity {
                 }
 
                 // Convert the pairs to Ingredient objects
-                List<Ingredient> ingredientsForThisDish = new ArrayList<>();
+                HashMap<String, Integer> ingredientsForThisDish = new HashMap<>();
                 for (Pair<String, Integer> pair : ingredientsPairs) {
                     // Assuming the default constructor of Ingredient takes name, quantity, and userId in that order
                     // Also assuming 0 for calories and an empty string for the expiration date
-                    ingredientsForThisDish.add(new Ingredient(pair.first, 0, pair.second, FirebaseViewModel.getInstance().getUser().getUserId()));
+                    ingredientsForThisDish.put(pair.first, pair.second);
                 }
 
                 // Create the Recipe object
-                Recipe newRecipe = new Recipe(dishName, ingredientsForThisDish, FirebaseViewModel.getInstance().getUser().getUserId());
+                Recipe newRecipe = new Recipe(dishName, ingredientsForThisDish);
 
                 // Use RecipeViewModel to add the recipe to the database
                 RecipeViewModel.addRecipe(newRecipe);
+                RecipeViewModel.fetchRecipes(FirebaseViewModel.getInstance().getUser());
 
                 // Clear the inputs and the ingredients list from the map
                 dishNameEditText.setText("");
                 dishIngredientsMap.remove(dishName);
 
                 Toast.makeText(AddRecipeActivity.this, "Recipe saved successfully", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(AddRecipeActivity.this, RecipeActivity.class);
+                startActivity(intent);
             }
         });
     }

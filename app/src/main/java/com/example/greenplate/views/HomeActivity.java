@@ -85,10 +85,10 @@ public class HomeActivity extends AppCompatActivity {
                         FirebaseViewModel.getInstance().getUser().getUserId()));
 
                 // Create the first preset recipe
-                Recipe margheritaPizza = new Recipe("Margherita Pizza",
-                        margheritaIngredients, FirebaseViewModel.getInstance().getUser()
-                        .getUserId());
-                RecipeViewModel.addRecipe(margheritaPizza);
+                //Recipe margheritaPizza = new Recipe("Margherita Pizza",
+                        //margheritaIngredients, FirebaseViewModel.getInstance().getUser()
+                        //.getUserId());
+                //RecipeViewModel.addRecipe(margheritaPizza);
 
                 // Create ingredients list for the second recipe
                 ArrayList<Ingredient> carbonaraIngredients = new ArrayList<>();
@@ -102,10 +102,10 @@ public class HomeActivity extends AppCompatActivity {
                         FirebaseViewModel.getInstance().getUser().getUserId()));
 
                 // Create the second preset recipe
-                Recipe carbonaraSpaghetti = new Recipe("Spaghetti Carbonara",
-                        carbonaraIngredients,
-                        FirebaseViewModel.getInstance().getUser().getUserId());
-                RecipeViewModel.addRecipe(carbonaraSpaghetti);
+                //Recipe carbonaraSpaghetti = new Recipe("Spaghetti Carbonara",
+                //        carbonaraIngredients,
+                //        FirebaseViewModel.getInstance().getUser().getUserId());
+                //RecipeViewModel.addRecipe(carbonaraSpaghetti);
 
                 Intent intent = new Intent(HomeActivity.this,
                         HomeActivity.class);
@@ -148,6 +148,7 @@ public class HomeActivity extends AppCompatActivity {
         toPersonalInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(HomeActivity.this,
                         PersonalInfoActivity.class);
                 startActivity(intent);

@@ -11,6 +11,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.greenplate.R;
+import com.example.greenplate.models.Recipe;
+import com.example.greenplate.viewmodels.FirebaseViewModel;
+import com.example.greenplate.viewmodels.SortByName;
+
+import java.util.ArrayList;
 
 /**
  * RecipeActivity serves as the primary interface
@@ -24,9 +29,6 @@ import com.example.greenplate.R;
  */
 
 public class Recipe20minActivity extends AppCompatActivity {
-
-    private String[] itemString = {"PB&J", "Apple Pie", "Birthday Cake"};
-
     /**
      * Initializes the activity by setting
      * the content view to the recipe page layout
@@ -53,22 +55,39 @@ public class Recipe20minActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_page_20min);
 
-        // add code here
         ListView listView = findViewById(R.id.recipe_list);
+
+
+        ArrayList<Recipe> recipes = FirebaseViewModel.getInstance().getUser().getRecipes();
+
+        Recipe[] recipeListUnsorted = new Recipe[recipes.size()];
+
+
+
+        for (int i = 0; i < recipes.size(); i++) {
+            if (recipes.get(i).isCanMake()) {
+                recipeListUnsorted[i] = recipes.get(i);
+            }
+        }
+        ArrayList<String> recipeNameList = new ArrayList<>();
+        for (Recipe recipe : recipeListUnsorted) {
+            if (recipe != null) {
+                recipeNameList.add(recipe.getRecipeName());
+            }
+        }
+
         ArrayAdapter<String> arrayAdapter = new
                 ArrayAdapter<>(
                         Recipe20minActivity.this, android.R.layout.simple_list_item_1,
-                itemString);
+                recipeNameList);
         listView.setAdapter(arrayAdapter);
 
 
-        listView.setAdapter(arrayAdapter);
         listView.setOnItemClickListener((adapterView, view, i, l) -> {
             String item = (String) adapterView.getItemAtPosition(i);
-            Toast.makeText(Recipe20minActivity.this, "Selected" + item,
-                    Toast.LENGTH_SHORT).show();
 
             // can implement add ingredients here
+            onClickItem(item);
         });
 
         final ImageButton toHome = findViewById(R.id.toHomePage);
@@ -160,5 +179,10 @@ public class Recipe20minActivity extends AppCompatActivity {
 
 
 
+    }
+    public void onClickItem(String item) {
+        Intent intent = new Intent(Recipe20minActivity.this, ViewRecipeActivity.class);
+        intent.putExtra("name", item);
+        startActivity(intent);
     }
 }

@@ -24,8 +24,8 @@ public class User {
     private String userId;
     private String email;
     private ArrayList<String> mealIds = new ArrayList<>();
-
     private ArrayList<Ingredient> ingredients = new ArrayList<>();
+    private ArrayList<Recipe> recipes = new ArrayList<>();
 
 
     /**
@@ -145,5 +145,33 @@ public class User {
                 ingredients.remove(i);
             }
         }
+    }
+
+    public int getQuantityOfIngredient(String ingredientName) {
+        for (Ingredient ingredient : ingredients) {
+            if (ingredient.getName().equals(ingredientName)) {
+                return ingredient.getQuantity();
+            }
+        }
+        return 0;
+    }
+
+    public void setRecipes(ArrayList<Recipe> recipes) {
+        this.recipes = recipes;
+    }
+
+    public ArrayList<Recipe> getRecipes() {
+        return recipes;
+    }
+
+    public boolean checkForIngredientAndQuantity(String ingredientName, int quantityNeeded) {
+        for (Ingredient ingredient : ingredients) {
+            if (ingredient.getName().equals(ingredientName)) {
+                if (getQuantityOfIngredient(ingredientName) >= quantityNeeded) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

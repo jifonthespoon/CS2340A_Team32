@@ -2,8 +2,10 @@ package com.example.greenplate.views;
 
 import com.example.greenplate.R;
 
+import com.example.greenplate.models.Recipe;
 import com.example.greenplate.models.SortingStrategy;
 
+import com.example.greenplate.viewmodels.FirebaseViewModel;
 import com.example.greenplate.viewmodels.RecipeViewModel;
 import com.example.greenplate.viewmodels.SortByName;
 import com.google.firebase.database.DataSnapshot;
@@ -41,10 +43,7 @@ import java.util.ArrayList;
 public class RecipeActivity extends AppCompatActivity {
     private SortingStrategy sortingStrategy;
 
-    private String[] itemString = {"Margherita Pizza", "Chicken Parmesan", "Apple Pie", "PB&J",
-                                   "Spaghetti Carbonara", "Birthday Cake", "Orange Chicken",
-                                   "Braised Beef", "Tikki Masala", "Grilled Chicken Breast",
-                                   "Calamari", "Smoked Salmon"};
+
 
     /**
      * Initializes the activity by setting
@@ -71,24 +70,31 @@ public class RecipeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_page);
-
+        RecipeViewModel.fetchRecipes(FirebaseViewModel.getInstance().getUser());
+        ArrayList<Recipe> recipes = FirebaseViewModel.getInstance().getUser().getRecipes();
         sortingStrategy = new SortByName();
-        String[] recipeList = sortingStrategy.sortRecipes(itemString);
+        Recipe[] recipeListUnsorted = new Recipe[recipes.size()];
+        for (int i = 0; i < recipes.size(); i++) {
+            recipeListUnsorted[i] = recipes.get(i);
+        }
+        Recipe[] recipeList = sortingStrategy.sortRecipes(recipeListUnsorted);
 
         ListView listView = findViewById(R.id.recipe_list);
+        ArrayList<String> recipeNameList = new ArrayList<>();
+        for (Recipe recipe : recipeList) {
+            recipeNameList.add(recipe.getRecipeName());
+        }
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(RecipeActivity.this,
-                android.R.layout.simple_list_item_1, recipeList);
+                android.R.layout.simple_list_item_1, recipeNameList);
         listView.setAdapter(arrayAdapter);
 
 
         // Set item click listener for ListView
         listView.setOnItemClickListener((adapterView, view, i, l) -> {
             String item = (String) adapterView.getItemAtPosition(i);
-            Toast.makeText(RecipeActivity.this, "Selected: " + item,
-                    Toast.LENGTH_SHORT).show();
 
             // Move onClick method outside of lambda expression
-            onClickItem();
+            onClickItem(item);
         });
 
 
@@ -188,43 +194,10 @@ public class RecipeActivity extends AppCompatActivity {
         this.sortingStrategy = sortingStrategy;
     }
 
-    public void fetchRecipes(ArrayList<String> recipeNames) {
-        RecipeViewModel.fetchRecipes(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                recipeNames.clear();
-
-                for (DataSnapshot recipeSnapshot: snapshot.getChildren()) {
-                    String recipeName = (String) recipeSnapshot.child("recipeName").getValue();
-                    recipeNames.add(recipeName);
-                }
-                handleFetchedRecipes(recipeNames);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                System.out.println("Something went wrong");
-            }
-        });
-    }
-    public void handleFetchedRecipes(ArrayList<String> recipeNames) {
-        System.out.println("The fetched recipes are " + recipeNames);
-        ListView listView = findViewById(R.id.recipe_list);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(RecipeActivity.this,
-                android.R.layout.simple_list_item_1, recipeNames);
-        listView.setAdapter(arrayAdapter);
-
-        // Set item click listener for ListView
-        listView.setOnItemClickListener((adapterView, view, i, l) -> {
-            String selectedItem = recipeNames.get(i);
-            Toast.makeText(RecipeActivity.this, "Selected: " + selectedItem,
-                    Toast.LENGTH_SHORT).show();
-        });
-    }
     // Define onClick method outside of lambda expression
-    public void onClickItem() {
+    public void onClickItem(String item) {
         Intent intent = new Intent(RecipeActivity.this, ViewRecipeActivity.class);
+        intent.putExtra("name", item);
         startActivity(intent);
     }
 
