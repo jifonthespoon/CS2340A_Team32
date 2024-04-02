@@ -119,7 +119,8 @@ public class AddRecipeActivity extends AppCompatActivity {
                 }
 
                 // Add the ingredient and quantity to the list for this dish name in the map
-                List<Pair<String, Integer>> ingredientsList = dishIngredientsMap.getOrDefault(dishName, new ArrayList<>());
+                List<Pair<String, Integer>> ingredientsList =
+                        dishIngredientsMap.getOrDefault(dishName, new ArrayList<>());
                 ingredientsList.add(new Pair<>(ingredient, quantity));
                 dishIngredientsMap.put(dishName, ingredientsList);
 
@@ -128,7 +129,8 @@ public class AddRecipeActivity extends AppCompatActivity {
                 quantityEditText.setText("");
 
                 // Optionally, you can display a toast to indicate the ingredient was added
-                Toast.makeText(AddRecipeActivity.this, "Ingredient added", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddRecipeActivity.this,
+                        "Ingredient added", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -143,27 +145,32 @@ public class AddRecipeActivity extends AppCompatActivity {
                 String dishName = dishNameEditText.getText().toString().trim();
 
                 if (dishName.isEmpty()) {
-                    Toast.makeText(AddRecipeActivity.this, "Please enter a dish name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddRecipeActivity.this,
+                            "Please enter a dish name", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 // Retrieve the list of ingredients (as pairs) for this dish
                 List<Pair<String, Integer>> ingredientsPairs = dishIngredientsMap.get(dishName);
                 if (ingredientsPairs == null || ingredientsPairs.isEmpty()) {
-                    Toast.makeText(AddRecipeActivity.this, "No ingredients added for this dish", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddRecipeActivity.this,
+                            "No ingredients added for this dish", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 // Convert the pairs to Ingredient objects
                 List<Ingredient> ingredientsForThisDish = new ArrayList<>();
                 for (Pair<String, Integer> pair : ingredientsPairs) {
-                    // Assuming the default constructor of Ingredient takes name, quantity, and userId in that order
+                    // Assuming the default constructor of Ingredient takes name,
+                    // quantity, and userId in that order
                     // Also assuming 0 for calories and an empty string for the expiration date
-                    ingredientsForThisDish.add(new Ingredient(pair.first, 0, pair.second, FirebaseViewModel.getInstance().getUser().getUserId()));
+                    ingredientsForThisDish.add(new Ingredient(pair.first, 0,
+                            pair.second, FirebaseViewModel.getInstance().getUser().getUserId()));
                 }
 
                 // Create the Recipe object
-                Recipe newRecipe = new Recipe(dishName, ingredientsForThisDish, FirebaseViewModel.getInstance().getUser().getUserId());
+                Recipe newRecipe = new Recipe(dishName, ingredientsForThisDish,
+                        FirebaseViewModel.getInstance().getUser().getUserId());
 
                 // Use RecipeViewModel to add the recipe to the database
                 RecipeViewModel.addRecipe(newRecipe);
@@ -172,7 +179,8 @@ public class AddRecipeActivity extends AppCompatActivity {
                 dishNameEditText.setText("");
                 dishIngredientsMap.remove(dishName);
 
-                Toast.makeText(AddRecipeActivity.this, "Recipe saved successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddRecipeActivity.this, "Recipe saved successfully",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
