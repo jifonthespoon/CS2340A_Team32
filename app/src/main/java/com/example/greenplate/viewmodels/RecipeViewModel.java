@@ -1,20 +1,15 @@
 package com.example.greenplate.viewmodels;
 
-import androidx.annotation.NonNull;
 
 import com.example.greenplate.models.Firebase;
-import com.example.greenplate.models.Ingredient;
 import com.example.greenplate.models.Recipe;
-import com.example.greenplate.models.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class RecipeViewModel {
     private static Firebase firebase = Firebase.getInstance();
@@ -69,4 +64,5 @@ public class RecipeViewModel {
                     }
                 });
     }
+
 }
