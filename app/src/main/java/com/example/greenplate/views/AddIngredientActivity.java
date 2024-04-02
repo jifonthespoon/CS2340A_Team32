@@ -2,7 +2,9 @@ package com.example.greenplate.views;
 
 
 import com.example.greenplate.R;
+import com.example.greenplate.viewmodels.FirebaseViewModel;
 import com.example.greenplate.viewmodels.IngredientsViewModel;
+import com.example.greenplate.viewmodels.RecipeViewModel;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -140,6 +142,7 @@ public class AddIngredientActivity extends AppCompatActivity {
 
                 Toast.makeText(AddIngredientActivity.this, "Ingredient saved!",
                         Toast.LENGTH_SHORT).show();
+                RecipeViewModel.fetchRecipes(FirebaseViewModel.getInstance().getUser());
             }
         });
 

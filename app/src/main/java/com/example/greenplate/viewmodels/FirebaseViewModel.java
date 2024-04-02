@@ -75,6 +75,7 @@ public class FirebaseViewModel extends ViewModel {
                                 Integer.valueOf(userInfo.get("heightInInches")),
                                 userInfo.get("userId"), userInfo.get("email"), mealIds);
                         IngredientsViewModel.fetchIngredients(user);
+                        RecipeViewModel.fetchRecipes(user);
                     }
 
                     @Override

@@ -11,7 +11,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecipeViewModel implements RecipeNamesCallback {
+public class RecipeViewModel {
     private static Firebase firebase = Firebase.getInstance();
 
     public static void addRecipe(Recipe recipe) {
@@ -21,39 +21,48 @@ public class RecipeViewModel implements RecipeNamesCallback {
         recipe.setId(recipesRef.getKey());
     }
 
-    public static void fetchRecipes(ValueEventListener listener) {
-        DatabaseReference recipesRef = firebase.getDatabase().getReference()
-                .child("cookbook");
-        recipesRef.addListenerForSingleValueEvent(listener);
-    }
-    public String[] onRecipeNamesFetched(String[] recipeNames) {
-        return recipeNames;
-    }
-    public static void getRecipeNames(RecipeNamesCallback callback) {
-        fetchRecipes(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                List<String> recipeNames = new ArrayList<>();
-                for (DataSnapshot recipeSnapshot : dataSnapshot.getChildren()) {
-                    String recipeName = recipeSnapshot.child("name").getValue(String.class);
-                    recipeNames.add(recipeName);
-                }
+    public static void fetchRecipes(User user) {
+        ArrayList<Recipe> recipes = new ArrayList<>();
+        firebase.getDatabase().getReference().child("cookbook")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        HashMap<String, HashMap<String, Object>> recipesMap =
+                                (HashMap<String, HashMap<String, Object>>) snapshot.getValue();
+                        if (recipes != null) {
+                            //System.out.println(recipesMap);
 
-                // Convert List to Array before passing it to the callback
-                String[] recipeNamesArray = recipeNames.toArray(new String[0]);
-                callback.onRecipeNamesFetched(recipeNamesArray);
-            }
+                            for (String recipeId : recipesMap.keySet()) {
+                                HashMap<String, Integer> ingredientMap = new HashMap<>();
+                                for (Object fieldName : recipesMap.get(recipeId).keySet()) {
+                                    if (fieldName.equals("ingredients")) {
+                                        //System.out.println(((HashMap<String, Integer>) recipesMap.get(recipeId).get(fieldName)).get("Bun"));
+                                        for (String ingredientName : ((HashMap<String, String>) recipesMap.get(recipeId).get(fieldName)).keySet()) {
+                                            ingredientMap.put(ingredientName, Integer.valueOf(((HashMap<String, String>) recipesMap.get(recipeId).get(fieldName)).get(ingredientName)));
+                                        }
+                                    }
+                                }
+                                boolean canMake = true;
+                                for (String ingredientName : ingredientMap.keySet()) {
+                                    if (user.getIngredients().size() == 0) {
+                                        canMake = false;
+                                    }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.err.println("Listener was cancelled, error: " + databaseError.getMessage());
-            }
-        });
-    }
+                                    if (!FirebaseViewModel.getInstance().getUser().checkForIngredientAndQuantity(ingredientName, ingredientMap.get(ingredientName))) {
+                                        canMake = false;
+                                    }
+                                }
+                                recipes.add(new Recipe((String) recipesMap.get(recipeId).get("recipeName"), ingredientMap, recipeId, canMake));
+                            }
+                            user.setRecipes(recipes);
+                        }
+                    }
 
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
 
-    public static void removeRecipe(String recipeId) {
-        firebase.getDatabase().getReference().child("cookbook").child(recipeId).removeValue();
+                    }
+                });
     }
 
 }

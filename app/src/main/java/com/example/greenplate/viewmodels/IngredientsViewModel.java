@@ -84,5 +84,6 @@ public class IngredientsViewModel {
             firebase.getDatabase().getReference().child("pantry")
                     .child(ingredient.getId()).setValue(ingredient.getMap());
         }
+        RecipeViewModel.fetchRecipes(FirebaseViewModel.getInstance().getUser());
     }
 }
