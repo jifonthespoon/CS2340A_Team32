@@ -1,18 +1,20 @@
 package com.example.greenplate.views;
 
-import static com.example.greenplate.R.id.toPersonalPage;
 
 import com.example.greenplate.R;
+import com.example.greenplate.viewmodels.IngredientsViewModel;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class AddIngredientActivity extends AppCompatActivity{
+public class AddIngredientActivity extends AppCompatActivity {
     /**
      * Called when the activity is starting.
      * This method handles the initialization of the activity,
@@ -98,9 +100,46 @@ public class AddIngredientActivity extends AppCompatActivity{
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // to implement
+                EditText nameEditText = findViewById(R.id.ingredient_name_enter);
+                EditText quantityEditText = findViewById(R.id.ingredient_quantity_enter);
+                EditText caloriesEditText = findViewById(R.id.ingredient_calories_enter);
+                EditText expirationDateEditText = findViewById(R.id.ingredient_expiration_enter);
 
+                // Extract the text from each EditText
+                String name = nameEditText.getText().toString();
+                String quantityStr = quantityEditText.getText().toString();
+                String caloriesStr = caloriesEditText.getText().toString();
+                String expirationDate = expirationDateEditText.getText().toString();
 
+                // Convert quantity and calories from String to int
+                int quantity = 0;
+                int calories = 0;
+                try {
+                    quantity = Integer.parseInt(quantityStr);
+                    calories = Integer.parseInt(caloriesStr);
+                } catch (NumberFormatException e) {
+                    // Handle the case where either quantity or calories isn't a valid integer
+                    Toast.makeText(AddIngredientActivity.this, "Quantity and Calories "
+                            + "must be valid numbers.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Validate the input (e.g., check if name is empty, quantity is positive, etc.)
+                if (name.isEmpty() || quantity <= 0) {
+                    Toast.makeText(AddIngredientActivity.this, "Please fill out the "
+                            + "name and make sure quantity is positive.",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                IngredientsViewModel.addIngredient(name, calories, quantity, expirationDate);
+
+                nameEditText.setText("");
+                quantityEditText.setText("");
+                caloriesEditText.setText("");
+                expirationDateEditText.setText("");
+
+                Toast.makeText(AddIngredientActivity.this, "Ingredient saved!",
+                        Toast.LENGTH_SHORT).show();
             }
         });
 

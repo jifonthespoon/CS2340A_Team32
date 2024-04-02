@@ -91,6 +91,11 @@
             android:exported="true">
         </activity>
 
+        <activity
+            android:name=".views.ViewRecipeActivity"
+            android:exported="true">
+        </activity>
+
 
     </application>
 

@@ -10,6 +10,7 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.example.greenplate.R;
+import com.example.greenplate.viewmodels.IngredientsViewModel;
 
 import java.util.ArrayList;
 
@@ -41,25 +42,27 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         View view = convertView;
         if (view == null) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater = (LayoutInflater)
+                    context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.ingredient_row, null);
         }
 
         //Handle TextView and display string from your list
-        TextView ingredientName = (TextView)view.findViewById(R.id.ingredientName);
+        TextView ingredientName = (TextView) view.findViewById(R.id.ingredientName);
         ingredientName.setText(list.get(position).getName());
 
-        TextView ingredientQuantity = (TextView)view.findViewById(R.id.quantity);
+        TextView ingredientQuantity = (TextView) view.findViewById(R.id.quantity);
         ingredientQuantity.setText(String.valueOf(list.get(position).getQuantity()));
 
         //Handle buttons and add onClickListeners
         Button increaseButton = (Button) view.findViewById(R.id.incrButton);
         Button decreaseButton = (Button) view.findViewById(R.id.decrButton);
 
-        increaseButton.setOnClickListener(new View.OnClickListener(){
+        increaseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 list.get(position).increaseQuantity();
+                IngredientsViewModel.updateIngredient(list.get(position));
                 ingredientQuantity.setText(String.valueOf(list.get(position).getQuantity()));
             }
         });
@@ -68,6 +71,7 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter {
             @Override
             public void onClick(View v) {
                 int newQuantity = list.get(position).decreaseQuantity();
+                IngredientsViewModel.updateIngredient(list.get(position));
                 if (newQuantity > 0) {
                     ingredientQuantity.setText(String.valueOf(list.get(position).getQuantity()));
                 } else {

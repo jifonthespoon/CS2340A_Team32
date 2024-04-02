@@ -43,13 +43,17 @@ public class Meal {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Meal meal = (Meal) o;
-        return calories == meal.calories &&
-                Objects.equals(mealId, meal.mealId) &&
-                Objects.equals(name, meal.name) &&
-                Objects.equals(dateAdded, meal.dateAdded);
+        return calories == meal.calories
+                && Objects.equals(mealId, meal.mealId)
+                && Objects.equals(name, meal.name)
+                && Objects.equals(dateAdded, meal.dateAdded);
     }
 
     public int getCalories() {

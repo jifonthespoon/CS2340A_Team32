@@ -7,11 +7,21 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import com.example.greenplate.models.Meal;
+import com.example.greenplate.models.SortingStrategy;
 import com.example.greenplate.models.User;
+import com.example.greenplate.models.SortingStrategy;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
+import com.example.greenplate.models.Recipe;
+import com.example.greenplate.models.Ingredient;
+import com.example.greenplate.viewmodels.SortByName;
+import com.example.greenplate.viewmodels.SortByReverseName;
+import com.example.greenplate.viewmodels.IngredientsViewModel;
+import com.example.greenplate.viewmodels.SortByName;
+import com.example.greenplate.viewmodels.SortByReverseName;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,7 +51,7 @@ public class ExampleUnitTest {
         assertEquals(checkInput(""), false);
     }
 
-        @Test
+    @Test
     public void testNullEmail() {
         assertEquals(checkInput(null), false);
     }
@@ -92,6 +102,13 @@ public class ExampleUnitTest {
     }
 
     @Test
+    public void testMaleCalorieCount2() {
+        //testing if a male and female of the same height and weight output different calories
+        User user = new User("Test User", 346, "Male", 72, "test-user", "test@gmail.com");
+        assertEquals(user.getDailyCalorieIntake(), 2717);
+    }
+
+    @Test
     public void testFemaleCalorieCount2() {
         //testing if a male and female of the same height and weight output different calories
         User user = new User("Test User", 346, "Female", 72, "test-user", "test@gmail.com");
@@ -137,4 +154,164 @@ public class ExampleUnitTest {
     }
 
 
+
+
+
+
+    // SPRINT 3 UNIT TESTS
+
+    // AUSTIN
+    @Test
+    public void decreaseIngredientQuantityWithReturn() {
+        Ingredient potatoes = new Ingredient("Potatoes", 120, 2, "94h98vb3-bvgevfi2-ef34g");
+        assertEquals(potatoes.decreaseQuantity(), 1);
+    }
+
+    @Test
+    public void increaseIngredientQuantity() {
+        Ingredient potatoes = new Ingredient("Potatoes", 120, 2, "94h98vb3-bvgevfi2-ef34g");
+        potatoes.increaseQuantity();
+        assertEquals(potatoes.getQuantity(), 3);
+    }
+
+    // ANYA
+    
+    @Test
+    public void testValidIngredientName() {
+        assertEquals(checkInput("Tomato"), true);
+    }
+
+    @Test
+    public void testInvalidIngredientNameWithWhitespace() {
+        assertEquals(checkInput("   "), false);
+    }
+
+    @Test
+    public void testValidQuantity() {
+        assertEquals(checkQuantity("2"), true);
+    }
+
+    @Test
+    public void testInvalidQuantityWithNonNumeric() {
+        assertEquals(checkQuantity("abc"), false);
+    }
+
+    @Test
+    public void testValidDate() {
+        assertEquals(checkDateFormat("2024-03-12"), true);
+    }
+
+    @Test
+    public void testInvalidDateWithWrongFormat() {
+        assertEquals(checkDateFormat("12-03-2024"), false);
+    }
+    
+    public static boolean checkQuantity(String quantity) {
+        try {
+            int qty = Integer.parseInt(quantity);
+            // Quantity must be a positive integer
+            return qty > 0;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    public static boolean checkDateFormat(String date) {
+        // Check if the date matches the expected format (YYYY-MM-DD)
+        return date.matches("\\d{4}-\\d{2}-\\d{2}");
+    }
+
+
+    // SUBHA
+    @Test public void testRecipeConstructor() {
+        List<Ingredient> ingredients = new ArrayList<>();
+        ingredients.add(new Ingredient("Bread", 150, 2, "2023-12-30", "subha"));
+        ingredients.add(new Ingredient("cheese", 200, 1, "2023-12-30", "subha"));
+        Recipe recipe = new Recipe("Grilled cheese", ingredients, "subha");
+        assertEquals("Grilled cheese", recipe.getRecipeName());
+        assertEquals(ingredients, recipe.getIngredients());
+        assertEquals("subha", recipe.getUserId());
+    }
+
+    @Test public void testIngredientConstructor() {
+        Ingredient ingredient = new Ingredient("Milk", 50, 4, "2023-06-30", "subha", "milk");
+        assertEquals("Milk", ingredient.getName());
+        assertEquals(50, ingredient.getCalories());
+        assertEquals(4, ingredient.getQuantity());
+        assertEquals("subha", ingredient.getUserId());
+        assertEquals("milk", ingredient.getId());
+    }
+
+    // NATHAN
+    @Test
+    public void testSorting() {
+        String[] testList = {"C", "B", "A", "D"};
+        SortingStrategy testSort = new SortByName();
+        String[] sortedList = testSort.sortRecipes(testList);
+        assertEquals("A", sortedList[0]);
+        assertEquals("B", sortedList[1]);
+        assertEquals("C", sortedList[2]);
+        assertEquals("D", sortedList[3]);
+    }
+
+    @Test
+    public void testReverseSorting() {
+        String[] testList = {"C", "B", "A", "D"};
+        SortingStrategy testSort = new SortByReverseName();
+        String[] sortedList = testSort.sortRecipes(testList);
+        assertEquals("D", sortedList[0]);
+        assertEquals("C", sortedList[1]);
+        assertEquals("B", sortedList[2]);
+        assertEquals("A", sortedList[3]);
+    }
+
+    // DANIEL
+    @Test
+    public void testRecipeToMapIncludesAllIngredients() {
+        Ingredient ingredient1 = new Ingredient("Salt", 0, 1, "2024-12-31", "user123", "ingredient1");
+        Ingredient ingredient2 = new Ingredient("Pepper", 0, 2, "2024-12-31", "user123", "ingredient2");
+        List<Ingredient> ingredients = new ArrayList<>();
+        ingredients.add(ingredient1);
+        ingredients.add(ingredient2);
+        Recipe recipe = new Recipe("Seasoning Mix", ingredients, "user123");
+
+        Map<String, Object> recipeMap = recipe.toMap();
+
+        assertEquals("Seasoning Mix", recipeMap.get("recipeName"));
+        Map<String, String> ingredientsMap = (Map<String, String>) recipeMap.get("ingredients");
+        assertNotNull(ingredientsMap);
+        assertEquals("1", ingredientsMap.get("Salt"));
+        assertEquals("2", ingredientsMap.get("Pepper"));
+    }
+
+    @Test
+    public void testAddingIngredientUpdatesRecipe() {
+        Ingredient ingredient1 = new Ingredient("Sugar", 15, 1, "2024-12-31", "user123", "ingredient1");
+        List<Ingredient> ingredients = new ArrayList<>();
+        ingredients.add(ingredient1);
+        Recipe recipe = new Recipe("Sweet Mix", ingredients, "user123");
+
+        Ingredient ingredient2 = new Ingredient("Cinnamon", 5, 1, "2024-12-31", "user123", "ingredient2");
+        recipe.getIngredients().add(ingredient2);
+        assertEquals(2, recipe.getIngredients().size());
+        assertTrue(recipe.getIngredients().contains(ingredient1));
+        assertTrue(recipe.getIngredients().contains(ingredient2));
+    }
+    // KUSHAL
+    @Test public void testIngredient() {
+        Ingredient ingredient = new Ingredient("Tomato", 25, 3, "2024-12-31", "user123", "ingredient123");
+        assertEquals("Tomato", ingredient.getName());
+        assertEquals(25, ingredient.getCalories());
+        assertEquals(3, ingredient.getQuantity());
+        assertEquals("user123", ingredient.getUserId());
+        assertEquals("ingredient123", ingredient.getId());
+    }
+    @Test public void testRecipe() {
+        List<Ingredient> ingredients = new ArrayList<>();
+        ingredients.add(new Ingredient("Ingredient1", 100, 2, "2024-12-31", "user123"));
+        ingredients.add(new Ingredient("Ingredient2", 200, 3, "2024-12-31", "user123"));
+        Recipe recipe = new Recipe("TestRecipe", ingredients, "user123");
+        assertEquals("TestRecipe", recipe.getRecipeName());
+        assertEquals(ingredients, recipe.getIngredients());
+        assertEquals("user123", recipe.getUserId()); }
 }

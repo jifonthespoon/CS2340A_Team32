@@ -1,12 +1,12 @@
 package com.example.greenplate.models;
 
-import com.example.greenplate.viewmodels.IngredientsViewModel;
 
-import java.lang.reflect.Array;
+
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
+
 
 /**
  * Represents a user in the application with basic user information.
@@ -32,8 +32,14 @@ public class User {
      * Constructs a new User instance with the specified name.
      *
      * @param name The name of the user to be set during object creation.
+     * @param email The email of the user
+     * @param gender The gender of the user
+     * @param id The id of the user
+     * @param weight The weight of the user
+     * @param heightInInches The height of the user in inches
      */
-    public User(String name, int weight, String gender, int heightInInches, String id, String email) {
+    public User(String name, int weight, String gender, int heightInInches, String id,
+                String email) {
         this.name = name;
         this.gender = gender;
         this.weight = weight;
@@ -42,7 +48,8 @@ public class User {
         this.email = email;
     }
 
-    public User(String name, int weight, String gender, int heightInInches, String id, String email, ArrayList<String> meals) {
+    public User(String name, int weight, String gender, int heightInInches, String id,
+                String email, ArrayList<String> meals) {
         this.name = name;
         this.gender = gender;
         this.weight = weight;
