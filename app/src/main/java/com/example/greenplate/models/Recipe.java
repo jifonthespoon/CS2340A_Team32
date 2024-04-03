@@ -67,7 +67,7 @@ public class Recipe implements Comparable<Recipe> {
 
     @Override
     public int compareTo(Recipe o) {
-        return this.recipeName.compareTo(o.getRecipeName());
+        return this.recipeName.toLowerCase().compareTo(o.getRecipeName().toLowerCase());
     }
 
     public boolean isCanMake() {

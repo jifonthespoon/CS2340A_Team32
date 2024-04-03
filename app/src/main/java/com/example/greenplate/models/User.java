@@ -149,7 +149,7 @@ public class User {
 
     public int getQuantityOfIngredient(String ingredientName) {
         for (Ingredient ingredient : ingredients) {
-            if (ingredient.getName().equals(ingredientName)) {
+            if (ingredient.getName().toLowerCase().equals(ingredientName.toLowerCase())) {
                 return ingredient.getQuantity();
             }
         }
@@ -166,7 +166,7 @@ public class User {
 
     public boolean checkForIngredientAndQuantity(String ingredientName, int quantityNeeded) {
         for (Ingredient ingredient : ingredients) {
-            if (ingredient.getName().equals(ingredientName)) {
+            if (ingredient.getName().toLowerCase().equals(ingredientName.toLowerCase())) {
                 if (getQuantityOfIngredient(ingredientName) >= quantityNeeded) {
                     return true;
                 }
