@@ -1,7 +1,6 @@
 package com.example.greenplate.views;
 
 import com.example.greenplate.R;
-import com.example.greenplate.models.Ingredient;
 import com.example.greenplate.models.Recipe;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
 import com.example.greenplate.viewmodels.RecipeViewModel;
