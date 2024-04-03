@@ -39,9 +39,14 @@ public class RecipeViewModel {
                                 HashMap<String, Integer> ingredientMap = new HashMap<>();
                                 for (Object fieldName : recipesMap.get(recipeId).keySet()) {
                                     if (fieldName.equals("ingredients")) {
-                                        //System.out.println(((HashMap<String, Integer>) recipesMap.get(recipeId).get(fieldName)).get("Bun"));
-                                        for (String ingredientName : ((HashMap<String, String>) recipesMap.get(recipeId).get(fieldName)).keySet()) {
-                                            ingredientMap.put(ingredientName, Integer.valueOf(((HashMap<String, String>) recipesMap.get(recipeId).get(fieldName)).get(ingredientName)));
+                                        //System.out.println(((HashMap<String, Integer>)
+                                        // recipesMap.get(recipeId).get(fieldName)).get("Bun"));
+                                        for (String ingredientName : ((HashMap<String, String>)
+                                                recipesMap.get(recipeId).get(fieldName)).keySet()) {
+                                            ingredientMap.put(ingredientName,
+                                                    Integer.valueOf(((HashMap<String, String>)
+                                                            recipesMap.get(recipeId).get(fieldName))
+                                                            .get(ingredientName)));
                                         }
                                     }
                                 }
@@ -51,11 +56,14 @@ public class RecipeViewModel {
                                         canMake = false;
                                     }
 
-                                    if (!FirebaseViewModel.getInstance().getUser().checkForIngredientAndQuantity(ingredientName, ingredientMap.get(ingredientName))) {
+                                    if (!FirebaseViewModel.getInstance().getUser()
+                                            .checkForIngredientAndQuantity(ingredientName,
+                                                    ingredientMap.get(ingredientName))) {
                                         canMake = false;
                                     }
                                 }
-                                recipes.add(new Recipe((String) recipesMap.get(recipeId).get("recipeName"), ingredientMap, recipeId, canMake));
+                                recipes.add(new Recipe((String) recipesMap.get(recipeId)
+                                        .get("recipeName"), ingredientMap, recipeId, canMake));
                             }
                             user.setRecipes(recipes);
                         }

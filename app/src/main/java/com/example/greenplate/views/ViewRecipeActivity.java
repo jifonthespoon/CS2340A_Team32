@@ -85,7 +85,8 @@ public class ViewRecipeActivity extends AppCompatActivity {
         dishNameTextView.setText(recipeLookingFor.getRecipeName());
         String ingredients = "";
         for (String ingredientName : recipeLookingFor.getIngredients().keySet()) {
-            ingredients += ingredientName + " - " + recipeLookingFor.getIngredients().get(ingredientName) + " \n";
+            ingredients += ingredientName + " - "
+                    + recipeLookingFor.getIngredients().get(ingredientName) + " \n";
         }
         ingredientTextView.setText(ingredients);
 

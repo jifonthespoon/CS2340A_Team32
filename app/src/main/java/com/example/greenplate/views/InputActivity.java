@@ -67,14 +67,12 @@ public class InputActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.input_page);
-        // Initialize navigation buttons and set their onClickListeners.
         final EditText mealNameInput = findViewById(R.id.input_page_meal_enter);
         final EditText caloriesInput = findViewById(R.id.input_page_calorie_enter);
         final ImageButton toHome = findViewById(R.id.toHomePage);
         FirebaseViewModel fvm = FirebaseViewModel.getInstance();
         TextView userInfo = findViewById(R.id.userInfoLabel);
         TextView calorieGoal = findViewById(R.id.calorieGoalText);
-
         userInfo.setText(fvm.getPersonalInformation());
         calorieGoal.setText(fvm.getCalorieGoal());
         toHome.setOnClickListener(new View.OnClickListener() {
@@ -116,8 +114,7 @@ public class InputActivity extends AppCompatActivity {
         toShopping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(InputActivity.this,
-                        ShoppingActivity.class);
+                Intent intent = new Intent(InputActivity.this, ShoppingActivity.class);
                 startActivity(intent);
             }
         });
@@ -137,10 +134,8 @@ public class InputActivity extends AppCompatActivity {
                 Intent intent = new Intent(InputActivity.this,
                         InputMonthlyActivity.class);
                 startActivity(intent);
-
             }
         });
-
         final ImageButton submit = findViewById(R.id.input_page_submit_button);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,33 +145,25 @@ public class InputActivity extends AppCompatActivity {
                 if (!caloriesString.isEmpty()) {
                     int calories = Integer.parseInt(caloriesInput.getText().toString().trim());
                     if (mealName.isEmpty() || caloriesString.isEmpty()) {
-                        // Show an error message or a toast to inform the user to input valid values
                         Toast.makeText(InputActivity.this, "Please enter valid meal "
                                 + "name " + "and calories.", Toast.LENGTH_LONG).show();
                         return; // Stop further execution
                     }
                     String dateAdded = new SimpleDateFormat("yyyy-MM-dd",
                             Locale.getDefault()).format(new Date());
-
-                    // Create a Meal object
                     Meal meal = new Meal(UUID.randomUUID().toString(), mealName, calories,
                             dateAdded);
-
-                    // Use FirebaseViewModel to save the meal
-                    fvm.saveOrUpdateMeal(meal);
-                    //clears input boxes
-                    mealNameInput.setText("");
-                    caloriesInput.setText("");
+                    fvm.saveOrUpdateMeal(meal); // Use FirebaseViewModel to save the meal
+                    mealNameInput.setText(""); //clears input boxes
+                    caloriesInput.setText(""); //clears input boxes
                 } else {
                     Toast.makeText(InputActivity.this,
                             "Please enter valid meal name and calories.",
                             Toast.LENGTH_LONG).show();
                     return;
                 }
-
             }
         });
-
         final ImageButton arrow = findViewById(R.id.arrow);
         arrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,43 +173,29 @@ public class InputActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
         BarChart mBarChart;
         mBarChart = findViewById(R.id.barChart);
         int totalCaloriesConsumed = 894;
         int recommendedTotalDailyCalorie = 1620;
-        // Inside onCreate or another appropriate method
         ArrayList<BarEntry> entries = new ArrayList<>();
-
         entries.add(new BarEntry(1f, new float[]{totalCaloriesConsumed}));
         entries.add(new BarEntry(2f, new float[]{recommendedTotalDailyCalorie}));
-
         BarDataSet dataSet = new BarDataSet(entries, "Calories");
         dataSet.setColors(ColorTemplate.rgb("#D64933")); // Setting color to red
         BarData barData = new BarData(dataSet);
         mBarChart.setData(barData);
-
-
-        // Customize X-axis
-        XAxis xAxis = mBarChart.getXAxis();
+        XAxis xAxis = mBarChart.getXAxis();  // Customize X-axis
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); // Position of X-axis labels
         xAxis.setGranularity(1.45f); // Interval between each label
         xAxis.setCenterAxisLabels(true); // Center the labels between the bars
         xAxis.setAxisMinimum(0.5f); // Adjust the minimum value to center the first bar
         xAxis.setValueFormatter(new IndexAxisValueFormatter(
                 new String[]{"Calories Consumed", "Calorie Goal"})); // Customizing labels
-
-
-
         dateLabel = findViewById(R.id.dayLabel);
         calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = dateFormat.format(calendar.getTime());
         updateDateLabel();
-
-        // ADD HERE
-
         final ImageButton backwardsTime = findViewById(R.id.left_arrow_input_page);
         backwardsTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -232,7 +205,6 @@ public class InputActivity extends AppCompatActivity {
                 updateVisualization();
             }
         });
-
         final ImageButton forwardsTime = findViewById(R.id.right_arrow_input_page);
         forwardsTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -242,23 +214,17 @@ public class InputActivity extends AppCompatActivity {
                 updateVisualization();
             }
         });
-
-
     }
-
     private void updateDateLabel() {
         SimpleDateFormat sdf = new SimpleDateFormat("MMM dd", Locale.getDefault());
         String formattedDate = sdf.format(calendar.getTime());
         dateLabel.setText(formattedDate);
     }
-
     private void updateVisualization() {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = dateFormat.format(calendar.getTime());
-        // ADD HERE
     }
-
 }

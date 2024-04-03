@@ -9,7 +9,8 @@ public class Recipe implements Comparable<Recipe> {
     private String id; // Unique identifier for the recipe
     private boolean canMake;
 
-    public Recipe(String recipeName, HashMap<String, Integer> ingredients, String id, boolean canMake) {
+    public Recipe(String recipeName, HashMap<String, Integer> ingredients, String id,
+                  boolean canMake) {
         this.recipeName = recipeName;
         this.ingredients = ingredients;
         this.id = id;
