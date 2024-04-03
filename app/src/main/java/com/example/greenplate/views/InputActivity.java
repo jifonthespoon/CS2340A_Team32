@@ -160,7 +160,6 @@ public class InputActivity extends AppCompatActivity {
                     Toast.makeText(InputActivity.this,
                             "Please enter valid meal name and calories.",
                             Toast.LENGTH_LONG).show();
-                    return;
                 }
             }
         });

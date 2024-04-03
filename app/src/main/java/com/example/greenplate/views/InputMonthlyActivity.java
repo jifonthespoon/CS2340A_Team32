@@ -138,7 +138,6 @@ public class InputMonthlyActivity extends AppCompatActivity {
                     Toast.makeText(InputMonthlyActivity.this,
                             "Please enter valid meal name and calories.",
                             Toast.LENGTH_LONG).show();
-                    return;
                 }
             }
         });
@@ -156,46 +155,20 @@ public class InputMonthlyActivity extends AppCompatActivity {
         mChart.setPinchZoom(true);
         mChart.getDescription().setText("");
         ArrayList<Entry> values = new ArrayList<>();
-        values.add(new Entry(1, 2000));
-        values.add(new Entry(2, 1930));
-        values.add(new Entry(3, 1810));
-        values.add(new Entry(4, 2110));
-        values.add(new Entry(5, 2050));
-        values.add(new Entry(6, 1590));
-        values.add(new Entry(7, 1990));
-        values.add(new Entry(8, 2000));
-        values.add(new Entry(9, 1950));
-        values.add(new Entry(10, 1890));
-        values.add(new Entry(11, 2010));
-        values.add(new Entry(12, 2020));
-        values.add(new Entry(13, 1960));
-        values.add(new Entry(14, 1990));
-        LineDataSet set1;
-        if (mChart.getData() != null
-                && mChart.getData().getDataSetCount() > 0) {
-            set1 = (LineDataSet) mChart.getData().getDataSetByIndex(0);
-            set1.setValues(values);
-            set1.setDrawValues(false);
+        addValues(values);
+        LineDataSet dataSet;
+        if (mChart.getData() != null && mChart.getData().getDataSetCount() > 0) {
+            dataSet = (LineDataSet) mChart.getData().getDataSetByIndex(0);
+            dataSet.setValues(values);
+            dataSet.setDrawValues(false);
             mChart.getData().notifyDataChanged();
             mChart.notifyDataSetChanged();
         } else {
-            set1 = new LineDataSet(values, "Calories per Day");
-            set1.setDrawIcons(false);
-            set1.setDrawValues(false);
-            set1.enableDashedLine(10f, 5f, 0f);
-            set1.enableDashedHighlightLine(10f, 5f, 0f);
-            set1.setColor(Color.DKGRAY);
-            set1.setCircleColor(Color.DKGRAY);
-            set1.setLineWidth(1f);
-            set1.setCircleRadius(3f);
-            set1.setDrawCircleHole(false);
-            set1.setValueTextSize(9f);
-            set1.setDrawFilled(true);
-            set1.setFormLineWidth(1f);
-            set1.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
-            set1.setFormSize(15.f);
+            dataSet = new LineDataSet(values, "Calories per Day");
+            configureSet(dataSet);
+
             ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-            dataSets.add(set1);
+            dataSets.add(dataSet);
             LineData data = new LineData(dataSets);
             mChart.setData(data);
             YAxis leftAxis = mChart.getAxisLeft();
@@ -235,5 +208,39 @@ public class InputMonthlyActivity extends AppCompatActivity {
         int month = calendar.get(Calendar.MONTH);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = dateFormat.format(calendar.getTime());
+    }
+
+    private void addValues(ArrayList<Entry> values) {
+        values.add(new Entry(1, 2000));
+        values.add(new Entry(2, 1930));
+        values.add(new Entry(3, 1810));
+        values.add(new Entry(4, 2110));
+        values.add(new Entry(5, 2050));
+        values.add(new Entry(6, 1590));
+        values.add(new Entry(7, 1990));
+        values.add(new Entry(8, 2000));
+        values.add(new Entry(9, 1950));
+        values.add(new Entry(10, 1890));
+        values.add(new Entry(11, 2010));
+        values.add(new Entry(12, 2020));
+        values.add(new Entry(13, 1960));
+        values.add(new Entry(14, 1990));
+    }
+
+    private void configureSet(LineDataSet dataSet) {
+        dataSet.setDrawIcons(false);
+        dataSet.setDrawValues(false);
+        dataSet.enableDashedLine(10f, 5f, 0f);
+        dataSet.enableDashedHighlightLine(10f, 5f, 0f);
+        dataSet.setColor(Color.DKGRAY);
+        dataSet.setCircleColor(Color.DKGRAY);
+        dataSet.setLineWidth(1f);
+        dataSet.setCircleRadius(3f);
+        dataSet.setDrawCircleHole(false);
+        dataSet.setValueTextSize(9f);
+        dataSet.setDrawFilled(true);
+        dataSet.setFormLineWidth(1f);
+        dataSet.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
+        dataSet.setFormSize(15.f);
     }
 }
