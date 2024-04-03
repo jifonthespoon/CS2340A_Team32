@@ -69,7 +69,7 @@ public class RecipeVegetarianActivity extends AppCompatActivity {
         ListView listView = findViewById(R.id.recipe_list);
         ArrayList<String> recipeNameList = new ArrayList<>();
         for (Recipe recipe : recipeList) {
-            recipeNameList.add(recipe.getRecipeName());
+            recipeNameList.add(recipe.getRecipeName() + " " + (recipe.isCanMake() ? "✓" : "x"));
         }
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(RecipeVegetarianActivity.this,
                 android.R.layout.simple_list_item_1, recipeNameList);
