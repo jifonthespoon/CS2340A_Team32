@@ -58,7 +58,6 @@ public class InputMonthlyActivity extends AppCompatActivity {
         FirebaseViewModel fvm = FirebaseViewModel.getInstance();
         TextView userInfo = findViewById(R.id.userInfoLabel);
         TextView calorieGoal = findViewById(R.id.calorieGoalText);
-
         userInfo.setText(fvm.getPersonalInformation());
         calorieGoal.setText(fvm.getCalorieGoal());
         toHome.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +104,6 @@ public class InputMonthlyActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
         final ImageButton toInputDaily = findViewById(R.id.toInputDaily);
         toInputDaily.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,7 +113,6 @@ public class InputMonthlyActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
         final ImageButton submit = findViewById(R.id.input_page_monthly_submit_button);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,9 +141,7 @@ public class InputMonthlyActivity extends AppCompatActivity {
                     return;
                 }
             }
-
         });
-
         final ImageButton arrow = findViewById(R.id.arrow);
         arrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,7 +151,6 @@ public class InputMonthlyActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
         LineChart mChart = findViewById(R.id.mpandroidchart1);
         mChart.setTouchEnabled(true);
         mChart.setPinchZoom(true);
@@ -200,22 +194,18 @@ public class InputMonthlyActivity extends AppCompatActivity {
             set1.setFormLineWidth(1f);
             set1.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
             set1.setFormSize(15.f);
-
             ArrayList<ILineDataSet> dataSets = new ArrayList<>();
             dataSets.add(set1);
             LineData data = new LineData(dataSets);
             mChart.setData(data);
-
             YAxis leftAxis = mChart.getAxisLeft();
             String caloriesGoalString = calorieGoal.getText().toString();
         }
-
         monthLabel = findViewById(R.id.monthLabel);
         calendar = Calendar.getInstance();
         updateDate();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = dateFormat.format(calendar.getTime());
-
         final ImageButton backwardsTime = findViewById(R.id.left_arrow_input_monthly_page);
         backwardsTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -225,7 +215,6 @@ public class InputMonthlyActivity extends AppCompatActivity {
                 updateVisualization();
             }
         });
-
         final ImageButton forwardsTime = findViewById(R.id.right_arrow_input_monthly_page);
         forwardsTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -235,20 +224,16 @@ public class InputMonthlyActivity extends AppCompatActivity {
                 updateVisualization();
             }
         });
-
     }
-
     private void updateDate() {
         SimpleDateFormat sdf = new SimpleDateFormat("MMM yyyy", Locale.getDefault());
         String formattedDate = sdf.format(calendar.getTime());
         monthLabel.setText(formattedDate);
     }
-
     private void updateVisualization() {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = dateFormat.format(calendar.getTime());
-        // ADD HERE
     }
 }
