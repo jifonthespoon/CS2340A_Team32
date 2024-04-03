@@ -34,18 +34,22 @@ public class ExampleUnitTest {
     public void testNull() {
         assertEquals(checkInput(null), false);
     }
+
     @Test
     public void testStrongPassword() {
         assertEquals(checkInput("Test123!"), true);
     }
+
     @Test
     public void testWeakPassword() {
         assertEquals(checkInput("Hi"), true);
     }
+
     @Test
     public void testSpacesString() {
         assertEquals(checkInput("   "), false);
     }
+
     @Test
     public void testEmptyString() {
         assertEquals(checkInput(""), false);
@@ -55,7 +59,7 @@ public class ExampleUnitTest {
     public void testNullEmail() {
         assertEquals(checkInput(null), false);
     }
-    
+
     @Test
     public void testUserCreation() {
         User user = new User("Test User", 150, "Male", 70, "test-user", "test@gmail.com");
@@ -129,6 +133,7 @@ public class ExampleUnitTest {
         assertEquals(130, user.getWeight());
         assertEquals("Female", user.getGender());
     }
+
     public void getUserMap_outputsCorrectMap() {
         User user = new User("Jane Doe", 130, "Female", 65, "user123", "jane.doe@example.com");
         Map<String, Object> userMap = user.getUserMap();
@@ -140,12 +145,8 @@ public class ExampleUnitTest {
         assertEquals("user123", userMap.get("userId"));
         assertEquals("jane.doe@example.com", userMap.get("email"));
         // Assuming mealIds is an empty list initially
-        assertTrue(((ArrayList)userMap.get("mealIds")).isEmpty());
+        assertTrue(((ArrayList) userMap.get("mealIds")).isEmpty());
     }
-
-
-
-
 
 
     // SPRINT 3 UNIT TESTS
@@ -165,7 +166,7 @@ public class ExampleUnitTest {
     }
 
     // ANYA
-    
+
     @Test
     public void testValidIngredientName() {
         assertEquals(checkInput("Tomato"), true);
@@ -195,7 +196,7 @@ public class ExampleUnitTest {
     public void testInvalidDateWithWrongFormat() {
         assertEquals(checkDateFormat("12-03-2024"), false);
     }
-    
+
     public static boolean checkQuantity(String quantity) {
         try {
             int qty = Integer.parseInt(quantity);
@@ -213,17 +214,18 @@ public class ExampleUnitTest {
 
 
     // SUBHA
-    @Test public void testRecipeConstructor() {
-        List<Ingredient> ingredients = new ArrayList<>();
-        ingredients.add(new Ingredient("Bread", 150, 2, "2023-12-30", "subha"));
-        ingredients.add(new Ingredient("cheese", 200, 1, "2023-12-30", "subha"));
-        Recipe recipe = new Recipe("Grilled cheese", ingredients, "subha");
+    @Test
+    public void testRecipeConstructor() {
+        HashMap<String, Integer> ingredients = new HashMap<>();
+        ingredients.put("Bread", 2);
+        ingredients.put("cheese", 1);
+        Recipe recipe = new Recipe("Grilled cheese", ingredients);
         assertEquals("Grilled cheese", recipe.getRecipeName());
         assertEquals(ingredients, recipe.getIngredients());
-        assertEquals("subha", recipe.getUserId());
     }
 
-    @Test public void testIngredientConstructor() {
+    @Test
+    public void testIngredientConstructor() {
         Ingredient ingredient = new Ingredient("Milk", 50, 4, "2023-06-30", "subha", "milk");
         assertEquals("Milk", ingredient.getName());
         assertEquals(50, ingredient.getCalories());
@@ -235,35 +237,31 @@ public class ExampleUnitTest {
     // NATHAN
     @Test
     public void testSorting() {
-        String[] testList = {"C", "B", "A", "D"};
+        Recipe[] testList = {new Recipe("B", null), new Recipe("A", null), new Recipe("C", null)};
         SortingStrategy testSort = new SortByName();
-        String[] sortedList = testSort.sortRecipes(testList);
-        assertEquals("A", sortedList[0]);
-        assertEquals("B", sortedList[1]);
-        assertEquals("C", sortedList[2]);
-        assertEquals("D", sortedList[3]);
+        Recipe[] sortedList = testSort.sortRecipes(testList);
+        assertEquals("A", sortedList[0].getRecipeName());
+        assertEquals("B", sortedList[1].getRecipeName());
+        assertEquals("C", sortedList[2].getRecipeName());
     }
 
     @Test
     public void testReverseSorting() {
-        String[] testList = {"C", "B", "A", "D"};
+        Recipe[] testList = {new Recipe("A", null), new Recipe("B", null), new Recipe("C", null)};
         SortingStrategy testSort = new SortByReverseName();
-        String[] sortedList = testSort.sortRecipes(testList);
-        assertEquals("D", sortedList[0]);
-        assertEquals("C", sortedList[1]);
-        assertEquals("B", sortedList[2]);
-        assertEquals("A", sortedList[3]);
+        Recipe[] sortedList = testSort.sortRecipes(testList);
+        assertEquals("C", sortedList[0].getRecipeName());
+        assertEquals("B", sortedList[1].getRecipeName());
+        assertEquals("A", sortedList[2].getRecipeName());
     }
 
     // DANIEL
     @Test
     public void testRecipeToMapIncludesAllIngredients() {
-        Ingredient ingredient1 = new Ingredient("Salt", 0, 1, "2024-12-31", "user123", "ingredient1");
-        Ingredient ingredient2 = new Ingredient("Pepper", 0, 2, "2024-12-31", "user123", "ingredient2");
-        List<Ingredient> ingredients = new ArrayList<>();
-        ingredients.add(ingredient1);
-        ingredients.add(ingredient2);
-        Recipe recipe = new Recipe("Seasoning Mix", ingredients, "user123");
+        HashMap<String, Integer> ingredients = new HashMap<>();
+        ingredients.put("Salt", 1);
+        ingredients.put("Pepper", 2);
+        Recipe recipe = new Recipe("Seasoning Mix", ingredients);
 
         Map<String, Object> recipeMap = recipe.toMap();
 
@@ -276,19 +274,19 @@ public class ExampleUnitTest {
 
     @Test
     public void testAddingIngredientUpdatesRecipe() {
-        Ingredient ingredient1 = new Ingredient("Sugar", 15, 1, "2024-12-31", "user123", "ingredient1");
-        List<Ingredient> ingredients = new ArrayList<>();
-        ingredients.add(ingredient1);
-        Recipe recipe = new Recipe("Sweet Mix", ingredients, "user123");
+        HashMap<String, Integer> ingredients = new HashMap<>();
+        ingredients.put("Sugar", 1);
+        Recipe recipe = new Recipe("Sweet Mix", ingredients);
 
-        Ingredient ingredient2 = new Ingredient("Cinnamon", 5, 1, "2024-12-31", "user123", "ingredient2");
-        recipe.getIngredients().add(ingredient2);
+        recipe.getIngredients().put("Cinnamon", 1);
         assertEquals(2, recipe.getIngredients().size());
-        assertTrue(recipe.getIngredients().contains(ingredient1));
-        assertTrue(recipe.getIngredients().contains(ingredient2));
+        assertTrue(recipe.getIngredients().containsKey("Sugar"));
+        assertTrue(recipe.getIngredients().containsValue(new Integer(1)));
     }
+
     // KUSHAL
-    @Test public void testIngredient() {
+    @Test
+    public void testIngredient() {
         Ingredient ingredient = new Ingredient("Tomato", 25, 3, "2024-12-31", "user123", "ingredient123");
         assertEquals("Tomato", ingredient.getName());
         assertEquals(25, ingredient.getCalories());
@@ -296,12 +294,14 @@ public class ExampleUnitTest {
         assertEquals("user123", ingredient.getUserId());
         assertEquals("ingredient123", ingredient.getId());
     }
-    @Test public void testRecipe() {
-        List<Ingredient> ingredients = new ArrayList<>();
-        ingredients.add(new Ingredient("Ingredient1", 100, 2, "2024-12-31", "user123"));
-        ingredients.add(new Ingredient("Ingredient2", 200, 3, "2024-12-31", "user123"));
-        Recipe recipe = new Recipe("TestRecipe", ingredients, "user123");
+
+    @Test
+    public void testRecipe() {
+        HashMap<String, Integer> ingredients = new HashMap<>();
+        ingredients.put("Ingredient1", 2);
+        ingredients.put("Ingredient2", 3);
+        Recipe recipe = new Recipe("TestRecipe", ingredients);
         assertEquals("TestRecipe", recipe.getRecipeName());
         assertEquals(ingredients, recipe.getIngredients());
-        assertEquals("user123", recipe.getUserId()); }
+    }
 }
