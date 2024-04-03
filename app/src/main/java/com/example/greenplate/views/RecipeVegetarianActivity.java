@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,7 +14,6 @@ import com.example.greenplate.models.Recipe;
 import com.example.greenplate.models.SortingStrategy;
 
 import com.example.greenplate.viewmodels.FirebaseViewModel;
-import com.example.greenplate.viewmodels.SortByName;
 import com.example.greenplate.viewmodels.SortByReverseName;
 
 import java.util.ArrayList;
