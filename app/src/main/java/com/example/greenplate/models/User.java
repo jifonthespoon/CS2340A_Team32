@@ -174,4 +174,14 @@ public class User {
         }
         return false;
     }
+    private ArrayList<ShoppingListItem> shoppingList = new ArrayList<>();
+    public ArrayList<ShoppingListItem> getShoppingList() { return shoppingList; }
+    public void setShoppingList(ArrayList<ShoppingListItem> shoppingList) { this.shoppingList = shoppingList; }
+
+    public void addShoppingListItem(ShoppingListItem item) {
+        this.shoppingList.add(item);
+    }
+    public void removeShoppingListItem(String itemId) {
+        shoppingList.removeIf(item -> item.getId().equals(itemId));
+    }
 }

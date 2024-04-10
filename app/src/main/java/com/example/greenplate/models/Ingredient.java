@@ -84,4 +84,7 @@ public class Ingredient {
     public String getUserId() {
         return userId;
     }
+    public void setQuantity(int newQuantity) {
+        this.quantity = newQuantity;
+    }
 }
