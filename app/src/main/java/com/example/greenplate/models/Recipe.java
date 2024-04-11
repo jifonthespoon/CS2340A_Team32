@@ -74,4 +74,14 @@ public class Recipe implements Comparable<Recipe> {
     public boolean isCanMake() {
         return canMake;
     }
+
+    public void addIngredients(Ingredient ingredient) {
+        ingredients.put(ingredient.getName(), ingredient.getQuantity());
+        ingredient.subscribe(this);
+    }
+    public void update(Ingredient ingredient) {
+        // Check if the ingredient is available and update recipe accordingly
+        canMake = ingredient.isAvailable();
+    }
+
 }
