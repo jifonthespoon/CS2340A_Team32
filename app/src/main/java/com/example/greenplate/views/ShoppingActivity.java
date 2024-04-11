@@ -75,6 +75,7 @@ public class ShoppingActivity extends AppCompatActivity {
         final ImageButton toIngredients = findViewById(R.id.toIngredientsPage);
         final ImageButton toShopping = findViewById(R.id.toShoppingPage);
         final ImageButton toPersonalInfo = findViewById(R.id.toPersonalPage);
+        final ImageButton toAddShopping = findViewById(R.id.to_add_shopping_page);
         toHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,6 +122,14 @@ public class ShoppingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ShoppingActivity.this,
                         PersonalInfoActivity.class);
+                startActivity(intent);
+            }
+        });
+        toAddShopping.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ShoppingActivity.this,
+                        AddShoppingActivity.class);
                 startActivity(intent);
             }
         });

@@ -96,6 +96,11 @@
             android:exported="true">
         </activity>
 
+        <activity
+            android:name=".views.AddShoppingActivity"
+            android:exported="true">
+        </activity>
+
 
     </application>
 
