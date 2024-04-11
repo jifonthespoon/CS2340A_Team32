@@ -27,6 +27,9 @@ public class User {
     private ArrayList<Ingredient> ingredients = new ArrayList<>();
     private ArrayList<Recipe> recipes = new ArrayList<>();
 
+    private int dailyCalorieIntake = 0;
+    private int monthlyCalorieIntake = 0;
+
 
     /**
      * Constructs a new User instance with the specified name.
@@ -78,7 +81,7 @@ public class User {
         return "" + feet + "' " + inches + "\"";
     }
 
-    public int getDailyCalorieIntake() {
+    /*public int getDailyCalorieIntake() {
         int calories = 0;
         // For Men:
         // BMR=(4.536×weight in pounds)+(15.88×height in inches)+5
@@ -91,7 +94,7 @@ public class User {
         }
 
         return calories;
-    }
+    }*/
 
     public void addPersonalInformation(int h, int w, String g) {
         heightInInches = h;
@@ -183,5 +186,18 @@ public class User {
     }
     public void removeShoppingListItem(String itemId) {
         shoppingList.removeIf(item -> item.getId().equals(itemId));
+    }
+    public void updateDailyCalorieIntake(int calories) {
+        this.dailyCalorieIntake = calories;
+    }
+    public void updateMonthlyCalorieIntake(int calories) {
+        this.monthlyCalorieIntake = calories;
+    }
+    public int getDailyCalorieIntake() {
+        return dailyCalorieIntake;
+    }
+
+    public int getMonthlyCalorieIntake() {
+        return monthlyCalorieIntake;
     }
 }
