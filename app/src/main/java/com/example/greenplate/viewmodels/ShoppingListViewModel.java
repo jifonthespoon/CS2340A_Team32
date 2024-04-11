@@ -4,15 +4,17 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.greenplate.models.Firebase;
 import com.example.greenplate.models.Ingredient;
+import com.example.greenplate.models.ShoppingListAdapter;
 import com.example.greenplate.models.ShoppingListItem;
 import com.example.greenplate.models.User;
 import com.google.firebase.database.DatabaseReference;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ShoppingListViewModel extends ViewModel {
     private Firebase firebase = Firebase.getInstance();
-    private User user;
+    private static User user;
 
     public ShoppingListViewModel() {
         this.user = FirebaseViewModel.getInstance().getUser();
@@ -54,6 +56,18 @@ public class ShoppingListViewModel extends ViewModel {
             }
         }
     }
+
+    public static void purchaseItem(ShoppingListItem item) {
+        user.removeShoppingListItem(item.getId());
+        ArrayList<Ingredient> ingredients = user.getIngredients();
+        for (Ingredient ingredient : ingredients) {
+            if (ingredient.getName().equals(item.getName())) {
+                ingredient.setQuantity(ingredient.getQuantity() + item.getQuantity());
+                IngredientsViewModel.updateIngredient(ingredient);
+            }
+        }
+    }
+
     private void addOrUpdateIngredientInPantry(ShoppingListItem shoppingItem) {
         List<Ingredient> pantry = user.getIngredients();
         boolean found = false;

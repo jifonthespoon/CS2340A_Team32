@@ -3,7 +3,7 @@ package com.example.greenplate.views;
 
 import com.example.greenplate.R;
 import com.example.greenplate.models.Ingredient;
-import com.example.greenplate.models.MyCustomAdapter;
+import com.example.greenplate.models.IngredientAdapter;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
 
 import android.content.Intent;
@@ -36,12 +36,8 @@ public class IngredientsActivity extends AppCompatActivity {
     private ListView mListview;
     private ArrayList<Ingredient> mArrData = FirebaseViewModel.getInstance().getUser()
             .getIngredients();
-    private MyCustomAdapter mAdapter;
+    private IngredientAdapter ingredientAdapter;
 
-    private String[] itemString = {"ingredient 1", "ingredient 2", "ingredient 3", "ingredient 4",
-                                   "ingredient 5", "ingredient 6", "ingredient 7", "ingredient 8",
-                                   "ingredient 9", "ingredient 10", "ingredient 11",
-                                   "ingredient 12"};
     /**
      * Called when the activity is starting.
      * This method handles the initialization of the activity,
@@ -70,9 +66,9 @@ public class IngredientsActivity extends AppCompatActivity {
 
         mListview = (ListView) findViewById(R.id.ingredients_list);
 
-        mAdapter = new MyCustomAdapter(mArrData, IngredientsActivity.this);
-        mListview.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
+        ingredientAdapter = new IngredientAdapter(mArrData, IngredientsActivity.this);
+        mListview.setAdapter(ingredientAdapter);
+        ingredientAdapter.notifyDataSetChanged();
 
 
 

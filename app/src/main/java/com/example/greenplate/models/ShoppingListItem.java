@@ -7,8 +7,7 @@ public class ShoppingListItem {
     private String id;
     private String name;
     private int quantity;
-    public ShoppingListItem() {
-    }
+
 
     public ShoppingListItem(String name, int quantity) {
         this.name = name;
