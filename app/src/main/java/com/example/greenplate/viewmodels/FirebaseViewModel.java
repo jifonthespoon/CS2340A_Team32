@@ -197,7 +197,7 @@ public class FirebaseViewModel extends ViewModel {
                     .child(mealId).removeValue();
         }
     }
-    public void queryMealsByDateCalories(String date, final FirebaseCallback<Integer> callback) {
+    public void queryMealsByDateCalories(String date) {
         firebase.getDatabase().getReference().child("meals")
                 .orderByChild("dateAdded").equalTo(date)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -219,7 +219,7 @@ public class FirebaseViewModel extends ViewModel {
                 });
     }
 
-    public void queryMealsByMonthCalories(String month, final FirebaseCallback<Integer> callback) {
+    public void queryMealsByMonthCalories(String month) {
         firebase.getDatabase().getReference().child("meals")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override

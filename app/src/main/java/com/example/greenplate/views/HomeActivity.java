@@ -7,9 +7,10 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.greenplate.models.ShoppingListItem;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
-
-
+import com.example.greenplate.viewmodels.ShoppingListViewModel;
 
 
 /**
@@ -57,6 +58,9 @@ public class HomeActivity extends AppCompatActivity {
         toHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ShoppingListViewModel slvm = new ShoppingListViewModel();
+                slvm.addShoppingListItem(new ShoppingListItem("Beef", 2));
+                slvm.addShoppingListItem(new ShoppingListItem("Eggs", 12));
                 Intent intent = new Intent(HomeActivity.this,
                         HomeActivity.class);
                 startActivity(intent);
