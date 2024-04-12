@@ -192,6 +192,7 @@
         android:layout_height="370dp"
         android:layout_marginBottom="250dp"
         android:dividerHeight="3dp"
+        android:divider="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.555"

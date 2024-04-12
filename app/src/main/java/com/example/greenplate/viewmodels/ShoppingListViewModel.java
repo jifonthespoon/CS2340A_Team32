@@ -7,6 +7,7 @@ import com.example.greenplate.models.Ingredient;
 import com.example.greenplate.models.ShoppingListAdapter;
 import com.example.greenplate.models.ShoppingListItem;
 import com.example.greenplate.models.User;
+import com.example.greenplate.views.PersonalInfoActivity;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
@@ -15,8 +16,10 @@ import java.util.List;
 public class ShoppingListViewModel extends ViewModel {
     private Firebase firebase = Firebase.getInstance();
     private static User user;
+    private static ArrayList<ShoppingListItem> selectedItems;
 
     public ShoppingListViewModel() {
+        selectedItems = new ArrayList<>();
         this.user = FirebaseViewModel.getInstance().getUser();
     }
     public void addShoppingListItem(ShoppingListItem item) {
@@ -55,6 +58,15 @@ public class ShoppingListViewModel extends ViewModel {
                 updateShoppingListItemQuantity(itemId, 0);
             }
         }
+    }
+
+    public static void selectItem(ShoppingListItem item) {
+        if (selectedItems.contains(item)) {
+            selectedItems.remove(item);
+        } else {
+            selectedItems.add(item);
+        }
+        System.out.println(selectedItems);
     }
 
     public static void purchaseItem(ShoppingListItem item) {
