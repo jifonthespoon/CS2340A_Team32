@@ -1,6 +1,8 @@
 package com.example.greenplate.models;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Ingredient {
@@ -12,6 +14,9 @@ public class Ingredient {
     private String id;
 
     private String userId;
+
+    private boolean available;
+    private List<Recipe> subscribers;
 
     public Ingredient(String n, int c, int q, String uI) {
         name = n;
@@ -35,6 +40,12 @@ public class Ingredient {
         expirationDate = eD;
         userId = uI;
         this.id = id;
+    }
+
+    public Ingredient(String n) {
+        this.name = n;
+        this.available = false;
+        this.subscribers = new ArrayList<>();
     }
 
     public int getQuantity() {
@@ -84,6 +95,30 @@ public class Ingredient {
     public String getUserId() {
         return userId;
     }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+        notifySubscribers();
+    }
+
+    public void subscribe(Recipe recipe) {
+        subscribers.add(recipe);
+    }
+
+    public void unsubscribe(Recipe recipe) {
+        subscribers.remove(recipe);
+    }
+
+    private void notifySubscribers() {
+        for (Recipe recipe: subscribers) {
+            recipe.update(this);
+        }
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
     public void setQuantity(int newQuantity) {
         this.quantity = newQuantity;
     }
