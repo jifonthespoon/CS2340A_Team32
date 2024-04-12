@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
@@ -52,15 +53,23 @@ public class ShoppingListAdapter extends BaseAdapter implements ListAdapter {
         TextView listQuantity = (TextView) view.findViewById(R.id.quantity);
         listQuantity.setText(String.valueOf(list.get(position).getQuantity()));
 
-        Button buyButton = (Button) view.findViewById(R.id.buyButton);
+        Button buyBox = (CheckBox) view.findViewById(R.id.myCheckbox);
 
-        buyButton.setOnClickListener(new View.OnClickListener() {
+        buyBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShoppingListViewModel.purchaseItem(list.get(position));
-                notifyDataSetChanged();
+                ShoppingListViewModel.selectItem(list.get(position));
             }
         });
+
+
+//        buyBox.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ShoppingListViewModel.purchaseItem(list.get(position));
+//                notifyDataSetChanged();
+//            }
+//        });
 
         return view;
     }
