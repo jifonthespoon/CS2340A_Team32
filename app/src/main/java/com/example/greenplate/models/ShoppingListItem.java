@@ -31,4 +31,11 @@ public class ShoppingListItem {
         result.put("quantity", quantity);
         return result;
     }
+
+    public void increaseQuantity() {
+        quantity++;
+    }
+    public void decreaseQuantity() {
+        quantity--;
+    }
 }

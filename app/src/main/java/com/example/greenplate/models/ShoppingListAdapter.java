@@ -11,7 +11,6 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.example.greenplate.R;
-import com.example.greenplate.viewmodels.IngredientsViewModel;
 import com.example.greenplate.viewmodels.ShoppingListViewModel;
 
 import java.util.ArrayList;
@@ -47,7 +46,7 @@ public class ShoppingListAdapter extends BaseAdapter implements ListAdapter {
             view = inflater.inflate(R.layout.shopping_list_row, null);
         }
 
-        TextView listItemName = (TextView) view.findViewById(R.id.shoppingListItemName);
+        TextView listItemName = (TextView) view.findViewById(R.id.recipe_name);
         listItemName.setText(list.get(position).getName());
 
         TextView listQuantity = (TextView) view.findViewById(R.id.quantity);
@@ -62,14 +61,26 @@ public class ShoppingListAdapter extends BaseAdapter implements ListAdapter {
             }
         });
 
+        Button increaseQuantity = (Button) view.findViewById(R.id.incrButton);
+        Button decreaseQuantity = (Button) view.findViewById(R.id.decrButton);
 
-//        buyBox.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                ShoppingListViewModel.purchaseItem(list.get(position));
-//                notifyDataSetChanged();
-//            }
-//        });
+        increaseQuantity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                list.get(position).increaseQuantity();
+                notifyDataSetChanged();
+            }
+        });
+
+        decreaseQuantity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                list.get(position).decreaseQuantity();
+                notifyDataSetChanged();
+            }
+        });
+
+
 
         return view;
     }

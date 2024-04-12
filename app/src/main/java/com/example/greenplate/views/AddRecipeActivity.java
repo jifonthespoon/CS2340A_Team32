@@ -48,8 +48,11 @@ public class AddRecipeActivity extends AppCompatActivity {
         toRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Recipe.recipeTab tab = RecipeViewModel.getRecipeTab();
                 Intent intent = new Intent(AddRecipeActivity.this,
-                        RecipeActivity.class);
+                        tab == Recipe.recipeTab.AtoZ ? RecipeActivityAtoZ.class : tab ==
+                                Recipe.recipeTab.ZtoA ? RecipeActivityZtoA.class :
+                                RecipeActivityCanCook.class);
                 startActivity(intent);
             }
         });
@@ -161,7 +164,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                 Toast.makeText(AddRecipeActivity.this, "Recipe saved successfully",
                         Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(AddRecipeActivity.this, RecipeActivity.class);
+                Intent intent = new Intent(AddRecipeActivity.this, RecipeActivityAtoZ.class);
                 startActivity(intent);
             }
         });

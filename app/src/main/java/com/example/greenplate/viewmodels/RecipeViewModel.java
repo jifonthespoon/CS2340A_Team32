@@ -16,12 +16,21 @@ import java.util.HashMap;
 
 public class RecipeViewModel {
     private static Firebase firebase = Firebase.getInstance();
+    private static Recipe.recipeTab recipeTab = Recipe.recipeTab.AtoZ;
+
+    public static Recipe.recipeTab getRecipeTab() {
+        return recipeTab;
+    }
 
     public static void addRecipe(Recipe recipe) {
         DatabaseReference recipesRef = firebase.getDatabase().getReference()
                 .child("cookbook").push();
         recipesRef.setValue(recipe.toMap());
         recipe.setId(recipesRef.getKey());
+    }
+
+    public static void setTab(Recipe.recipeTab newTab) {
+        recipeTab = newTab;
     }
 
     public static void fetchRecipes(User user) {
