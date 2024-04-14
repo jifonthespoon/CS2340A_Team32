@@ -13,8 +13,11 @@ import com.example.greenplate.R;
 import com.example.greenplate.models.Recipe;
 import com.example.greenplate.models.SortingStrategy;
 
+import com.example.greenplate.models.SortingStrategyFactory;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
+import com.example.greenplate.viewmodels.SortByNameStrategyFactory;
 import com.example.greenplate.viewmodels.SortByReverseName;
+import com.example.greenplate.viewmodels.SortByReverseNameStrategyFactory;
 
 import java.util.ArrayList;
 
@@ -59,6 +62,10 @@ public class RecipeVegetarianActivity extends AppCompatActivity {
         setContentView(R.layout.recipe_page_vegetarian);
 
         ArrayList<Recipe> recipes = FirebaseViewModel.getInstance().getUser().getRecipes();
+
+        SortingStrategyFactory factory = new SortByReverseNameStrategyFactory();
+        sortingStrategy = factory.createFactorySortingStrategy();
+
         sortingStrategy = new SortByReverseName();
         Recipe[] recipeListUnsorted = new Recipe[recipes.size()];
         for (int i = 0; i < recipes.size(); i++) {
