@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/ingredientName"
+        android:id="@+id/shoppingListItemName"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginStart="24dp"

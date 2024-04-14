@@ -118,4 +118,8 @@ public class Ingredient {
     public boolean isAvailable() {
         return available;
     }
+
+    public void setQuantity(int newQuantity) {
+        this.quantity = newQuantity;
+    }
 }

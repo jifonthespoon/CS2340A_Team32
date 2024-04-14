@@ -1,43 +1,22 @@
 package com.example.greenplate.views;
 
 
-import com.example.greenplate.R;
-import com.example.greenplate.models.Ingredient;
-import com.example.greenplate.models.IngredientAdapter;
-import com.example.greenplate.viewmodels.FirebaseViewModel;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListView;
-
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
+import com.example.greenplate.R;
+import com.example.greenplate.viewmodels.FirebaseViewModel;
+import com.example.greenplate.viewmodels.IngredientsViewModel;
+import com.example.greenplate.viewmodels.RecipeViewModel;
 
-/**
- * IngredientsActivity is responsible for displaying
- * the ingredients page within the app,
- * allowing users to access and view various
- * ingredients needed for cooking. It also includes
- * navigation options to other primary features
- * of the app like the home page, input page,
- * recipe page, shopping list, and the
- * ingredients page itself for refresh purposes.
- * This activity serves as a central point
- * for ingredient management and navigation.
- */
-
-public class IngredientsActivity extends AppCompatActivity {
-
-    private ListView mListview;
-    private ArrayList<Ingredient> mArrData = FirebaseViewModel.getInstance().getUser()
-            .getIngredients();
-    private IngredientAdapter ingredientAdapter;
-
+public class AddShoppingActivity extends AppCompatActivity {
     /**
      * Called when the activity is starting.
      * This method handles the initialization of the activity,
@@ -61,25 +40,13 @@ public class IngredientsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ingredient_page);
-
-
-        mListview = (ListView) findViewById(R.id.ingredients_list);
-
-        ingredientAdapter = new IngredientAdapter(mArrData, IngredientsActivity.this);
-        mListview.setAdapter(ingredientAdapter);
-        ingredientAdapter.notifyDataSetChanged();
-
-
-
-
-
+        setContentView(R.layout.add_shopping_page);
         // Initialize navigation buttons and set their onClickListeners.
         final ImageButton toHome = findViewById(R.id.toHomePage);
         toHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(IngredientsActivity.this,
+                Intent intent = new Intent(AddShoppingActivity.this,
                         HomeActivity.class);
                 startActivity(intent);
             }
@@ -88,7 +55,7 @@ public class IngredientsActivity extends AppCompatActivity {
         toInput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(IngredientsActivity.this,
+                Intent intent = new Intent(AddShoppingActivity.this,
                         InputActivity.class);
                 startActivity(intent);
             }
@@ -97,7 +64,7 @@ public class IngredientsActivity extends AppCompatActivity {
         toRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(IngredientsActivity.this,
+                Intent intent = new Intent(AddShoppingActivity.this,
                         RecipeActivity.class);
                 startActivity(intent);
             }
@@ -106,7 +73,7 @@ public class IngredientsActivity extends AppCompatActivity {
         toIngredients.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(IngredientsActivity.this,
+                Intent intent = new Intent(AddShoppingActivity.this,
                         IngredientsActivity.class);
                 startActivity(intent);
             }
@@ -115,7 +82,7 @@ public class IngredientsActivity extends AppCompatActivity {
         toShopping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(IngredientsActivity.this,
+                Intent intent = new Intent(AddShoppingActivity.this,
                         ShoppingActivity.class);
                 startActivity(intent);
             }
@@ -124,21 +91,59 @@ public class IngredientsActivity extends AppCompatActivity {
         toPersonalInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(IngredientsActivity.this,
+                Intent intent = new Intent(AddShoppingActivity.this,
                         PersonalInfoActivity.class);
                 startActivity(intent);
             }
         });
 
-        final ImageButton toAddIngredientActivity = findViewById(R.id.to_add_ingredient_page);
-        toAddIngredientActivity.setOnClickListener(new View.OnClickListener() {
+
+        final Button saveButton = findViewById(R.id.save);
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(IngredientsActivity.this,
-                        AddIngredientActivity.class);
-                startActivity(intent);
+                EditText nameEditText = findViewById(R.id.shoppingList_name_enter);
+                EditText quantityEditText = findViewById(R.id.shoppingList_quantity_enter);
+                EditText caloriesEditText = findViewById(R.id.shoppingList_calories_enter);
+
+                // Extract the text from each EditText
+                String name = nameEditText.getText().toString();
+                String quantityStr = quantityEditText.getText().toString();
+                String caloriesStr = caloriesEditText.getText().toString();
+
+                // Convert quantity and calories from String to int
+                int quantity = 0;
+                int calories = 0;
+                try {
+                    quantity = Integer.parseInt(quantityStr);
+                    calories = Integer.parseInt(caloriesStr);
+                } catch (NumberFormatException e) {
+                    // Handle the case where either quantity or calories isn't a valid integer
+                    Toast.makeText(AddShoppingActivity.this, "Quantity and Calories "
+                            + "must be valid numbers.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Validate the input (e.g., check if name is empty, quantity is positive, etc.)
+                if (name.isEmpty() || quantity <= 0) {
+                    Toast.makeText(AddShoppingActivity.this, "Please fill out the "
+                                    + "name and make sure quantity is positive.",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                //IngredientsViewModel.addIngredient(name, calories, quantity, expirationDate);
+
+                nameEditText.setText("");
+                quantityEditText.setText("");
+                caloriesEditText.setText("");
+
+                Toast.makeText(AddShoppingActivity.this, "Item saved!",
+                        Toast.LENGTH_SHORT).show();
+                RecipeViewModel.fetchRecipes(FirebaseViewModel.getInstance().getUser());
             }
         });
+
+
 
     }
 }

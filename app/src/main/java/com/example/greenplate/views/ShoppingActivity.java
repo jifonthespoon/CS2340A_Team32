@@ -1,12 +1,22 @@
 package com.example.greenplate.views;
 
 import com.example.greenplate.R;
+import com.example.greenplate.models.Ingredient;
+import com.example.greenplate.models.IngredientAdapter;
+import com.example.greenplate.models.ShoppingListAdapter;
+import com.example.greenplate.models.ShoppingListItem;
+import com.example.greenplate.viewmodels.FirebaseViewModel;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
+
 /**
  * ShoppingActivity provides a user interface
  * for displaying and managing a shopping list.
@@ -21,6 +31,10 @@ import androidx.appcompat.app.AppCompatActivity;
  */
 
 public class ShoppingActivity extends AppCompatActivity {
+    private ListView mListview;
+    private ArrayList<ShoppingListItem> mArrData = FirebaseViewModel.getInstance().getUser()
+            .getShoppingList();
+    private ShoppingListAdapter shoppingListAdapter;
 
     /**
      * Initializes the activity by inflating
@@ -49,12 +63,19 @@ public class ShoppingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shopping_list);
 
+        mListview = (ListView) findViewById(R.id.shopping_list_view);
+
+        shoppingListAdapter = new ShoppingListAdapter(mArrData, ShoppingActivity.this);
+        mListview.setAdapter(shoppingListAdapter);
+        shoppingListAdapter.notifyDataSetChanged();
+
         final ImageButton toHome = findViewById(R.id.toHomePage);
         final ImageButton toInput = findViewById(R.id.toInputPage);
         final ImageButton toRecipe = findViewById(R.id.toRecipePage);
         final ImageButton toIngredients = findViewById(R.id.toIngredientsPage);
         final ImageButton toShopping = findViewById(R.id.toShoppingPage);
         final ImageButton toPersonalInfo = findViewById(R.id.toPersonalPage);
+        final ImageButton toAddShopping = findViewById(R.id.to_add_shopping_page);
         toHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,6 +122,14 @@ public class ShoppingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ShoppingActivity.this,
                         PersonalInfoActivity.class);
+                startActivity(intent);
+            }
+        });
+        toAddShopping.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ShoppingActivity.this,
+                        AddShoppingActivity.class);
                 startActivity(intent);
             }
         });
