@@ -6,9 +6,11 @@ import com.example.greenplate.models.Recipe;
 import com.example.greenplate.models.RecipeListAdapter;
 import com.example.greenplate.models.SortingStrategy;
 
+import com.example.greenplate.models.SortingStrategyFactory;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
 import com.example.greenplate.viewmodels.RecipeViewModel;
 import com.example.greenplate.viewmodels.SortByName;
+import com.example.greenplate.viewmodels.SortByNameStrategyFactory;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -68,7 +70,10 @@ public class RecipeActivityAtoZ extends AppCompatActivity {
         RecipeViewModel.setTab(Recipe.recipeTab.AtoZ);
         RecipeViewModel.fetchRecipes(FirebaseViewModel.getInstance().getUser());
         ArrayList<Recipe> recipes = FirebaseViewModel.getInstance().getUser().getRecipes();
-        sortingStrategy = new SortByName();
+
+        SortingStrategyFactory factory = new SortByNameStrategyFactory();
+        sortingStrategy = factory.createFactorySortingStrategy();
+
         Recipe[] recipeListUnsorted = new Recipe[recipes.size()];
         for (int i = 0; i < recipes.size(); i++) {
             recipeListUnsorted[i] = recipes.get(i);
