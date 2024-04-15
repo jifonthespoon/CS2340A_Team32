@@ -24,8 +24,12 @@ public class User {
     private String userId;
     private String email;
     private ArrayList<String> mealIds = new ArrayList<>();
-
     private ArrayList<Ingredient> ingredients = new ArrayList<>();
+    private ArrayList<Recipe> recipes = new ArrayList<>();
+    private ArrayList<ShoppingListItem> shoppingList = new ArrayList<>();
+
+    private int dailyCalorieIntake = 0;
+    private int monthlyCalorieIntake = 0;
 
 
     /**
@@ -145,5 +149,56 @@ public class User {
                 ingredients.remove(i);
             }
         }
+    }
+
+    public int getQuantityOfIngredient(String ingredientName) {
+        for (Ingredient ingredient : ingredients) {
+            if (ingredient.getName().toLowerCase().equals(ingredientName.toLowerCase())) {
+                return ingredient.getQuantity();
+            }
+        }
+        return 0;
+    }
+
+    public void setRecipes(ArrayList<Recipe> recipes) {
+        this.recipes = recipes;
+    }
+
+    public ArrayList<Recipe> getRecipes() {
+        return recipes;
+    }
+
+    public boolean checkForIngredientAndQuantity(String ingredientName, int quantityNeeded) {
+        for (Ingredient ingredient : ingredients) {
+            if (ingredient.getName().toLowerCase().equals(ingredientName.toLowerCase())) {
+                if (getQuantityOfIngredient(ingredientName) >= quantityNeeded) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public ArrayList<ShoppingListItem> getShoppingList() { return shoppingList; }
+    public void setShoppingList(ArrayList<ShoppingListItem> shoppingList) { this.shoppingList = shoppingList; }
+
+    public void addShoppingListItem(ShoppingListItem item) {
+        this.shoppingList.add(item);
+    }
+    public void removeShoppingListItem(String itemId) {
+        shoppingList.removeIf(item -> item.getId().equals(itemId));
+    }
+    public void updateDailyCalorieIntake(int calories) {
+        this.dailyCalorieIntake = calories;
+    }
+    public void updateMonthlyCalorieIntake(int calories) {
+        this.monthlyCalorieIntake = calories;
+    }
+    public int getCalculatedDailyCalorieIntake() {
+        return dailyCalorieIntake;
+    }
+
+    public int getMonthlyCalorieIntake() {
+        return monthlyCalorieIntake;
     }
 }

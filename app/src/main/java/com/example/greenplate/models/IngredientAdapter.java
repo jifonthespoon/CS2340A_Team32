@@ -14,11 +14,11 @@ import com.example.greenplate.viewmodels.IngredientsViewModel;
 
 import java.util.ArrayList;
 
-public class MyCustomAdapter extends BaseAdapter implements ListAdapter {
+public class IngredientAdapter extends BaseAdapter implements ListAdapter {
     private ArrayList<Ingredient> list = new ArrayList<Ingredient>();
     private Context context;
 
-    public MyCustomAdapter(ArrayList<Ingredient> list, Context context) {
+    public IngredientAdapter(ArrayList<Ingredient> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -29,12 +29,10 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter {
     }
 
     public Object getItem(int position) {
-        // TODO Auto-generated method stub
         return position;
     }
 
     public long getItemId(int position) {
-        // TODO Auto-generated method stub
         return position;
     }
 
@@ -47,14 +45,12 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter {
             view = inflater.inflate(R.layout.ingredient_row, null);
         }
 
-        //Handle TextView and display string from your list
-        TextView ingredientName = (TextView) view.findViewById(R.id.ingredientName);
+        TextView ingredientName = (TextView) view.findViewById(R.id.ingredient_name);
         ingredientName.setText(list.get(position).getName());
 
         TextView ingredientQuantity = (TextView) view.findViewById(R.id.quantity);
         ingredientQuantity.setText(String.valueOf(list.get(position).getQuantity()));
 
-        //Handle buttons and add onClickListeners
         Button increaseButton = (Button) view.findViewById(R.id.incrButton);
         Button decreaseButton = (Button) view.findViewById(R.id.decrButton);
 

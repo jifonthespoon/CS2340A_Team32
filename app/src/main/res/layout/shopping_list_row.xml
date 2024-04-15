@@ -18,15 +18,30 @@
         app:srcCompat="@drawable/rectangle_item" />
 
     <TextView
-        android:id="@+id/ingredient_name"
+        android:id="@+id/recipe_name"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginStart="36dp"
+        android:layout_marginStart="88dp"
         android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="rferf"
         android:textSize="30sp"
         android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
+        android:id="@+id/myCheckbox"
+        android:layout_width="46dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="16dp"
+        android:buttonTint="#CD2C2C"
+        android:checked="false"
+        android:padding="16dp"
+        app:buttonCompat="?android:attr/textCheckMarkInverse"
+        app:buttonIcon="?android:attr/textCheckMark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.073"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

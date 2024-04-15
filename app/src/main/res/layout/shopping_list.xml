@@ -16,7 +16,6 @@
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/red_rectangle" />
 
-
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="360dp"
@@ -29,6 +28,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/shopping_list" />
+
+    <ImageButton
+        android:id="@+id/to_add_shopping_page"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="111dp"
+        android:layout_marginEnd="36dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/shoppinglist_to_add_shoppinglist" />
 
     <ImageView
         android:id="@+id/imageView6"
@@ -163,7 +175,46 @@
         app:layout_constraintTop_toBottomOf="@+id/divider2"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
+    <ListView
+        android:id="@+id/shopping_list_view"
+        android:layout_width="408dp"
+        android:layout_height="395dp"
+        android:layout_marginBottom="230dp"
+        android:divider="@null"
+        android:dividerHeight="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView3"
+        app:layout_constraintVertical_bias="1.0">
 
+    </ListView>
+
+    <ImageButton
+        android:id="@+id/buy_items_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:backgroundTint="#311E10"
+        android:src="@drawable/to_buy_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView3"
+        app:layout_constraintVertical_bias="0.797" />
+
+    <ImageView
+        android:id="@+id/toBuyButtonLabel"
+        android:layout_width="113dp"
+        android:layout_height="19dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.792"
+        app:srcCompat="@drawable/to_buy_items_label" />
 
     <View
         android:id="@+id/divider"

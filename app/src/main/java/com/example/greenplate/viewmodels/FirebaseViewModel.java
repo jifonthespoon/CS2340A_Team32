@@ -75,6 +75,7 @@ public class FirebaseViewModel extends ViewModel {
                                 Integer.valueOf(userInfo.get("heightInInches")),
                                 userInfo.get("userId"), userInfo.get("email"), mealIds);
                         IngredientsViewModel.fetchIngredients(user);
+                        RecipeViewModel.fetchRecipes(user);
                     }
 
                     @Override
@@ -196,7 +197,7 @@ public class FirebaseViewModel extends ViewModel {
                     .child(mealId).removeValue();
         }
     }
-    public void queryMealsByDateCalories(String date, final FirebaseCallback<Integer> callback) {
+    public void queryMealsByDateCalories(String date) {
         firebase.getDatabase().getReference().child("meals")
                 .orderByChild("dateAdded").equalTo(date)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -206,22 +207,19 @@ public class FirebaseViewModel extends ViewModel {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Meal meal = snapshot.getValue(Meal.class);
                             if (meal != null) {
-                                totalCalories += meal.getCalories(); // Assume 'calories' is
-                                // an int field in Meal
+                                totalCalories += meal.getCalories();
                             }
                         }
-                        callback.onCallback(totalCalories);
+                        user.updateDailyCalorieIntake(totalCalories); // Update user's daily calorie intake
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        Log.w("FirebaseViewModel", "loadMeal:onCancelled",
-                                databaseError.toException());
                     }
                 });
     }
 
-    public void queryMealsByMonthCalories(String month, final FirebaseCallback<Integer> callback) {
+    public void queryMealsByMonthCalories(String month) {
         firebase.getDatabase().getReference().child("meals")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -233,13 +231,11 @@ public class FirebaseViewModel extends ViewModel {
                                 totalCalories += meal.getCalories();
                             }
                         }
-                        callback.onCallback(totalCalories);
+                        user.updateMonthlyCalorieIntake(totalCalories); // Update user's monthly calorie intake
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        Log.w("FirebaseViewModel", "loadMeal:onCancelled",
-                                databaseError.toException());
                     }
                 });
     }
