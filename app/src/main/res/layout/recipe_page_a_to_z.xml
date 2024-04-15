@@ -45,6 +45,19 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.135" />
 
+    <ImageButton
+        android:id="@+id/to_20min_recipe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:src="@drawable/to_other_recipe"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.935"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.311" />
+
     <TextView
         android:id="@+id/t20label"
         android:layout_width="wrap_content"
@@ -59,30 +72,15 @@
         app:layout_constraintVertical_bias="0.313" />
 
     <ImageButton
-        android:id="@+id/to_20min_recipe"
-        android:layout_width="132dp"
-        android:layout_height="31dp"
-        android:background="@null"
-        android:scaleX="1.4"
-        android:scaleY="1.1"
-        android:src="@drawable/recipie_selected_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.982"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.31" />
-
-    <ImageButton
         android:id="@+id/toeRecipeEasy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="48dp"
         android:background="@null"
-        android:src="@drawable/to_other_recipe"
+        android:src="@drawable/recipie_selected_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.076"
+        app:layout_constraintHorizontal_bias="0.121"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.311" />
@@ -96,21 +94,10 @@
         android:text="A-Z"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.175"
+        app:layout_constraintHorizontal_bias="0.184"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.312" />
-
-    <View
-        android:id="@+id/horizontalLine"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="92dp"
-        android:background="@android:color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recipieLabel" />
+        app:layout_constraintVertical_bias="0.311" />
 
     <ImageButton
         android:id="@+id/toeRecipeVegetarian"
@@ -121,24 +108,10 @@
         android:src="@drawable/to_other_recipe"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.58"
+        app:layout_constraintHorizontal_bias="0.603"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.31" />
-
-    <TextView
-        android:id="@+id/vegLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:layout_marginEnd="88dp"
-        android:text="Z-A"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.652"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.313" />
+        app:layout_constraintVertical_bias="0.311" />
 
     <TextView
         android:id="@+id/sortByLabel"
@@ -155,6 +128,20 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.264" />
 
+
+    <TextView
+        android:id="@+id/vegLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="88dp"
+        android:text="Z-A"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.652"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.313" />
 
     <TextView
         android:id="@+id/recipieLabel"
@@ -176,15 +163,16 @@
         android:id="@+id/recipe_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="100dp"
-        android:dividerHeight="3dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="80dp"
+        android:divider="@null"
+        android:dividerHeight="5dp"
         app:layout_constraintBottom_toTopOf="@id/navBox"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/horizontalLine"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/toeRecipeVegetarian"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/navBox"

@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.greenplate.R;
 import com.example.greenplate.models.Recipe;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
+import com.example.greenplate.viewmodels.RecipeViewModel;
+
 import java.util.ArrayList;
 
 public class ViewRecipeActivity extends AppCompatActivity {
@@ -17,7 +19,7 @@ public class ViewRecipeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_recipe_page);
         Intent intent = getIntent();
-        String recipeName = intent.getStringExtra("name");
+        String recipeName = intent.getStringExtra("recipe");
 
         final ImageButton toHome = findViewById(R.id.toHomePage);
         final ImageButton toInput = findViewById(R.id.toInputPage);
@@ -25,6 +27,8 @@ public class ViewRecipeActivity extends AppCompatActivity {
         final ImageButton toIngredients = findViewById(R.id.toIngredientsPage);
         final ImageButton toShopping = findViewById(R.id.toShoppingPage);
         final ImageButton toPersonalInfo = findViewById(R.id.toPersonalPage);
+
+        Recipe.recipeTab tab = RecipeViewModel.getRecipeTab();
 
         // Set onClickListeners for navigation buttons
         toHome.setOnClickListener(new View.OnClickListener() {
@@ -44,8 +48,14 @@ public class ViewRecipeActivity extends AppCompatActivity {
         toRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ViewRecipeActivity.this,
-                        RecipeActivity.class));
+                if (tab == Recipe.recipeTab.AtoZ) {
+                    startActivity(new Intent(ViewRecipeActivity.this, RecipeActivityAtoZ.class));
+                } else if (tab == Recipe.recipeTab.ZtoA) {
+                    startActivity(new Intent(ViewRecipeActivity.this, RecipeActivityZtoA.class));
+                } else {
+                    startActivity(new Intent(ViewRecipeActivity.this, RecipeActivityCanCook.class));
+                }
+
             }
         });
         toIngredients.setOnClickListener(new View.OnClickListener() {

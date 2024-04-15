@@ -1,11 +1,10 @@
 package com.example.greenplate.views;
 
 import com.example.greenplate.R;
-import com.example.greenplate.models.Ingredient;
-import com.example.greenplate.models.IngredientAdapter;
 import com.example.greenplate.models.ShoppingListAdapter;
 import com.example.greenplate.models.ShoppingListItem;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
+import com.example.greenplate.viewmodels.ShoppingListViewModel;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -76,6 +75,15 @@ public class ShoppingActivity extends AppCompatActivity {
         final ImageButton toShopping = findViewById(R.id.toShoppingPage);
         final ImageButton toPersonalInfo = findViewById(R.id.toPersonalPage);
         final ImageButton toAddShopping = findViewById(R.id.to_add_shopping_page);
+        final ImageButton buyItems = findViewById(R.id.buy_items_button);
+
+        buyItems.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShoppingListViewModel.purchaseItems();
+            }
+        });
+
         toHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,7 +104,7 @@ public class ShoppingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ShoppingActivity.this,
-                        RecipeActivity.class);
+                        RecipeActivityAtoZ.class);
                 startActivity(intent);
             }
         });

@@ -82,7 +82,7 @@ public class InputMonthlyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(InputMonthlyActivity.this,
-                        RecipeActivity.class);
+                        RecipeActivityAtoZ.class);
                 startActivity(intent);
             }
         });

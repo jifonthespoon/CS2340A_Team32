@@ -2,6 +2,7 @@ package com.example.greenplate.views;
 
 
 import com.example.greenplate.R;
+import com.example.greenplate.models.Recipe;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
 import com.example.greenplate.viewmodels.IngredientsViewModel;
 import com.example.greenplate.viewmodels.RecipeViewModel;
@@ -64,8 +65,11 @@ public class AddIngredientActivity extends AppCompatActivity {
         toRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Recipe.recipeTab tab = RecipeViewModel.getRecipeTab();
                 Intent intent = new Intent(AddIngredientActivity.this,
-                        RecipeActivity.class);
+                        tab == Recipe.recipeTab.AtoZ ? RecipeActivityAtoZ.class : tab ==
+                                Recipe.recipeTab.ZtoA ? RecipeActivityZtoA.class :
+                                RecipeActivityCanCook.class);
                 startActivity(intent);
             }
         });

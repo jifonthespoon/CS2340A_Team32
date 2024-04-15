@@ -60,6 +60,11 @@ public class ShoppingListViewModel extends ViewModel {
         }
     }
 
+    public static void purchaseItems() {
+        // TODO: Logic to buy items and add to ingredients. Must also refresh recipe availabilty
+        // Use selectedItems static variable to access selected list
+    }
+
     public static void selectItem(ShoppingListItem item) {
         if (selectedItems.contains(item)) {
             selectedItems.remove(item);
