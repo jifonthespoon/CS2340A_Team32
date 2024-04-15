@@ -14,9 +14,12 @@ import com.example.greenplate.models.Recipe;
 import com.example.greenplate.models.RecipeListAdapter;
 import com.example.greenplate.models.SortingStrategy;
 
+import com.example.greenplate.models.SortingStrategyFactory;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
+import com.example.greenplate.viewmodels.SortByNameStrategyFactory;
 import com.example.greenplate.viewmodels.RecipeViewModel;
 import com.example.greenplate.viewmodels.SortByReverseName;
+import com.example.greenplate.viewmodels.SortByReverseNameStrategyFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -64,6 +67,10 @@ public class RecipeActivityZtoA extends AppCompatActivity {
         setContentView(R.layout.recipe_page_z_to_a);
 
         ArrayList<Recipe> recipes = FirebaseViewModel.getInstance().getUser().getRecipes();
+
+        SortingStrategyFactory factory = new SortByReverseNameStrategyFactory();
+        sortingStrategy = factory.createFactorySortingStrategy();
+
         RecipeViewModel.setTab(Recipe.recipeTab.ZtoA);
         sortingStrategy = new SortByReverseName();
         Recipe[] recipeListUnsorted = new Recipe[recipes.size()];
