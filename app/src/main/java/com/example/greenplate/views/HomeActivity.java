@@ -8,8 +8,10 @@ import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.greenplate.models.Recipe;
 import com.example.greenplate.models.ShoppingListItem;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
+import com.example.greenplate.viewmodels.RecipeViewModel;
 import com.example.greenplate.viewmodels.ShoppingListViewModel;
 
 
@@ -63,6 +65,8 @@ public class HomeActivity extends AppCompatActivity {
                 slvm.addShoppingListItem(new ShoppingListItem("Eggs", 12));
                 slvm.addShoppingListItem(new ShoppingListItem("Apples", 3));
                 slvm.addShoppingListItem(new ShoppingListItem("Bread", 1));
+                slvm.addShoppingListItem(new ShoppingListItem("Avocados", 4));
+                slvm.addShoppingListItem(new ShoppingListItem("Chicken", 2));
                 Intent intent = new Intent(HomeActivity.this,
                         HomeActivity.class);
                 startActivity(intent);
@@ -80,8 +84,11 @@ public class HomeActivity extends AppCompatActivity {
         toRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Recipe.recipeTab tab = RecipeViewModel.getRecipeTab();
                 Intent intent = new Intent(HomeActivity.this,
-                        RecipeActivity.class);
+                        tab == Recipe.recipeTab.AtoZ ? RecipeActivityAtoZ.class : tab ==
+                                Recipe.recipeTab.ZtoA ? RecipeActivityZtoA.class :
+                                RecipeActivityCanCook.class);
                 startActivity(intent);
             }
         });

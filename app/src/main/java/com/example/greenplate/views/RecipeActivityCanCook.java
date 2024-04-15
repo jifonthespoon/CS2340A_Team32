@@ -1,17 +1,7 @@
 package com.example.greenplate.views;
 
-import com.example.greenplate.R;
-
-import com.example.greenplate.models.Recipe;
-import com.example.greenplate.models.SortingStrategy;
-
-import com.example.greenplate.viewmodels.FirebaseViewModel;
-import com.example.greenplate.viewmodels.RecipeViewModel;
-import com.example.greenplate.viewmodels.SortByName;
-
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
@@ -19,9 +9,14 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.greenplate.R;
+import com.example.greenplate.models.Recipe;
+import com.example.greenplate.models.RecipeListAdapter;
+import com.example.greenplate.viewmodels.FirebaseViewModel;
+import com.example.greenplate.viewmodels.RecipeViewModel;
 
 import java.util.ArrayList;
-
+import java.util.Arrays;
 
 /**
  * RecipeActivity serves as the primary interface
@@ -34,10 +29,9 @@ import java.util.ArrayList;
  * effort to organize and display cooking recipes in a user-friendly manner.
  */
 
-public class RecipeActivity extends AppCompatActivity {
-    private SortingStrategy sortingStrategy;
-
-
+public class RecipeActivityCanCook extends AppCompatActivity {
+    private ListView mListview;
+    private RecipeListAdapter recipeListAdapter;
 
     /**
      * Initializes the activity by setting
@@ -63,34 +57,21 @@ public class RecipeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.recipe_page);
-        RecipeViewModel.fetchRecipes(FirebaseViewModel.getInstance().getUser());
+        setContentView(R.layout.recipe_page_can_cook);
+        RecipeViewModel.setTab(Recipe.recipeTab.CANCOOK);
         ArrayList<Recipe> recipes = FirebaseViewModel.getInstance().getUser().getRecipes();
-        sortingStrategy = new SortByName();
-        Recipe[] recipeListUnsorted = new Recipe[recipes.size()];
+        ArrayList<Recipe> canMakeRecipes = new ArrayList<>();
+
         for (int i = 0; i < recipes.size(); i++) {
-            recipeListUnsorted[i] = recipes.get(i);
+            if (recipes.get(i).isCanMake()) {
+                canMakeRecipes.add(recipes.get(i));
+            }
         }
-        Recipe[] recipeList = sortingStrategy.sortRecipes(recipeListUnsorted);
 
-        ListView listView = findViewById(R.id.recipe_list);
-        ArrayList<String> recipeNameList = new ArrayList<>();
-        for (Recipe recipe : recipeList) {
-            recipeNameList.add(recipe.getRecipeName() + " " + (recipe.isCanMake() ? "✓" : "x"));
-        }
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(RecipeActivity.this,
-                android.R.layout.simple_list_item_1, recipeNameList);
-        listView.setAdapter(arrayAdapter);
-
-
-        // Set item click listener for ListView
-        listView.setOnItemClickListener((adapterView, view, i, l) -> {
-            String item = (String) adapterView.getItemAtPosition(i);
-
-            // Move onClick method outside of lambda expression
-            onClickItem(item);
-        });
-
+        mListview = (ListView) findViewById(R.id.recipe_list);
+        recipeListAdapter = new RecipeListAdapter(canMakeRecipes, RecipeActivityCanCook.this);
+        mListview.setAdapter(recipeListAdapter);
+        recipeListAdapter.notifyDataSetChanged();
 
         final ImageButton toHome = findViewById(R.id.toHomePage);
         final ImageButton toInput = findViewById(R.id.toInputPage);
@@ -102,7 +83,7 @@ public class RecipeActivity extends AppCompatActivity {
         toHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RecipeActivity.this,
+                Intent intent = new Intent(RecipeActivityCanCook.this,
                         HomeActivity.class);
                 startActivity(intent);
             }
@@ -110,7 +91,7 @@ public class RecipeActivity extends AppCompatActivity {
         toInput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RecipeActivity.this,
+                Intent intent = new Intent(RecipeActivityCanCook.this,
                         InputActivity.class);
                 startActivity(intent);
             }
@@ -118,15 +99,15 @@ public class RecipeActivity extends AppCompatActivity {
         toRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RecipeActivity.this,
-                        RecipeActivity.class);
+                Intent intent = new Intent(RecipeActivityCanCook.this,
+                        RecipeActivityCanCook.class);
                 startActivity(intent);
             }
         });
         toIngredients.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RecipeActivity.this,
+                Intent intent = new Intent(RecipeActivityCanCook.this,
                         IngredientsActivity.class);
                 startActivity(intent);
             }
@@ -134,7 +115,7 @@ public class RecipeActivity extends AppCompatActivity {
         toShopping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RecipeActivity.this,
+                Intent intent = new Intent(RecipeActivityCanCook.this,
                         ShoppingActivity.class);
                 startActivity(intent);
             }
@@ -142,7 +123,7 @@ public class RecipeActivity extends AppCompatActivity {
         toPersonalInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RecipeActivity.this,
+                Intent intent = new Intent(RecipeActivityCanCook.this,
                         PersonalInfoActivity.class);
                 startActivity(intent);
             }
@@ -153,7 +134,7 @@ public class RecipeActivity extends AppCompatActivity {
         toAddRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RecipeActivity.this,
+                Intent intent = new Intent(RecipeActivityCanCook.this,
                         AddRecipeActivity.class);
                 startActivity(intent);
             }
@@ -163,38 +144,28 @@ public class RecipeActivity extends AppCompatActivity {
         toRecipeVegetarian.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RecipeActivity.this,
-                        RecipeVegetarianActivity.class);
+                Intent intent = new Intent(RecipeActivityCanCook.this,
+                        RecipeActivityZtoA.class);
                 startActivity(intent);
             }
         });
 
-
-        final ImageButton to20minRecipe = findViewById(R.id.to_20min_recipe);
-        to20minRecipe.setOnClickListener(new View.OnClickListener() {
+        final ImageButton toEasyRecipe = findViewById(R.id.toeRecipeEasy);
+        toEasyRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RecipeActivity.this,
-                        Recipe20minActivity.class);
+                Intent intent = new Intent(RecipeActivityCanCook.this,
+                        RecipeActivityAtoZ.class);
                 startActivity(intent);
             }
         });
 
 
+
     }
-
-
-    public void setSortingStrategy(SortingStrategy sortingStrategy) {
-        this.sortingStrategy = sortingStrategy;
-    }
-
-    // Define onClick method outside of lambda expression
     public void onClickItem(String item) {
-        Intent intent = new Intent(RecipeActivity.this, ViewRecipeActivity.class);
+        Intent intent = new Intent(RecipeActivityCanCook.this, ViewRecipeActivity.class);
         intent.putExtra("name", item);
         startActivity(intent);
     }
-
-
 }
-

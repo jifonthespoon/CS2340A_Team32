@@ -10,11 +10,8 @@ public class Ingredient {
     private int calories;
     private int quantity;
     private String expirationDate = "";
-
     private String id;
-
     private String userId;
-
     private boolean available;
     private List<Recipe> subscribers;
 

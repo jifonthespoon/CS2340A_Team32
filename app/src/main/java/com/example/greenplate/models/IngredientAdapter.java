@@ -45,7 +45,7 @@ public class IngredientAdapter extends BaseAdapter implements ListAdapter {
             view = inflater.inflate(R.layout.ingredient_row, null);
         }
 
-        TextView ingredientName = (TextView) view.findViewById(R.id.shoppingListItemName);
+        TextView ingredientName = (TextView) view.findViewById(R.id.ingredient_name);
         ingredientName.setText(list.get(position).getName());
 
         TextView ingredientQuantity = (TextView) view.findViewById(R.id.quantity);

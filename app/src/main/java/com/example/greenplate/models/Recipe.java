@@ -8,6 +8,7 @@ public class Recipe implements Comparable<Recipe> {
     private HashMap<String, Integer> ingredients;
     private String id; // Unique identifier for the recipe
     private boolean canMake;
+    public enum recipeTab { AtoZ, ZtoA, CANCOOK };
 
     public Recipe(String recipeName, HashMap<String, Integer> ingredients, String id,
                   boolean canMake) {

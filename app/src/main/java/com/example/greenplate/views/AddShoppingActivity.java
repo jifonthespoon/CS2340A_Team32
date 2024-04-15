@@ -12,8 +12,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.greenplate.R;
+import com.example.greenplate.models.Recipe;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
-import com.example.greenplate.viewmodels.IngredientsViewModel;
 import com.example.greenplate.viewmodels.RecipeViewModel;
 
 public class AddShoppingActivity extends AppCompatActivity {
@@ -64,8 +64,11 @@ public class AddShoppingActivity extends AppCompatActivity {
         toRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Recipe.recipeTab tab = RecipeViewModel.getRecipeTab();
                 Intent intent = new Intent(AddShoppingActivity.this,
-                        RecipeActivity.class);
+                        tab == Recipe.recipeTab.AtoZ ? RecipeActivityAtoZ.class : tab ==
+                                Recipe.recipeTab.ZtoA ? RecipeActivityZtoA.class :
+                                RecipeActivityCanCook.class);
                 startActivity(intent);
             }
         });
