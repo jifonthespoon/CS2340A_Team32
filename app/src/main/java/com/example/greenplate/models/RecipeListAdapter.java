@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.greenplate.R;
 import com.example.greenplate.views.ViewRecipeActivity;
+import com.example.greenplate.views.ViewRecipeActivityNeedIngredients;
 
 import java.util.ArrayList;
 
@@ -66,8 +67,10 @@ public class RecipeListAdapter extends BaseAdapter implements ListAdapter {
         navigateScreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context,
-                        ViewRecipeActivity.class);
+                Class<?> destinationClass = list.get(position).isCanMake() ?
+                        ViewRecipeActivity.class : ViewRecipeActivityNeedIngredients.class;
+
+                Intent intent = new Intent(context, destinationClass);
                 intent.putExtra("recipe", list.get(position).getRecipeName());
                 context.startActivity(intent);
             }
