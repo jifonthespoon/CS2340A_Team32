@@ -42,6 +42,8 @@ import java.util.UUID;
  */
 
 public class InputActivity extends AppCompatActivity {
+    int caloriesConsumed;
+    int caloriesRecommended;
     /**
      * Initializes the activity, sets the content view
      * from the input_page layout, and configures
@@ -174,8 +176,8 @@ public class InputActivity extends AppCompatActivity {
         });
         BarChart mBarChart;
         mBarChart = findViewById(R.id.barChart);
-        int totalCaloriesConsumed = 894;
-        int recommendedTotalDailyCalorie = 1620;
+        int totalCaloriesConsumed = FirebaseViewModel.getInstance().getUser().getCalculatedDailyCalorieIntake();
+        int recommendedTotalDailyCalorie = FirebaseViewModel.getInstance().getUser().getDailyCalorieIntake();
         ArrayList<BarEntry> entries = new ArrayList<>();
         entries.add(new BarEntry(1f, new float[]{totalCaloriesConsumed}));
         entries.add(new BarEntry(2f, new float[]{recommendedTotalDailyCalorie}));
@@ -202,6 +204,7 @@ public class InputActivity extends AppCompatActivity {
                 calendar.add(Calendar.DAY_OF_MONTH, -1);
                 updateDateLabel();
                 updateVisualization();
+                caloriesConsumed = FirebaseViewModel.getInstance().getUser().getCalculatedDailyCalorieIntake();
             }
         });
         final ImageButton forwardsTime = findViewById(R.id.right_arrow_input_page);
@@ -211,6 +214,7 @@ public class InputActivity extends AppCompatActivity {
                 calendar.add(Calendar.DAY_OF_MONTH, 1);
                 updateDateLabel();
                 updateVisualization();
+                caloriesConsumed = FirebaseViewModel.getInstance().getUser().getCalculatedDailyCalorieIntake();
             }
         });
     }
@@ -218,6 +222,11 @@ public class InputActivity extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("MMM dd", Locale.getDefault());
         String formattedDate = sdf.format(calendar.getTime());
         dateLabel.setText(formattedDate);
+        SimpleDateFormat firebaseDate = new SimpleDateFormat("YYYY-MM-dd");
+        String firebaseDateInput = firebaseDate.format(calendar.getTime());
+        System.out.println(firebaseDateInput);
+        FirebaseViewModel.getInstance().queryMealsByDateCalories(firebaseDateInput);
+
     }
     private void updateVisualization() {
         int year = calendar.get(Calendar.YEAR);

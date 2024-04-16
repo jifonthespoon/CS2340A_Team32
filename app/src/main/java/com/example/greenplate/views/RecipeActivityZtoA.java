@@ -79,7 +79,6 @@ public class RecipeActivityZtoA extends AppCompatActivity {
         }
         Recipe[] recipeList = sortingStrategy.sortRecipes(recipeListUnsorted);
 
-        ListView listView = findViewById(R.id.recipe_list);
         ArrayList<String> recipeNameList = new ArrayList<>();
         for (Recipe recipe : recipeList) {
             recipeNameList.add(recipe.getRecipeName() + " " + (recipe.isCanMake() ? "✓" : "x"));
