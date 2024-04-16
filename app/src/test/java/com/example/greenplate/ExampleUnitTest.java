@@ -7,6 +7,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import com.example.greenplate.models.Meal;
+import com.example.greenplate.models.ShoppingListItem;
 import com.example.greenplate.models.SortingStrategy;
 import com.example.greenplate.models.User;
 import com.example.greenplate.models.SortingStrategy;
@@ -328,5 +329,19 @@ public class ExampleUnitTest {
         Ingredient testIngredient = new Ingredient("testIngredient");
         testRecipe.addIngredients(testIngredient);
         assertEquals(testRecipe.getIngredients(), map2);
+    }
+    // AUSTIN - Sprint 4
+    @Test
+    public void testShoppingListItemDecreaseQuantity() {
+        ShoppingListItem item1 = new ShoppingListItem("Eggs", 12);
+        item1.decreaseQuantity();
+        assertEquals(item1.getQuantity(), 11);
+    }
+
+    @Test
+    public void testShoppingListItemIncreaseQuantity() {
+        ShoppingListItem item1 = new ShoppingListItem("Eggs", 12);
+        item1.increaseQuantity();
+        assertEquals(item1.getQuantity(), 13);
     }
 }

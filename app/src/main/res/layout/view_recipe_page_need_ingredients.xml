@@ -42,7 +42,7 @@
         app:layout_constraintHorizontal_bias="0.091"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/all_ingredients_available" />
+        app:srcCompat="@drawable/not_enough_ingredients" />
 
     <TextView
         android:id="@+id/dish_name_textView"
@@ -58,7 +58,7 @@
         app:layout_constraintHorizontal_bias="0.086"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.194" />
+        app:layout_constraintVertical_bias="0.191" />
 
     <TextView
         android:id="@+id/ingredient_textView"
@@ -73,7 +73,23 @@
         app:layout_constraintHorizontal_bias="0.045"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.35" />
+        app:layout_constraintVertical_bias="0.348" />
+
+    <TextView
+        android:id="@+id/missingIngredient_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="88dp"
+        android:text="Ingredient:"
+        android:textColor="#d44c34"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.525" />
 
     <TextView
         android:id="@+id/quantity_label"
@@ -88,24 +104,38 @@
         app:layout_constraintHorizontal_bias="0.06"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.273" />
+        app:layout_constraintVertical_bias="0.271" />
 
+    <TextView
+        android:id="@+id/MissingIngredientLabel"
+        android:layout_width="151dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="88dp"
+        android:text="Missing:"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.06"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.455" />
 
     <Button
-        android:id="@+id/cookRecipe"
-        android:layout_width="206dp"
-        android:layout_height="56dp"
-        android:layout_marginBottom="224dp"
+        android:id="@+id/missingShoppingList"
+        android:layout_width="299dp"
+        android:layout_height="69dp"
+        android:layout_marginBottom="208dp"
         android:backgroundTint="#d44c34"
         android:drawablePadding="0px"
         android:paddingLeft="100px"
         android:paddingRight="100px"
-        android:text="Cook Recipe"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:text="Add missing ingredients to shopping list?"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:cornerRadius="40px"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.463"
+        app:layout_constraintHorizontal_bias="0.464"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView

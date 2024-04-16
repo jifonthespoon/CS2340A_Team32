@@ -14,11 +14,11 @@ import com.example.greenplate.viewmodels.RecipeViewModel;
 
 import java.util.ArrayList;
 
-public class ViewRecipeActivity extends AppCompatActivity {
+public class ViewRecipeActivityNeedIngredients extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_recipe_page);
+        setContentView(R.layout.view_recipe_page_need_ingredients);
         Intent intent = getIntent();
         String recipeName = intent.getStringExtra("recipe");
 
@@ -35,14 +35,14 @@ public class ViewRecipeActivity extends AppCompatActivity {
         toHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ViewRecipeActivity.this,
+                startActivity(new Intent(ViewRecipeActivityNeedIngredients.this,
                         HomeActivity.class));
             }
         });
         toInput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ViewRecipeActivity.this,
+                startActivity(new Intent(ViewRecipeActivityNeedIngredients.this,
                         InputActivity.class));
             }
         });
@@ -50,11 +50,11 @@ public class ViewRecipeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (tab == Recipe.recipeTab.AtoZ) {
-                    startActivity(new Intent(ViewRecipeActivity.this, RecipeActivityAtoZ.class));
+                    startActivity(new Intent(ViewRecipeActivityNeedIngredients.this, RecipeActivityAtoZ.class));
                 } else if (tab == Recipe.recipeTab.ZtoA) {
-                    startActivity(new Intent(ViewRecipeActivity.this, RecipeActivityZtoA.class));
+                    startActivity(new Intent(ViewRecipeActivityNeedIngredients.this, RecipeActivityZtoA.class));
                 } else {
-                    startActivity(new Intent(ViewRecipeActivity.this, RecipeActivityCanCook.class));
+                    startActivity(new Intent(ViewRecipeActivityNeedIngredients.this, RecipeActivityCanCook.class));
                 }
 
             }
@@ -62,28 +62,27 @@ public class ViewRecipeActivity extends AppCompatActivity {
         toIngredients.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ViewRecipeActivity.this,
+                startActivity(new Intent(ViewRecipeActivityNeedIngredients.this,
                         IngredientsActivity.class));
             }
         });
         toShopping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ViewRecipeActivity.this,
+                startActivity(new Intent(ViewRecipeActivityNeedIngredients.this,
                         ShoppingActivity.class));
             }
         });
         toPersonalInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ViewRecipeActivity.this,
+                startActivity(new Intent(ViewRecipeActivityNeedIngredients.this,
                         PersonalInfoActivity.class));
             }
         });
 
-
-        final Button cookRecipe = findViewById(R.id.cookRecipe);
-        cookRecipe.setOnClickListener(new View.OnClickListener() {
+        final Button missingShoppingList = findViewById(R.id.missingShoppingList);
+        missingShoppingList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // to implement
@@ -93,7 +92,9 @@ public class ViewRecipeActivity extends AppCompatActivity {
         // Retrieve EditTexts
         final TextView dishNameTextView = findViewById(R.id.dish_name_textView);
         final TextView ingredientTextView = findViewById(R.id.ingredient_textView);
-
+        final TextView missingIngredientTextView = findViewById(R.id.missingIngredient_textView);
+        // to implement
+        
         ArrayList<Recipe> recipes = FirebaseViewModel.getInstance().getUser().getRecipes();
         Recipe recipeLookingFor = recipes.get(0);
         for (Recipe recipe : recipes) {
