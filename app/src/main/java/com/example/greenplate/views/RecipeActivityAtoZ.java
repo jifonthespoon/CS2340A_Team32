@@ -179,11 +179,6 @@ public class RecipeActivityAtoZ extends AppCompatActivity {
 
     }
 
-
-    public void setSortingStrategy(SortingStrategy sortingStrategy) {
-        this.sortingStrategy = sortingStrategy;
-    }
-
     // Define onClick method outside of lambda expression
     public void onClickItem(String item) {
         Intent intent = new Intent(RecipeActivityAtoZ.this, ViewRecipeActivity.class);

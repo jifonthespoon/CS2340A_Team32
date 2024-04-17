@@ -306,6 +306,30 @@ public class ExampleUnitTest {
         assertEquals(ingredients, recipe.getIngredients());
     }
 
+    //NATHAN Sprint 4
+    @Test
+    public void testObserverSetAvailable() {
+        Ingredient testIngredient = new Ingredient("test ingredient");
+        testIngredient.setAvailable(true);
+        assertTrue(testIngredient.isAvailable());
+    }
+
+    @Test
+    public void testObserverUpdate() {
+        HashMap<String, Integer> map1 = new HashMap<String, Integer>();
+        HashMap<String, Integer> map2 = new HashMap<String, Integer>();
+        map1.put("a", 5);
+        map1.put("b", 10);
+        map1.put("c", 15);
+        map2.put("a", 5);
+        map2.put("b", 10);
+        map2.put("c", 15);
+        map2.put("testIngredient", 0);
+        Recipe testRecipe = new Recipe("testRecipe", map1);
+        Ingredient testIngredient = new Ingredient("testIngredient");
+        testRecipe.addIngredients(testIngredient);
+        assertEquals(testRecipe.getIngredients(), map2);
+    }
     // AUSTIN - Sprint 4
     @Test
     public void testShoppingListItemDecreaseQuantity() {
@@ -320,5 +344,4 @@ public class ExampleUnitTest {
         item1.increaseQuantity();
         assertEquals(item1.getQuantity(), 13);
     }
-
 }
