@@ -210,6 +210,7 @@ public class FirebaseViewModel extends ViewModel {
                                 totalCalories += meal.getCalories();
                             }
                         }
+                        System.out.println(totalCalories);
                         user.updateDailyCalorieIntake(totalCalories); // Update user's daily calorie intake
                     }
 
@@ -231,6 +232,7 @@ public class FirebaseViewModel extends ViewModel {
                                 totalCalories += meal.getCalories();
                             }
                         }
+                        System.out.println(totalCalories);
                         user.updateMonthlyCalorieIntake(totalCalories); // Update user's monthly calorie intake
                     }
 
