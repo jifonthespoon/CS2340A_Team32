@@ -3,6 +3,7 @@ package com.example.greenplate.viewmodels;
 import android.util.Log;
 import androidx.annotation.NonNull;
 import com.example.greenplate.models.Meal;
+import com.example.greenplate.models.ShoppingListItem;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -13,6 +14,8 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import androidx.lifecycle.ViewModel;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.HashMap;
@@ -54,6 +57,7 @@ public class FirebaseViewModel extends ViewModel {
         Dictionary<String, String> userInfo = new Hashtable<>();
         ArrayList<String> mealIds = new ArrayList();
         ArrayList<String> ingredientIds = new ArrayList<>();
+        ArrayList<ShoppingListItem> shoppingListItems = new ArrayList<>();
         firebase.getDatabase().getReference().child("users").orderByChild("email")
                 .equalTo(email).addChildEventListener(new ChildEventListener() {
                     @Override
@@ -64,7 +68,16 @@ public class FirebaseViewModel extends ViewModel {
                                         .values()) {
                                     mealIds.add(String.valueOf(mealId));
                                 }
-                            }  else {
+                            } else if (child.getKey().equals("shoppingList")) {
+                                HashMap<String, HashMap<String, Object>> childValues = (HashMap<String, HashMap<String, Object>>) child.getValue();
+                                System.out.println(childValues);
+                                for (String shoppingListItemId : childValues.keySet()) {
+                                    //System.out.println(shoppingListItemId);
+                                    //System.out.println(childValues.get(shoppingListItemId).get("name"));
+                                    //System.out.println(childValues.get(shoppingListItemId).get("quantity"));
+                                    shoppingListItems.add(new ShoppingListItem(shoppingListItemId, (String) childValues.get(shoppingListItemId).get("name"), ((Long) childValues.get(shoppingListItemId).get("quantity")).intValue()));
+                                }
+                            } else {
                                 userInfo.put(child.getKey(), child.getValue().toString());
                             }
 
@@ -73,9 +86,39 @@ public class FirebaseViewModel extends ViewModel {
                                 Integer.valueOf(userInfo.get("weight")),
                                 userInfo.get("gender"),
                                 Integer.valueOf(userInfo.get("heightInInches")),
-                                userInfo.get("userId"), userInfo.get("email"), mealIds);
+                                userInfo.get("userId"), userInfo.get("email"), mealIds, shoppingListItems);
                         IngredientsViewModel.fetchIngredients(user);
                         RecipeViewModel.fetchRecipes(user);
+                        firebase.getDatabase().getReference().child("meals").addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        HashMap<String, Integer> dateMeals = new HashMap<>();
+                                        HashMap<String, HashMap<String, Object>> childValues =
+                                                (HashMap<String, HashMap<String, Object>>) dataSnapshot.getValue();
+                                            System.out.println(childValues);
+                                            for (String mealId : childValues.keySet()) {
+                                                System.out.println(mealId);
+                                                System.out.println(childValues.get(mealId));
+                                                if (user.getMealIds().contains((String) childValues.get(mealId).get("mealId"))) {
+                                                    if (dateMeals.containsKey((String) childValues.get(mealId).get("dateAdded"))) {
+                                                        dateMeals.put((String) childValues.get(mealId).get("dateAdded"),
+                                                                ((Long) childValues.get(mealId).get("calories")).intValue()
+                                                                        + dateMeals.get((String) childValues.get(mealId)
+                                                                        .get("dateAdded")));
+                                                    } else {
+                                                        dateMeals.put((String) childValues.get(mealId).get("dateAdded"),
+                                                                ((Long) childValues.get(mealId).get("calories")).intValue());
+                                                    }
+                                                }
+                                            }
+                                        System.out.println(dateMeals);
+                                        user.setMeals(dateMeals);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                    }
+                                });
                     }
 
                     @Override
@@ -98,6 +141,7 @@ public class FirebaseViewModel extends ViewModel {
                         System.out.println(error);
                     }
                 });
+
     }
 
     /**
@@ -179,6 +223,7 @@ public class FirebaseViewModel extends ViewModel {
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
                                 addMealToUser(meal.getMealId());
+                                user.addCalories(meal.getMealDateAdded(), meal.getCalories());
                                 Log.d("Meal Save", "Meal successfully saved to Firebase");
                             } else {
                                 Log.d("Meal Save", "Failed to save meal to Firebase");
@@ -196,49 +241,5 @@ public class FirebaseViewModel extends ViewModel {
             firebase.getDatabase().getReference().child("meals")
                     .child(mealId).removeValue();
         }
-    }
-    public void queryMealsByDateCalories(String date) {
-        firebase.getDatabase().getReference().child("meals")
-                .orderByChild("dateAdded").equalTo(date)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        int totalCalories = 0;
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            Meal meal = snapshot.getValue(Meal.class);
-                            if (meal != null) {
-                                totalCalories += meal.getCalories();
-                            }
-                        }
-                        System.out.println(totalCalories);
-                        user.updateDailyCalorieIntake(totalCalories); // Update user's daily calorie intake
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
-    }
-
-    public void queryMealsByMonthCalories(String month) {
-        firebase.getDatabase().getReference().child("meals")
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        int totalCalories = 0;
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            Meal meal = snapshot.getValue(Meal.class);
-                            if (meal != null && meal.getMealDateAdded().startsWith(month)) {
-                                totalCalories += meal.getCalories();
-                            }
-                        }
-                        System.out.println(totalCalories);
-                        user.updateMonthlyCalorieIntake(totalCalories); // Update user's monthly calorie intake
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
     }
 }

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShoppingListViewModel extends ViewModel {
-    private Firebase firebase = Firebase.getInstance();
+    private static Firebase firebase = Firebase.getInstance();
     private static User user;
     private static ArrayList<ShoppingListItem> selectedItems;
 
@@ -29,7 +29,15 @@ public class ShoppingListViewModel extends ViewModel {
         shoppingListRef.setValue(item.toMap());
         user.addShoppingListItem(item);
     }
-    public void updateShoppingListItemQuantity(String itemId, int newQuantity) {
+    public static void updateShoppingListItemQuantity(String name, int quantity) {
+        int newQuantity = quantity;
+        String itemId = "";
+        for (ShoppingListItem item : user.getShoppingList()) {
+            if (item.getName().equals(name)) {
+                newQuantity += item.getQuantity();
+                itemId = item.getId();
+            }
+        }
         if (newQuantity <= 0) {
             firebase.getDatabase().getReference().child("users").child(user.getUserId())
                     .child("shoppingList").child(itemId).removeValue();
@@ -71,7 +79,6 @@ public class ShoppingListViewModel extends ViewModel {
         } else {
             selectedItems.add(item);
         }
-        System.out.println(selectedItems);
     }
 
     public static void purchaseItem(ShoppingListItem item) {

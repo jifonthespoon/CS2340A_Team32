@@ -31,6 +31,11 @@ public class ViewRecipeActivity extends AppCompatActivity {
 
         Recipe.recipeTab tab = RecipeViewModel.getRecipeTab();
 
+//        TextView ingredientsText = findViewById(R.id.ingredient_textView);
+//        String ingredientsString = "";
+//        for
+//        ingredientsText.setText();
+
         // Set onClickListeners for navigation buttons
         toHome.setOnClickListener(new View.OnClickListener() {
             @Override
