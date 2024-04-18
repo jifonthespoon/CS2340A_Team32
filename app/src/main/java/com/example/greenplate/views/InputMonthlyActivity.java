@@ -210,7 +210,9 @@ public class InputMonthlyActivity extends AppCompatActivity {
         SimpleDateFormat year = new SimpleDateFormat("yyyy");
         String yearText = year.format(calendar.getTime());
 
-        HashMap<Integer, Integer> caloriesPerDay = FirebaseViewModel.getInstance().getUser().getCaloriesForMonth(monthText, yearText);
+        HashMap<Integer, Integer> caloriesPerDay =
+                FirebaseViewModel.getInstance().getUser().
+                        getCaloriesForMonth(monthText, yearText);
 
         values = new ArrayList<>();
         for (int day : caloriesPerDay.keySet()) {

@@ -4,10 +4,8 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.greenplate.models.Firebase;
 import com.example.greenplate.models.Ingredient;
-import com.example.greenplate.models.ShoppingListAdapter;
 import com.example.greenplate.models.ShoppingListItem;
 import com.example.greenplate.models.User;
-import com.example.greenplate.views.PersonalInfoActivity;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
@@ -106,9 +104,12 @@ public class ShoppingListViewModel extends ViewModel {
         }
 
         if (!found) {
-            Ingredient newIngredient = new Ingredient(shoppingItem.getName(), 0, shoppingItem.getQuantity(), user.getUserId());
-            IngredientsViewModel.addIngredient(newIngredient.getName(), newIngredient.getCalories(), newIngredient.getQuantity(), ""); // Adjust this call based on the actual method signature
+            Ingredient newIngredient = new Ingredient(shoppingItem.getName(),
+                    0, shoppingItem.getQuantity(), user.getUserId());
+            IngredientsViewModel.addIngredient(newIngredient.getName(),
+                    newIngredient.getCalories(), newIngredient.getQuantity(), "");
+            // Adjust this call based on the actual method signature
         }
-}
+    }
 }
 

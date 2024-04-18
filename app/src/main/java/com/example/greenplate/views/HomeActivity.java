@@ -86,9 +86,9 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Recipe.recipeTab tab = RecipeViewModel.getRecipeTab();
                 Intent intent = new Intent(HomeActivity.this,
-                        tab == Recipe.recipeTab.AtoZ ? RecipeActivityAtoZ.class : tab ==
-                                Recipe.recipeTab.ZtoA ? RecipeActivityZtoA.class :
-                                RecipeActivityCanCook.class);
+                        tab == Recipe.recipeTab.AtoZ ? RecipeActivityAtoZ.class : tab
+                                == Recipe.recipeTab.ZtoA ? RecipeActivityZtoA.class
+                                : RecipeActivityCanCook.class);
                 startActivity(intent);
             }
         });

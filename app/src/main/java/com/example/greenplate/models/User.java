@@ -1,10 +1,4 @@
 package com.example.greenplate.models;
-
-
-
-
-import com.example.greenplate.views.PersonalInfoActivity;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -67,7 +61,8 @@ public class User {
     }
 
     public User(String name, int weight, String gender, int heightInInches, String id,
-                String email, ArrayList<String> meals, ArrayList<ShoppingListItem> shoppingListItems) {
+                String email, ArrayList<String> meals,
+                ArrayList<ShoppingListItem> shoppingListItems) {
         this.name = name;
         this.gender = gender;
         this.weight = weight;
@@ -78,6 +73,7 @@ public class User {
         for (String meal : meals) {
             mealIds.add(meal);
         }
+
         shoppingList = shoppingListItems;
     }
 
@@ -203,8 +199,12 @@ public class User {
         return false;
     }
 
-    public ArrayList<ShoppingListItem> getShoppingList() { return shoppingList; }
-    public void setShoppingList(ArrayList<ShoppingListItem> shoppingList) { this.shoppingList = shoppingList; }
+    public ArrayList<ShoppingListItem> getShoppingList() {
+        return shoppingList;
+    }
+    public void setShoppingList(ArrayList<ShoppingListItem> shoppingList) {
+        this.shoppingList = shoppingList;
+    }
 
     public void addShoppingListItem(ShoppingListItem item) {
         this.shoppingList.add(item);

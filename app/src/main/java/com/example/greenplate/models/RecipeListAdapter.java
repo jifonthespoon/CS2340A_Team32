@@ -67,8 +67,8 @@ public class RecipeListAdapter extends BaseAdapter implements ListAdapter {
         navigateScreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Class<?> destinationClass = list.get(position).isCanMake() ?
-                        ViewRecipeActivity.class : ViewRecipeActivityNeedIngredients.class;
+                Class<?> destinationClass = list.get(position).isCanMake()
+                        ? ViewRecipeActivity.class : ViewRecipeActivityNeedIngredients.class;
 
                 Intent intent = new Intent(context, destinationClass);
                 intent.putExtra("recipe", list.get(position).getRecipeName());
