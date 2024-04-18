@@ -3,6 +3,8 @@ package com.example.greenplate.models;
 
 
 
+import com.example.greenplate.views.PersonalInfoActivity;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,9 +29,7 @@ public class User {
     private ArrayList<Ingredient> ingredients = new ArrayList<>();
     private ArrayList<Recipe> recipes = new ArrayList<>();
     private ArrayList<ShoppingListItem> shoppingList = new ArrayList<>();
-
-    private int dailyCalorieIntake = 0;
-    private int monthlyCalorieIntake = 0;
+    private HashMap<String, Integer> dailyCalories = new HashMap<>();
 
 
     /**
@@ -64,6 +64,21 @@ public class User {
         for (String meal : meals) {
             mealIds.add(meal);
         }
+    }
+
+    public User(String name, int weight, String gender, int heightInInches, String id,
+                String email, ArrayList<String> meals, ArrayList<ShoppingListItem> shoppingListItems) {
+        this.name = name;
+        this.gender = gender;
+        this.weight = weight;
+        this.heightInInches = heightInInches;
+        userId = id;
+        this.email = email;
+        mealIds = new ArrayList<>();
+        for (String meal : meals) {
+            mealIds.add(meal);
+        }
+        shoppingList = shoppingListItems;
     }
 
     public User(String name) {
@@ -160,6 +175,15 @@ public class User {
         return 0;
     }
 
+    public Ingredient findIngredient(String ingredientName) {
+        for (Ingredient ingredient : ingredients) {
+            if (ingredient.getName().toLowerCase().equals(ingredientName.toLowerCase())) {
+                return ingredient;
+            }
+        }
+        return null;
+    }
+
     public void setRecipes(ArrayList<Recipe> recipes) {
         this.recipes = recipes;
     }
@@ -188,17 +212,39 @@ public class User {
     public void removeShoppingListItem(String itemId) {
         shoppingList.removeIf(item -> item.getId().equals(itemId));
     }
-    public void updateDailyCalorieIntake(int calories) {
-        this.dailyCalorieIntake = calories;
-    }
-    public void updateMonthlyCalorieIntake(int calories) {
-        this.monthlyCalorieIntake = calories;
-    }
-    public int getCalculatedDailyCalorieIntake() {
-        return dailyCalorieIntake;
+
+
+    public void setMeals(HashMap<String, Integer> meals) {
+        this.dailyCalories = meals;
     }
 
-    public int getMonthlyCalorieIntake() {
-        return monthlyCalorieIntake;
+    public ArrayList<String> getMealIds() {
+        return mealIds;
+    }
+
+    public int getCaloriesForDay(String day) {
+        if (dailyCalories.keySet().contains(day)) {
+            return dailyCalories.get(day);
+        } else {
+            return 0;
+        }
+    }
+
+    public HashMap<Integer, Integer> getCaloriesForMonth(String month, String year) {
+        HashMap<Integer, Integer> caloriesForMonth = new HashMap<>();
+        for (String key : dailyCalories.keySet()) {
+            if (key.startsWith(year) && key.contains("-" + month + "-")) {
+                caloriesForMonth.put(Integer.valueOf(key.split("-")[2]), dailyCalories.get(key));
+            }
+        }
+        return caloriesForMonth;
+    }
+
+    public void addCalories(String date, int calories) {
+        if (dailyCalories.keySet().contains(date)) {
+            dailyCalories.put(date, dailyCalories.get(date) + calories);
+        } else {
+            dailyCalories.put(date, calories);
+        }
     }
 }
