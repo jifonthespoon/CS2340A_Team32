@@ -293,20 +293,6 @@
         app:layout_constraintVertical_bias="0.764"
         android:src="@drawable/input_page_to_daily_button" />
 
-    <ImageButton
-        android:id="@+id/toRecipePage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="68dp"
-        android:background="@null"
-        android:scaleX=".5"
-        android:scaleY=".5"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/toIngredientsPage"
-        app:layout_constraintTop_toBottomOf="@+id/divider"
-        app:layout_constraintVertical_bias="0.567"
-        app:srcCompat="@drawable/recipe_button" />
-
     <ImageView
         android:id="@+id/imageView6"
         android:layout_width="448dp"
