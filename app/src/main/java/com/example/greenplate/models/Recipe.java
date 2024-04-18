@@ -1,19 +1,26 @@
 package com.example.greenplate.models;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class Recipe {
+public class Recipe implements Comparable<Recipe> {
     private String recipeName;
-    private List<Ingredient> ingredients;
-    private String userId; // The user who submitted the recipe
+    private HashMap<String, Integer> ingredients;
     private String id; // Unique identifier for the recipe
+    private boolean canMake;
+    public enum recipeTab { AtoZ, ZtoA, CANCOOK };
 
-    public Recipe(String recipeName, List<Ingredient> ingredients, String userId) {
+    public Recipe(String recipeName, HashMap<String, Integer> ingredients, String id,
+                  boolean canMake) {
         this.recipeName = recipeName;
         this.ingredients = ingredients;
-        this.userId = userId;
+        this.id = id;
+        this.canMake = canMake;
+    }
+
+    public Recipe(String recipeName, HashMap<String, Integer> ingredients) {
+        this.recipeName = recipeName;
+        this.ingredients = ingredients;
     }
 
     // Getter for recipeName
@@ -27,23 +34,13 @@ public class Recipe {
     }
 
     // Getter for ingredients
-    public List<Ingredient> getIngredients() {
+    public HashMap<String, Integer> getIngredients() {
         return ingredients;
     }
 
     // Setter for ingredients
-    public void setIngredients(List<Ingredient> ingredients) {
+    public void setIngredients(HashMap<String, Integer> ingredients) {
         this.ingredients = ingredients;
-    }
-
-    // Getter for userId
-    public String getUserId() {
-        return userId;
-    }
-
-    // Setter for userId
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     // Getter for id
@@ -59,15 +56,33 @@ public class Recipe {
     public Map<String, Object> toMap() {
         Map<String, Object> recipeMap = new HashMap<>();
         recipeMap.put("recipeName", recipeName);
-        recipeMap.put("userId", userId);
 
         // Convert ingredients list to a map
         Map<String, String> ingredientsMap = new HashMap<>();
-        for (Ingredient ingredient : ingredients) {
-            ingredientsMap.put(ingredient.getName(), Integer.toString(ingredient.getQuantity()));
+        for (String ingredient : ingredients.keySet()) {
+            ingredientsMap.put(ingredient, String.valueOf(ingredients.get(ingredient)));
         }
         recipeMap.put("ingredients", ingredientsMap);
 
         return recipeMap;
     }
+
+    @Override
+    public int compareTo(Recipe o) {
+        return this.recipeName.toLowerCase().compareTo(o.getRecipeName().toLowerCase());
+    }
+
+    public boolean isCanMake() {
+        return canMake;
+    }
+
+    public void addIngredients(Ingredient ingredient) {
+        ingredients.put(ingredient.getName(), ingredient.getQuantity());
+        ingredient.subscribe(this);
+    }
+    public void update(Ingredient ingredient) {
+        // Check if the ingredient is available and update recipe accordingly
+        canMake = ingredient.isAvailable();
+    }
+
 }

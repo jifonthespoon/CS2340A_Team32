@@ -1,12 +1,12 @@
 package com.example.greenplate.models;
 
-import com.example.greenplate.viewmodels.IngredientsViewModel;
 
-import java.lang.reflect.Array;
+
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
+
 
 /**
  * Represents a user in the application with basic user information.
@@ -24,16 +24,26 @@ public class User {
     private String userId;
     private String email;
     private ArrayList<String> mealIds = new ArrayList<>();
-
     private ArrayList<Ingredient> ingredients = new ArrayList<>();
+    private ArrayList<Recipe> recipes = new ArrayList<>();
+    private ArrayList<ShoppingListItem> shoppingList = new ArrayList<>();
+
+    private int dailyCalorieIntake = 0;
+    private int monthlyCalorieIntake = 0;
 
 
     /**
      * Constructs a new User instance with the specified name.
      *
      * @param name The name of the user to be set during object creation.
+     * @param email The email of the user
+     * @param gender The gender of the user
+     * @param id The id of the user
+     * @param weight The weight of the user
+     * @param heightInInches The height of the user in inches
      */
-    public User(String name, int weight, String gender, int heightInInches, String id, String email) {
+    public User(String name, int weight, String gender, int heightInInches, String id,
+                String email) {
         this.name = name;
         this.gender = gender;
         this.weight = weight;
@@ -42,7 +52,8 @@ public class User {
         this.email = email;
     }
 
-    public User(String name, int weight, String gender, int heightInInches, String id, String email, ArrayList<String> meals) {
+    public User(String name, int weight, String gender, int heightInInches, String id,
+                String email, ArrayList<String> meals) {
         this.name = name;
         this.gender = gender;
         this.weight = weight;
@@ -138,5 +149,56 @@ public class User {
                 ingredients.remove(i);
             }
         }
+    }
+
+    public int getQuantityOfIngredient(String ingredientName) {
+        for (Ingredient ingredient : ingredients) {
+            if (ingredient.getName().toLowerCase().equals(ingredientName.toLowerCase())) {
+                return ingredient.getQuantity();
+            }
+        }
+        return 0;
+    }
+
+    public void setRecipes(ArrayList<Recipe> recipes) {
+        this.recipes = recipes;
+    }
+
+    public ArrayList<Recipe> getRecipes() {
+        return recipes;
+    }
+
+    public boolean checkForIngredientAndQuantity(String ingredientName, int quantityNeeded) {
+        for (Ingredient ingredient : ingredients) {
+            if (ingredient.getName().toLowerCase().equals(ingredientName.toLowerCase())) {
+                if (getQuantityOfIngredient(ingredientName) >= quantityNeeded) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public ArrayList<ShoppingListItem> getShoppingList() { return shoppingList; }
+    public void setShoppingList(ArrayList<ShoppingListItem> shoppingList) { this.shoppingList = shoppingList; }
+
+    public void addShoppingListItem(ShoppingListItem item) {
+        this.shoppingList.add(item);
+    }
+    public void removeShoppingListItem(String itemId) {
+        shoppingList.removeIf(item -> item.getId().equals(itemId));
+    }
+    public void updateDailyCalorieIntake(int calories) {
+        this.dailyCalorieIntake = calories;
+    }
+    public void updateMonthlyCalorieIntake(int calories) {
+        this.monthlyCalorieIntake = calories;
+    }
+    public int getCalculatedDailyCalorieIntake() {
+        return dailyCalorieIntake;
+    }
+
+    public int getMonthlyCalorieIntake() {
+        return monthlyCalorieIntake;
     }
 }

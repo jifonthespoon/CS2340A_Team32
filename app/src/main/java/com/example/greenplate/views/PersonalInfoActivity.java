@@ -5,7 +5,7 @@ import com.example.greenplate.viewmodels.FirebaseViewModel;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -16,7 +16,7 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class PersonalInfoActivity extends AppCompatActivity{
+public class PersonalInfoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +62,7 @@ public class PersonalInfoActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PersonalInfoActivity.this,
-                        RecipeActivity.class);
+                        RecipeActivityAtoZ.class);
                 startActivity(intent);
             }
         });
@@ -89,12 +89,18 @@ public class PersonalInfoActivity extends AppCompatActivity{
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (LoginActivity.checkInput(weightText.getText().toString()) && LoginActivity.checkInput(heightText.getText().toString()) && genderSelection[0] != 0) {
-                    fvm.addPersonalInformation(Integer.valueOf(weightText.getText().toString()), genderSelection[0] == 1 ? "Male" : "Female", Integer.valueOf(heightText.getText().toString()));
-                    Intent intent = new Intent(PersonalInfoActivity.this, InputActivity.class);
+                if (LoginActivity.checkInput(weightText.getText().toString())
+                        && LoginActivity.checkInput(heightText.getText().toString())
+                        && genderSelection[0] != 0) {
+                    fvm.addPersonalInformation(Integer.valueOf(weightText.getText().toString()),
+                            genderSelection[0] == 1 ? "Male" : "Female",
+                            Integer.valueOf(heightText.getText().toString()));
+                    Intent intent = new Intent(PersonalInfoActivity.this,
+                            InputActivity.class);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(PersonalInfoActivity.this, "Fill out all fields.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PersonalInfoActivity.this, "Fill out all fields.",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -7,19 +7,13 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
 
-import com.example.greenplate.models.Ingredient;
-import com.example.greenplate.models.Meal;
 import com.example.greenplate.models.Recipe;
+import com.example.greenplate.models.ShoppingListItem;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
-import com.example.greenplate.models.User;
-import com.example.greenplate.viewmodels.IngredientsViewModel;
 import com.example.greenplate.viewmodels.RecipeViewModel;
+import com.example.greenplate.viewmodels.ShoppingListViewModel;
 
-import java.util.ArrayList;
-import java.util.UUID;
 
 /**
  * HomeActivity serves as the central navigation point for the application,
@@ -66,33 +60,13 @@ public class HomeActivity extends AppCompatActivity {
         toHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Meal meal = new Meal(UUID.randomUUID().toString(), "Pizza", 200);
-                //boolean worked = fvm.saveOrUpdateMeal(meal);
-                IngredientsViewModel.addIngredient("Bacon", 120, 2, "4/10/2024");
-                IngredientsViewModel.addIngredient("Cheese Slices", 60, 10, "4/10/2024");
-                IngredientsViewModel.addIngredient("Potatoes", 80, 4, "4/10/2024");
-                IngredientsViewModel.addIngredient("Chicken Breasts", 200, 2, "4/10/2024");
-                // Create ingredients list for the first recipe
-                ArrayList<Ingredient> margheritaIngredients = new ArrayList<>();
-                margheritaIngredients.add(new Ingredient("Tomato Sauce", 50, 1, "", FirebaseViewModel.getInstance().getUser().getUserId()));
-                margheritaIngredients.add(new Ingredient("Mozzarella Cheese", 200, 2, "", FirebaseViewModel.getInstance().getUser().getUserId()));
-                margheritaIngredients.add(new Ingredient("Basil Leaves", 5, 10, "", FirebaseViewModel.getInstance().getUser().getUserId()));
-
-                // Create the first preset recipe
-                Recipe margheritaPizza = new Recipe("Margherita Pizza", margheritaIngredients, FirebaseViewModel.getInstance().getUser().getUserId());
-                RecipeViewModel.addRecipe(margheritaPizza);
-
-                // Create ingredients list for the second recipe
-                ArrayList<Ingredient> carbonaraIngredients = new ArrayList<>();
-                carbonaraIngredients.add(new Ingredient("Spaghetti", 100, 1, "", FirebaseViewModel.getInstance().getUser().getUserId()));
-                carbonaraIngredients.add(new Ingredient("Pancetta", 250, 1, "", FirebaseViewModel.getInstance().getUser().getUserId()));
-                carbonaraIngredients.add(new Ingredient("Parmesan Cheese", 100, 1, "", FirebaseViewModel.getInstance().getUser().getUserId()));
-                carbonaraIngredients.add(new Ingredient("Eggs", 70, 4, "", FirebaseViewModel.getInstance().getUser().getUserId()));
-
-                // Create the second preset recipe
-                Recipe carbonaraSpaghetti = new Recipe("Spaghetti Carbonara", carbonaraIngredients, FirebaseViewModel.getInstance().getUser().getUserId());
-                RecipeViewModel.addRecipe(carbonaraSpaghetti);
-
+                ShoppingListViewModel slvm = new ShoppingListViewModel();
+                slvm.addShoppingListItem(new ShoppingListItem("Beef", 2));
+                slvm.addShoppingListItem(new ShoppingListItem("Eggs", 12));
+                slvm.addShoppingListItem(new ShoppingListItem("Apples", 3));
+                slvm.addShoppingListItem(new ShoppingListItem("Bread", 1));
+                slvm.addShoppingListItem(new ShoppingListItem("Avocados", 4));
+                slvm.addShoppingListItem(new ShoppingListItem("Chicken", 2));
                 Intent intent = new Intent(HomeActivity.this,
                         HomeActivity.class);
                 startActivity(intent);
@@ -110,10 +84,11 @@ public class HomeActivity extends AppCompatActivity {
         toRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //System.out.println(FirebaseViewModel.getInstance().getUser().getIngredients().get(0));
-                //FirebaseViewModel.getInstance().getUser().getIngredients().get(0).decreaseQuantity();
+                Recipe.recipeTab tab = RecipeViewModel.getRecipeTab();
                 Intent intent = new Intent(HomeActivity.this,
-                        RecipeActivity.class);
+                        tab == Recipe.recipeTab.AtoZ ? RecipeActivityAtoZ.class : tab ==
+                                Recipe.recipeTab.ZtoA ? RecipeActivityZtoA.class :
+                                RecipeActivityCanCook.class);
                 startActivity(intent);
             }
         });
@@ -136,6 +111,7 @@ public class HomeActivity extends AppCompatActivity {
         toPersonalInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(HomeActivity.this,
                         PersonalInfoActivity.class);
                 startActivity(intent);

@@ -1,11 +1,10 @@
 package com.example.greenplate.views;
 
 import static com.example.greenplate.views.LoginActivity.checkInput;
-import  com.example.greenplate.models.User;
+import com.example.greenplate.models.User;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -74,24 +73,19 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String email = emailInput.getText().toString();
-                String password =
-                        passwordInput.getText().toString();
-                String passwordConfirmation =
-                        passwordInputConfirmation.getText().toString();
-                String name =
-                        nameInput.getText().toString();
+                String password = passwordInput.getText().toString();
+                String passwordConfirmation = passwordInputConfirmation.getText().toString();
+                String name = nameInput.getText().toString();
 
                 if (!(checkInput(email) && checkInput(password)
-                        && checkInput(passwordConfirmation)
-                        && checkInput(name))) {
-                    Toast.makeText(RegisterActivity.this,
-                            "Fill out all fields.", Toast.LENGTH_SHORT).show();
+                        && checkInput(passwordConfirmation) && checkInput(name))) {
+                    Toast.makeText(RegisterActivity.this, "Fill out all fields.",
+                            Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (!passwordConfirmation.equals(password)) {
-                    Toast.makeText(RegisterActivity.this,
-                            "Passwords do not match.",
+                    Toast.makeText(RegisterActivity.this, "Passwords do not match.",
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -100,25 +94,26 @@ public class RegisterActivity extends AppCompatActivity {
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(RegisterActivity.this,
                                 new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            String userId = UUID.randomUUID().toString();
-                            user[0] = fvm.createUser(userId, name, email);
-                            Intent intent = new Intent(RegisterActivity.this,
-                                    HomeActivity.class);
-                            FirebaseViewModel.loadUser();
-                            startActivity(intent);
-                        } else {
-                            Toast.makeText(RegisterActivity.this,
-                                    "Account creation failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+                                            String userId = UUID.randomUUID().toString();
+                                            user[0] = fvm.createUser(userId, name, email);
+                                            Intent intent = new Intent(
+                                                    RegisterActivity.this, HomeActivity.class);
+                                            FirebaseViewModel.loadUser();
+                                            startActivity(intent);
+                                        } else {
+                                            Toast.makeText(RegisterActivity.this,
+                                                    "Account creation failed.",
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
             }
         });
     }
+
     /**
      * Handles button clicks for the RegisterActivity,
      * primarily used to navigate back to the LoginActivity.

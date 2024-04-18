@@ -16,7 +16,6 @@
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/red_rectangle" />
 
-
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="360dp"
@@ -29,6 +28,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/shopping_list" />
+
+    <ImageButton
+        android:id="@+id/to_add_shopping_page"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="111dp"
+        android:layout_marginEnd="36dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/shoppinglist_to_add_shoppinglist" />
 
     <ImageView
         android:id="@+id/imageView6"

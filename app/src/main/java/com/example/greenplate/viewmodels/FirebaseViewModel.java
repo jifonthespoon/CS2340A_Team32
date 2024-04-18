@@ -1,10 +1,7 @@
 package com.example.greenplate.viewmodels;
 
 import android.util.Log;
-
 import androidx.annotation.NonNull;
-
-import com.example.greenplate.models.Ingredient;
 import com.example.greenplate.models.Meal;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -14,23 +11,12 @@ import com.example.greenplate.models.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
 import androidx.lifecycle.ViewModel;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 
 /**
@@ -44,7 +30,6 @@ public class FirebaseViewModel extends ViewModel {
      */
     private static Firebase firebase;
     private static User user;
-
     private static FirebaseViewModel viewModel;
 
     /**
@@ -69,45 +54,50 @@ public class FirebaseViewModel extends ViewModel {
         Dictionary<String, String> userInfo = new Hashtable<>();
         ArrayList<String> mealIds = new ArrayList();
         ArrayList<String> ingredientIds = new ArrayList<>();
-        firebase.getDatabase().getReference().child("users").orderByChild("email").equalTo(email).addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    if (child.getKey().equals("mealIds")) {
-                        //System.out.println(child.getValue());
-                        //Map<Integer, String> meals = (Map<Integer, String>) child.getValue();
-                        for (String mealId : ((HashMap<String, String>) child.getValue()).values()) {
-                            mealIds.add(String.valueOf(mealId));
+        firebase.getDatabase().getReference().child("users").orderByChild("email")
+                .equalTo(email).addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+                        for (DataSnapshot child : dataSnapshot.getChildren()) {
+                            if (child.getKey().equals("mealIds")) {
+                                for (String mealId : ((HashMap<String, String>) child.getValue())
+                                        .values()) {
+                                    mealIds.add(String.valueOf(mealId));
+                                }
+                            }  else {
+                                userInfo.put(child.getKey(), child.getValue().toString());
+                            }
+
                         }
-                    }  else {
-                        userInfo.put(child.getKey(), child.getValue().toString());
+                        user = new User(userInfo.get("name"),
+                                Integer.valueOf(userInfo.get("weight")),
+                                userInfo.get("gender"),
+                                Integer.valueOf(userInfo.get("heightInInches")),
+                                userInfo.get("userId"), userInfo.get("email"), mealIds);
+                        IngredientsViewModel.fetchIngredients(user);
+                        RecipeViewModel.fetchRecipes(user);
                     }
 
-                }
-                user = new User(userInfo.get("name"), Integer.valueOf(userInfo.get("weight")), userInfo.get("gender"), Integer.valueOf(userInfo.get("heightInInches")), userInfo.get("userId"), userInfo.get("email"), mealIds);
-                IngredientsViewModel.fetchIngredients(user);
-            }
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
+                        System.out.println(dataSnapshot.getKey());
+                    }
 
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
-                System.out.println(dataSnapshot.getKey());
-            }
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+                        System.out.println(dataSnapshot.getKey());
+                    }
 
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                System.out.println(dataSnapshot.getKey());
-            }
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {
+                        System.out.println(dataSnapshot.getKey());
+                    }
 
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {
-                System.out.println(dataSnapshot.getKey());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                System.out.println(error);
-            }
-        });
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+                        System.out.println(error);
+                    }
+                });
     }
 
     /**
@@ -130,17 +120,20 @@ public class FirebaseViewModel extends ViewModel {
 
     public User createUser(String userId, String name, String email) {
         user = new User(name, userId, email);
-        firebase.getDatabase().getReference().child("users").child(userId).setValue(user.getUserMap());
+        firebase.getDatabase().getReference().child("users").child(userId)
+                .setValue(user.getUserMap());
         return user;
     }
 
     public void addPersonalInformation(int weight, String gender, int heightInInches) {
         user.addPersonalInformation(heightInInches, weight, gender);
-        firebase.getDatabase().getReference().child("users").child(user.getUserId()).setValue(user.getUserMap());
+        firebase.getDatabase().getReference().child("users").child(user.getUserId())
+                .setValue(user.getUserMap());
     }
 
     public String getPersonalInformation() {
-        if (user != null && user.getHeightInInches() != 0 && !user.getGender().isEmpty() && user.getWeight() != 0) {
+        if (user != null && user.getHeightInInches() != 0 && !user.getGender().isEmpty() && user
+                .getWeight() != 0) {
             return "" + user.getHeight() + " | " + user.getWeight() + "lbs | " + user.getGender();
         } else {
             return "Fill out personal information";
@@ -148,15 +141,18 @@ public class FirebaseViewModel extends ViewModel {
     }
 
     public String[] getPersonalInformationArray() {
-        if (user != null && user.getHeightInInches() != 0 && !user.getGender().isEmpty() && user.getWeight() != 0) {
-            return new String[] {String.valueOf(user.getHeightInInches()), String.valueOf(user.getWeight()), user.getGender()};
+        if (user != null && user.getHeightInInches() != 0 && !user.getGender().isEmpty()
+                && user.getWeight() != 0) {
+            return new String[] {String.valueOf(user.getHeightInInches()),
+                    String.valueOf(user.getWeight()), user.getGender()};
         } else {
             return null;
         }
     }
 
     public String getCalorieGoal() {
-        if (user != null && user.getHeightInInches() != 0 && !user.getGender().isEmpty() && user.getWeight() != 0) {
+        if (user != null && user.getHeightInInches() != 0 && !user.getGender().isEmpty()
+                && user.getWeight() != 0) {
             return "" + user.getDailyCalorieIntake();
         } else {
             return "Fill out personal information";
@@ -165,28 +161,30 @@ public class FirebaseViewModel extends ViewModel {
 
     public void addMealToUser(String mealId) {
         user.addMeal(mealId);
-        firebase.getDatabase().getReference().child("users").child(user.getUserId()).child("mealIds").push().setValue(mealId);
+        firebase.getDatabase().getReference().child("users").child(user.getUserId())
+                .child("mealIds").push().setValue(mealId);
     }
-    
+
     public User getUser() {
-       return user;
+        return user;
     }
 
     public boolean saveOrUpdateMeal(Meal meal) {
 
         if (meal != null && meal.getMealId() != null && !meal.getName().isEmpty()) {
             // Using the mealId as the key to store meal information
-            firebase.getDatabase().getReference().child("meals").child(meal.getMealId()).setValue(meal.toMap()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
-                        addMealToUser(meal.getMealId());
-                        Log.d("Meal Save", "Meal successfully saved to Firebase");
-                    } else {
-                        Log.d("Meal Save", "Failed to save meal to Firebase");
-                    }
-                }
-            });
+            firebase.getDatabase().getReference().child("meals").child(meal.getMealId())
+                    .setValue(meal.toMap()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                addMealToUser(meal.getMealId());
+                                Log.d("Meal Save", "Meal successfully saved to Firebase");
+                            } else {
+                                Log.d("Meal Save", "Failed to save meal to Firebase");
+                            }
+                        }
+                    });
             return true;
         }
         return false;
@@ -195,51 +193,11 @@ public class FirebaseViewModel extends ViewModel {
     // Method to delete a meal from the database
     public void deleteMeal(String mealId) {
         if (mealId != null) {
-            firebase.getDatabase().getReference().child("meals").child(mealId).removeValue();
+            firebase.getDatabase().getReference().child("meals")
+                    .child(mealId).removeValue();
         }
     }
-    public void queryMealsByDate(String date, final FirebaseCallback<List<Meal>> callback) {
-        firebase.getDatabase().getReference().child("meals")
-                .orderByChild("dateAdded").equalTo(date)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        List<Meal> meals = new ArrayList<>();
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            Meal meal = snapshot.getValue(Meal.class);
-                            meals.add(meal);
-                        }
-                        callback.onCallback(meals);
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Log.w("FirebaseViewModel", "loadMeal:onCancelled", databaseError.toException());
-                    }
-                });
-    }
-    public void queryMealsByMonth(String month, final FirebaseCallback<List<Meal>> callback) {
-        firebase.getDatabase().getReference().child("meals")
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        List<Meal> meals = new ArrayList<>();
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            Meal meal = snapshot.getValue(Meal.class);
-                            if (meal != null && meal.getMealDateAdded().startsWith(month)) {
-                                meals.add(meal);
-                            }
-                        }
-                        callback.onCallback(meals);
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Log.w("FirebaseViewModel", "loadMeal:onCancelled", databaseError.toException());
-                    }
-                });
-    }
-    public void queryMealsByDateCalories(String date, final FirebaseCallback<Integer> callback) {
+    public void queryMealsByDateCalories(String date) {
         firebase.getDatabase().getReference().child("meals")
                 .orderByChild("dateAdded").equalTo(date)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -249,20 +207,20 @@ public class FirebaseViewModel extends ViewModel {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Meal meal = snapshot.getValue(Meal.class);
                             if (meal != null) {
-                                totalCalories += meal.getCalories(); // Assume 'calories' is an int field in Meal
+                                totalCalories += meal.getCalories();
                             }
                         }
-                        callback.onCallback(totalCalories);
+                        System.out.println(totalCalories);
+                        user.updateDailyCalorieIntake(totalCalories); // Update user's daily calorie intake
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        Log.w("FirebaseViewModel", "loadMeal:onCancelled", databaseError.toException());
                     }
                 });
     }
 
-    public void queryMealsByMonthCalories(String month, final FirebaseCallback<Integer> callback) {
+    public void queryMealsByMonthCalories(String month) {
         firebase.getDatabase().getReference().child("meals")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -274,15 +232,13 @@ public class FirebaseViewModel extends ViewModel {
                                 totalCalories += meal.getCalories();
                             }
                         }
-                        callback.onCallback(totalCalories);
+                        System.out.println(totalCalories);
+                        user.updateMonthlyCalorieIntake(totalCalories); // Update user's monthly calorie intake
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        Log.w("FirebaseViewModel", "loadMeal:onCancelled", databaseError.toException());
                     }
                 });
     }
-
 }
-
