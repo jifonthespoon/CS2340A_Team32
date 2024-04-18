@@ -15,7 +15,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import androidx.lifecycle.ViewModel;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.HashMap;
@@ -69,13 +68,16 @@ public class FirebaseViewModel extends ViewModel {
                                     mealIds.add(String.valueOf(mealId));
                                 }
                             } else if (child.getKey().equals("shoppingList")) {
-                                HashMap<String, HashMap<String, Object>> childValues = (HashMap<String, HashMap<String, Object>>) child.getValue();
+                                HashMap<String, HashMap<String, Object>> childValues
+                                        = (HashMap<String, HashMap<String, Object>>)
+                                        child.getValue();
                                 System.out.println(childValues);
                                 for (String shoppingListItemId : childValues.keySet()) {
                                     //System.out.println(shoppingListItemId);
-                                    //System.out.println(childValues.get(shoppingListItemId).get("name"));
-                                    //System.out.println(childValues.get(shoppingListItemId).get("quantity"));
-                                    shoppingListItems.add(new ShoppingListItem(shoppingListItemId, (String) childValues.get(shoppingListItemId).get("name"), ((Long) childValues.get(shoppingListItemId).get("quantity")).intValue()));
+                                    shoppingListItems.add(new ShoppingListItem(shoppingListItemId,
+                                            (String) childValues.get(shoppingListItemId).get("name")
+                                            ,((Long) childValues.get(shoppingListItemId).
+                                            get("quantity")).intValue()));
                                 }
                             } else {
                                 userInfo.put(child.getKey(), child.getValue().toString());
@@ -86,7 +88,8 @@ public class FirebaseViewModel extends ViewModel {
                                 Integer.valueOf(userInfo.get("weight")),
                                 userInfo.get("gender"),
                                 Integer.valueOf(userInfo.get("heightInInches")),
-                                userInfo.get("userId"), userInfo.get("email"), mealIds, shoppingListItems);
+                                userInfo.get("userId"), userInfo.get("email"), mealIds,
+                                shoppingListItems);
                         IngredientsViewModel.fetchIngredients(user);
                         RecipeViewModel.fetchRecipes(user);
                         firebase.getDatabase().getReference().child("meals").addListenerForSingleValueEvent(new ValueEventListener() {

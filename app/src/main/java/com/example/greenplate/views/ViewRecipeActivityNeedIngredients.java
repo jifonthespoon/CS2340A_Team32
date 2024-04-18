@@ -8,7 +8,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.greenplate.R;
-import com.example.greenplate.models.Ingredient;
 import com.example.greenplate.models.Recipe;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
 import com.example.greenplate.viewmodels.RecipeViewModel;
@@ -54,11 +53,14 @@ public class ViewRecipeActivityNeedIngredients extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (tab == Recipe.recipeTab.AtoZ) {
-                    startActivity(new Intent(ViewRecipeActivityNeedIngredients.this, RecipeActivityAtoZ.class));
+                    startActivity(new Intent(ViewRecipeActivityNeedIngredients.this,
+                            RecipeActivityAtoZ.class));
                 } else if (tab == Recipe.recipeTab.ZtoA) {
-                    startActivity(new Intent(ViewRecipeActivityNeedIngredients.this, RecipeActivityZtoA.class));
+                    startActivity(new Intent(ViewRecipeActivityNeedIngredients.this,
+                            RecipeActivityZtoA.class));
                 } else {
-                    startActivity(new Intent(ViewRecipeActivityNeedIngredients.this, RecipeActivityCanCook.class));
+                    startActivity(new Intent(ViewRecipeActivityNeedIngredients.this,
+                            RecipeActivityCanCook.class));
                 }
 
             }

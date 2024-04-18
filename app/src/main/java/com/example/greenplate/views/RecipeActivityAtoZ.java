@@ -9,7 +9,6 @@ import com.example.greenplate.models.SortingStrategy;
 import com.example.greenplate.models.SortingStrategyFactory;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
 import com.example.greenplate.viewmodels.RecipeViewModel;
-import com.example.greenplate.viewmodels.SortByName;
 import com.example.greenplate.viewmodels.SortByNameStrategyFactory;
 
 import android.content.Intent;

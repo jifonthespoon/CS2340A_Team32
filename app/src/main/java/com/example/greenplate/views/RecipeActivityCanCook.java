@@ -3,7 +3,6 @@ package com.example.greenplate.views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
@@ -16,7 +15,6 @@ import com.example.greenplate.viewmodels.FirebaseViewModel;
 import com.example.greenplate.viewmodels.RecipeViewModel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * RecipeActivity serves as the primary interface
