@@ -30,15 +30,6 @@
         app:layout_constraintVertical_bias="0.019"
         app:srcCompat="@drawable/input_page_header" />
 
-
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="448dp"
-        android:layout_height="101dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/nav_bar" />
-
     <EditText
         android:id="@+id/input_page_meal_enter"
         android:layout_width="310dp"
