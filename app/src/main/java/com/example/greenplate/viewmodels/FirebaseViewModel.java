@@ -3,6 +3,7 @@ package com.example.greenplate.viewmodels;
 import android.util.Log;
 import androidx.annotation.NonNull;
 import com.example.greenplate.models.Meal;
+import com.example.greenplate.models.ShoppingListItem;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -96,6 +97,42 @@ public class FirebaseViewModel extends ViewModel {
                     @Override
                     public void onCancelled(DatabaseError error) {
                         System.out.println(error);
+                    }
+                });
+        firebase.getDatabase().getReference().child("meals").orderByChild("userId")
+                .equalTo(user.getUserId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        HashMap<String, ArrayList<Meal>> dateMeals = new HashMap<>();
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            Meal meal = snapshot.getValue(Meal.class);
+                            if (meal != null) {
+                                ArrayList<Meal> meals = dateMeals.getOrDefault(meal.getMealDateAdded(), new ArrayList<>());
+                                meals.add(meal);
+                                dateMeals.put(meal.getMealDateAdded(), meals);
+                            }
+                        }
+                        user.setMeals(dateMeals);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+        firebase.getDatabase().getReference().child("users").child(user.getUserId()).child("shoppingList")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        ArrayList<ShoppingListItem> items = new ArrayList<>();
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            ShoppingListItem item = snapshot.getValue(ShoppingListItem.class);
+                            items.add(item);
+                        }
+                        user.setShoppingList(items);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
                     }
                 });
     }

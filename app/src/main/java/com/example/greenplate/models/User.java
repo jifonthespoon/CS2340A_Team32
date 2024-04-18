@@ -27,7 +27,7 @@ public class User {
     private ArrayList<Ingredient> ingredients = new ArrayList<>();
     private ArrayList<Recipe> recipes = new ArrayList<>();
     private ArrayList<ShoppingListItem> shoppingList = new ArrayList<>();
-
+    private HashMap<String, ArrayList<Meal>> mealsByDate = new HashMap<>();
     private int dailyCalorieIntake = 0;
     private int monthlyCalorieIntake = 0;
 
@@ -200,5 +200,11 @@ public class User {
 
     public int getMonthlyCalorieIntake() {
         return monthlyCalorieIntake;
+    }
+    public void setMeals(HashMap<String, ArrayList<Meal>> mealsByDate) {
+        this.mealsByDate = mealsByDate;
+    }
+    public HashMap<String, ArrayList<Meal>> getMealsByDate() {
+        return mealsByDate;
     }
 }
