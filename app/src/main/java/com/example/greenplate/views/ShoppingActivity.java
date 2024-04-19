@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -80,6 +81,18 @@ public class ShoppingActivity extends AppCompatActivity {
         buyItems.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (FirebaseViewModel.getInstance().getUser() == null) {
+                    // User is null, handle this situation
+                    Toast.makeText(ShoppingActivity.this, "User data is not loaded yet. Please wait.", Toast.LENGTH_SHORT).show();
+                    // Consider returning, redirecting to a login screen, or retrying the data load
+                    return;
+                }
+
+                // Check if the selectedItems list is null or empty
+                if (ShoppingListViewModel.getSelectedItems() == null || ShoppingListViewModel.getSelectedItems().isEmpty()) {
+                    Toast.makeText(ShoppingActivity.this, "No items selected to purchase.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 ShoppingListViewModel.purchaseItems();
             }
         });

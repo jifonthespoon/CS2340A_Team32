@@ -88,7 +88,10 @@ public class ShoppingListViewModel extends ViewModel {
         }
     }
 
-/*    public static void purchaseItem(ShoppingListItem item) {
+    public static ArrayList<ShoppingListItem> getSelectedItems() {
+        return selectedItems;
+    }
+    /*    public static void purchaseItem(ShoppingListItem item) {
         user.removeShoppingListItem(item.getId());
         ArrayList<Ingredient> ingredients = user.getIngredients();
         for (Ingredient ingredient : ingredients) {
