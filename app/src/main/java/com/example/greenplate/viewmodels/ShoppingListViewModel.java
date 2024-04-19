@@ -13,19 +13,20 @@ import java.util.List;
 
 public class ShoppingListViewModel extends ViewModel {
     private static Firebase firebase = Firebase.getInstance();
-    private static User user;
+    private static User user = FirebaseViewModel.getInstance().getUser();
     private static ArrayList<ShoppingListItem> selectedItems;
 
     public ShoppingListViewModel() {
         selectedItems = new ArrayList<>();
         this.user = FirebaseViewModel.getInstance().getUser();
     }
-    public void addShoppingListItem(ShoppingListItem item) {
+    public static void addShoppingListItem(ShoppingListItem item) {
         DatabaseReference shoppingListRef = firebase.getDatabase().getReference()
                 .child("users").child(user.getUserId()).child("shoppingList").push();
         item.setId(shoppingListRef.getKey());
         shoppingListRef.setValue(item.toMap());
         user.addShoppingListItem(item);
+        selectedItems.add(item);
     }
     public static void updateShoppingListItemQuantity(String name, int quantity) {
         int newQuantity = quantity;
@@ -52,23 +53,31 @@ public class ShoppingListViewModel extends ViewModel {
             }
         }
     }
-    public void purchaseSelectedItems(List<String> selectedItemIds) {
-        for (String itemId : selectedItemIds) {
-            ShoppingListItem item = user.getShoppingList().stream()
-                    .filter(i -> i.getId().equals(itemId))
-                    .findFirst().orElse(null);
-            if (item != null) {
-                // Logic to add item to pantry goes here
-                addOrUpdateIngredientInPantry(item);
-                // Remove the item from the shopping list
-                updateShoppingListItemQuantity(itemId, 0);
-            }
-        }
-    }
 
     public static void purchaseItems() {
-        // TODO: Logic to buy items and add to ingredients. Must also refresh recipe availabilty
-        // Use selectedItems static variable to access selected list
+        Firebase firebase = Firebase.getInstance();
+        DatabaseReference databaseReference = firebase.getDatabase().getReference();
+
+        for (ShoppingListItem shoppingItem : selectedItems) {
+            Ingredient existingIngredient = user.findIngredient(shoppingItem.getName());
+
+            if (existingIngredient != null) {
+                existingIngredient.setQuantity(existingIngredient.getQuantity() + shoppingItem.getQuantity());
+                databaseReference.child("pantry").child(existingIngredient.getId()).setValue(existingIngredient.getMap());
+            } else {
+                Ingredient newIngredient = new Ingredient(shoppingItem.getName(), 0, shoppingItem.getQuantity(), user.getUserId());
+                DatabaseReference newIngredientRef = databaseReference.child("pantry").push();
+                String newIngredientId = newIngredientRef.getKey();
+                newIngredient.setId(newIngredientId);
+                newIngredientRef.setValue(newIngredient.getMap());
+                user.addIngredient(newIngredient);
+            }
+            databaseReference.child("users").child(user.getUserId()).child("shoppingList").child(shoppingItem.getId()).removeValue();
+            user.removeShoppingListItem(shoppingItem.getId());
+        }
+
+        selectedItems.clear();
+
     }
 
     public static void selectItem(ShoppingListItem item) {
@@ -79,7 +88,7 @@ public class ShoppingListViewModel extends ViewModel {
         }
     }
 
-    public static void purchaseItem(ShoppingListItem item) {
+/*    public static void purchaseItem(ShoppingListItem item) {
         user.removeShoppingListItem(item.getId());
         ArrayList<Ingredient> ingredients = user.getIngredients();
         for (Ingredient ingredient : ingredients) {
@@ -88,9 +97,9 @@ public class ShoppingListViewModel extends ViewModel {
                 IngredientsViewModel.updateIngredient(ingredient);
             }
         }
-    }
+    }*/
 
-    private void addOrUpdateIngredientInPantry(ShoppingListItem shoppingItem) {
+    private static void addOrUpdateIngredientInPantry(ShoppingListItem shoppingItem) {
         List<Ingredient> pantry = user.getIngredients();
         boolean found = false;
 
