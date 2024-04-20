@@ -120,6 +120,7 @@ public class ViewRecipeActivity extends AppCompatActivity {
                 Meal meal = new Meal(UUID.randomUUID().toString(), finalRecipeLookingFor.getRecipeName(), 200,
                         firebaseDateInput);
                 FirebaseViewModel.getInstance().saveOrUpdateMeal(meal);
+                startActivity(new Intent(ViewRecipeActivity.this, IngredientsActivity.class));
             }
         });
 
