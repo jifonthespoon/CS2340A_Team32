@@ -11,8 +11,10 @@ import com.example.greenplate.R;
 import com.example.greenplate.models.Recipe;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
 import com.example.greenplate.viewmodels.RecipeViewModel;
+import com.example.greenplate.viewmodels.ShoppingListViewModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ViewRecipeActivityNeedIngredients extends AppCompatActivity {
     @Override
@@ -21,6 +23,7 @@ public class ViewRecipeActivityNeedIngredients extends AppCompatActivity {
         setContentView(R.layout.view_recipe_page_need_ingredients);
         Intent intent = getIntent();
         String recipeName = intent.getStringExtra("recipe");
+        HashMap<String, Integer> missingIngredientsMap = new HashMap<>();
 
         final ImageButton toHome = findViewById(R.id.toHomePage);
         final ImageButton toInput = findViewById(R.id.toInputPage);
@@ -50,11 +53,14 @@ public class ViewRecipeActivityNeedIngredients extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (tab == Recipe.recipeTab.AtoZ) {
-                    startActivity(new Intent(ViewRecipeActivityNeedIngredients.this, RecipeActivityAtoZ.class));
+                    startActivity(new Intent(ViewRecipeActivityNeedIngredients.this,
+                            RecipeActivityAtoZ.class));
                 } else if (tab == Recipe.recipeTab.ZtoA) {
-                    startActivity(new Intent(ViewRecipeActivityNeedIngredients.this, RecipeActivityZtoA.class));
+                    startActivity(new Intent(ViewRecipeActivityNeedIngredients.this,
+                            RecipeActivityZtoA.class));
                 } else {
-                    startActivity(new Intent(ViewRecipeActivityNeedIngredients.this, RecipeActivityCanCook.class));
+                    startActivity(new Intent(ViewRecipeActivityNeedIngredients.this,
+                            RecipeActivityCanCook.class));
                 }
 
             }
@@ -85,7 +91,12 @@ public class ViewRecipeActivityNeedIngredients extends AppCompatActivity {
         missingShoppingList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // to implement
+                for (String ingredientName : missingIngredientsMap.keySet()) {
+                    ShoppingListViewModel.updateShoppingListItemQuantity(ingredientName,
+                            missingIngredientsMap.get(ingredientName));
+                }
+                Intent intent = new Intent(ViewRecipeActivityNeedIngredients.this, ShoppingActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -105,12 +116,26 @@ public class ViewRecipeActivityNeedIngredients extends AppCompatActivity {
 
         dishNameTextView.setText(recipeLookingFor.getRecipeName());
         String ingredients = "";
+        String missingIngredients = "";
         for (String ingredientName : recipeLookingFor.getIngredients().keySet()) {
-            ingredients += ingredientName + " - "
-                    + recipeLookingFor.getIngredients().get(ingredientName) + " \n";
+            if (FirebaseViewModel.getInstance().getUser()
+                    .checkForIngredientAndQuantity(ingredientName, recipeLookingFor.getIngredients()
+                            .get(ingredientName))) {
+                ingredients += ingredientName + " - "
+                        + recipeLookingFor.getIngredients().get(ingredientName) + " \n";
+            } else {
+                missingIngredients += ingredientName + " - "
+                        + (recipeLookingFor.getIngredients().get(ingredientName)
+                        - FirebaseViewModel.getInstance().getUser()
+                        .getQuantityOfIngredient(ingredientName)) + " \n";
+                missingIngredientsMap.put(ingredientName, recipeLookingFor.getIngredients()
+                        .get(ingredientName) - FirebaseViewModel.getInstance().getUser()
+                        .getQuantityOfIngredient(ingredientName));
+            }
         }
         ingredientTextView.setText(ingredients);
-
+        missingIngredientTextView.setText((missingIngredients));
+        System.out.println(missingIngredientsMap.keySet());
     }
 }
 

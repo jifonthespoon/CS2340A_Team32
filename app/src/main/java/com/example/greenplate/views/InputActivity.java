@@ -77,6 +77,7 @@ public class InputActivity extends AppCompatActivity {
         TextView calorieGoal = findViewById(R.id.calorieGoalText);
         userInfo.setText(fvm.getPersonalInformation());
         calorieGoal.setText(fvm.getCalorieGoal());
+        caloriesRecommended = FirebaseViewModel.getInstance().getUser().getDailyCalorieIntake();
         toHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -176,15 +177,7 @@ public class InputActivity extends AppCompatActivity {
         });
         BarChart mBarChart;
         mBarChart = findViewById(R.id.barChart);
-        int totalCaloriesConsumed = FirebaseViewModel.getInstance().getUser().getCalculatedDailyCalorieIntake();
-        int recommendedTotalDailyCalorie = FirebaseViewModel.getInstance().getUser().getDailyCalorieIntake();
-        ArrayList<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry(1f, new float[]{totalCaloriesConsumed}));
-        entries.add(new BarEntry(2f, new float[]{recommendedTotalDailyCalorie}));
-        BarDataSet dataSet = new BarDataSet(entries, "Calories");
-        dataSet.setColors(ColorTemplate.rgb("#D64933")); // Setting color to red
-        BarData barData = new BarData(dataSet);
-        mBarChart.setData(barData);
+
         XAxis xAxis = mBarChart.getXAxis();  // Customize X-axis
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); // Position of X-axis labels
         xAxis.setGranularity(1.45f); // Interval between each label
@@ -194,17 +187,13 @@ public class InputActivity extends AppCompatActivity {
                 new String[]{"Calories Consumed", "Calorie Goal"})); // Customizing labels
         dateLabel = findViewById(R.id.dayLabel);
         calendar = Calendar.getInstance();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String formattedDate = dateFormat.format(calendar.getTime());
-        updateDateLabel();
+        updateVisualization(mBarChart);
         final ImageButton backwardsTime = findViewById(R.id.left_arrow_input_page);
         backwardsTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 calendar.add(Calendar.DAY_OF_MONTH, -1);
-                updateDateLabel();
-                updateVisualization();
-                caloriesConsumed = FirebaseViewModel.getInstance().getUser().getCalculatedDailyCalorieIntake();
+                updateVisualization(mBarChart);
             }
         });
         final ImageButton forwardsTime = findViewById(R.id.right_arrow_input_page);
@@ -212,27 +201,28 @@ public class InputActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 calendar.add(Calendar.DAY_OF_MONTH, 1);
-                updateDateLabel();
-                updateVisualization();
-                caloriesConsumed = FirebaseViewModel.getInstance().getUser().getCalculatedDailyCalorieIntake();
+                updateVisualization(mBarChart);
             }
         });
     }
-    private void updateDateLabel() {
+    private void updateVisualization(BarChart barChart) {
         SimpleDateFormat sdf = new SimpleDateFormat("MMM dd", Locale.getDefault());
         String formattedDate = sdf.format(calendar.getTime());
         dateLabel.setText(formattedDate);
         SimpleDateFormat firebaseDate = new SimpleDateFormat("YYYY-MM-dd");
         String firebaseDateInput = firebaseDate.format(calendar.getTime());
         System.out.println(firebaseDateInput);
-        FirebaseViewModel.getInstance().queryMealsByDateCalories(firebaseDateInput);
-
-    }
-    private void updateVisualization() {
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String formattedDate = dateFormat.format(calendar.getTime());
+        caloriesConsumed = FirebaseViewModel.getInstance().getUser().getCaloriesForDay(firebaseDateInput);
+        //FirebaseViewModel.getInstance().queryMealsByDateCalories(firebaseDateInput);
+        System.out.println(caloriesConsumed);
+        ArrayList<BarEntry> entries = new ArrayList<>();
+        entries.add(new BarEntry(1f, new float[]{caloriesConsumed}));
+        entries.add(new BarEntry(2f, new float[]{caloriesRecommended}));
+        System.out.println(entries);
+        BarDataSet dataSet = new BarDataSet(entries, "Calories");
+        dataSet.setColors(ColorTemplate.rgb("#D64933")); // Setting color to red
+        BarData barData = new BarData(dataSet);
+        barChart.setData(barData);
+        barChart.invalidate();
     }
 }

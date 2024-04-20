@@ -9,7 +9,6 @@ import com.example.greenplate.models.SortingStrategy;
 import com.example.greenplate.models.SortingStrategyFactory;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
 import com.example.greenplate.viewmodels.RecipeViewModel;
-import com.example.greenplate.viewmodels.SortByName;
 import com.example.greenplate.viewmodels.SortByNameStrategyFactory;
 
 import android.content.Intent;
@@ -40,7 +39,7 @@ import java.util.Arrays;
 public class RecipeActivityAtoZ extends AppCompatActivity {
     private SortingStrategy sortingStrategy;
     private ListView mListview;
-    private RecipeListAdapter recipeListAdapter;
+    private static RecipeListAdapter recipeListAdapter;
 
     /**
      * Initializes the activity by setting
@@ -184,6 +183,12 @@ public class RecipeActivityAtoZ extends AppCompatActivity {
         Intent intent = new Intent(RecipeActivityAtoZ.this, ViewRecipeActivity.class);
         intent.putExtra("name", item);
         startActivity(intent);
+    }
+
+    public static void refreshRecipes() {
+        if (recipeListAdapter != null) {
+            recipeListAdapter.notifyDataSetChanged();
+        }
     }
 
 

@@ -181,7 +181,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/personal_info_weight_enter" />
 
-
     <ImageView
         android:id="@+id/imageView6"
         android:layout_width="448dp"
@@ -269,17 +268,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/toRecipePage"
         app:srcCompat="@drawable/input_button" />
-
-    <ImageButton
-        android:id="@+id/toPersonalPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="26dp"
-        android:background="@android:color/transparent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icon_button" />
 
     <RadioGroup
         android:id="@+id/radioGroup"

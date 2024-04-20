@@ -1,5 +1,7 @@
 package com.example.greenplate.models;
 
+import com.example.greenplate.viewmodels.ShoppingListViewModel;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,12 +21,25 @@ public class ShoppingListItem {
         this.name = name;
         this.quantity = quantity;
     }
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-    public int getQuantity() { return quantity; }
-    public void setQuantity(int quantity) { this.quantity = quantity; }
+
+    public String getId() {
+        return id;
+    }
+    public void setId(String id) {
+        this.id = id;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public int getQuantity() {
+        return quantity;
+    }
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("name", name);
@@ -34,8 +49,10 @@ public class ShoppingListItem {
 
     public void increaseQuantity() {
         quantity++;
+        ShoppingListViewModel.updateShoppingListItemQuantity(name, 0);
     }
     public void decreaseQuantity() {
         quantity--;
+        ShoppingListViewModel.updateShoppingListItemQuantity(name, 0);
     }
 }

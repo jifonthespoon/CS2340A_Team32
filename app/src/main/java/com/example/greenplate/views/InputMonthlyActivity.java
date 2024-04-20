@@ -31,7 +31,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 
 import java.text.SimpleDateFormat;
@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -46,6 +47,7 @@ public class InputMonthlyActivity extends AppCompatActivity {
 
     private TextView monthLabel;
     private Calendar calendar;
+    ArrayList<Entry> values = new ArrayList<>();
 
 
     @Override
@@ -155,7 +157,7 @@ public class InputMonthlyActivity extends AppCompatActivity {
         mChart.setPinchZoom(true);
         mChart.getDescription().setText("");
         ArrayList<Entry> values = new ArrayList<>();
-        addValues(values);
+        //addValues(values);
         LineDataSet dataSet;
         if (mChart.getData() != null && mChart.getData().getDataSetCount() > 0) {
             dataSet = (LineDataSet) mChart.getData().getDataSetByIndex(0);
@@ -176,7 +178,7 @@ public class InputMonthlyActivity extends AppCompatActivity {
         }
         monthLabel = findViewById(R.id.monthLabel);
         calendar = Calendar.getInstance();
-        updateDate();
+        updateVisualization(mChart);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = dateFormat.format(calendar.getTime());
         final ImageButton backwardsTime = findViewById(R.id.left_arrow_input_monthly_page);
@@ -184,8 +186,7 @@ public class InputMonthlyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 calendar.add(Calendar.MONTH, -1); // Subtract one month
-                updateDate();
-                updateVisualization();
+                updateVisualization(mChart);
             }
         });
         final ImageButton forwardsTime = findViewById(R.id.right_arrow_input_monthly_page);
@@ -193,21 +194,38 @@ public class InputMonthlyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 calendar.add(Calendar.MONTH, 1); // Add one month
-                updateDate();
-                updateVisualization();
+                updateVisualization(mChart);
             }
         });
     }
-    private void updateDate() {
+
+    private void updateVisualization(LineChart chart) {
         SimpleDateFormat sdf = new SimpleDateFormat("MMM yyyy", Locale.getDefault());
         String formattedDate = sdf.format(calendar.getTime());
         monthLabel.setText(formattedDate);
-    }
-    private void updateVisualization() {
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String formattedDate = dateFormat.format(calendar.getTime());
+
+        SimpleDateFormat month = new SimpleDateFormat("MM");
+        String monthText = month.format(calendar.getTime());
+
+        SimpleDateFormat year = new SimpleDateFormat("yyyy");
+        String yearText = year.format(calendar.getTime());
+
+        HashMap<Integer, Integer> caloriesPerDay =
+                FirebaseViewModel.getInstance().getUser().
+                        getCaloriesForMonth(monthText, yearText);
+
+        values = new ArrayList<>();
+        for (int day : caloriesPerDay.keySet()) {
+            values.add(new Entry(day, caloriesPerDay.get(day)));
+        }
+        LineDataSet dataSet = new LineDataSet(values, "Calories per Day");
+        dataSet.setValues(values);
+        dataSet.setColors(ColorTemplate.rgb("#D64933"));
+        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+        dataSets.add(dataSet);
+        LineData data = new LineData(dataSets);
+        chart.setData(data);
+        chart.invalidate();
     }
 
     private void addValues(ArrayList<Entry> values) {

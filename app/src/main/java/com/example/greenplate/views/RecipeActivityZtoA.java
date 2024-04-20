@@ -3,7 +3,6 @@ package com.example.greenplate.views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
@@ -16,7 +15,6 @@ import com.example.greenplate.models.SortingStrategy;
 
 import com.example.greenplate.models.SortingStrategyFactory;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
-import com.example.greenplate.viewmodels.SortByNameStrategyFactory;
 import com.example.greenplate.viewmodels.RecipeViewModel;
 import com.example.greenplate.viewmodels.SortByReverseName;
 import com.example.greenplate.viewmodels.SortByReverseNameStrategyFactory;
@@ -38,7 +36,7 @@ import java.util.Arrays;
 public class RecipeActivityZtoA extends AppCompatActivity {
     private SortingStrategy sortingStrategy;
     private ListView mListview;
-    private RecipeListAdapter recipeListAdapter;
+    private static RecipeListAdapter recipeListAdapter;
 
     /**
      * Initializes the activity by setting
@@ -185,5 +183,10 @@ public class RecipeActivityZtoA extends AppCompatActivity {
         Intent intent = new Intent(RecipeActivityZtoA.this, ViewRecipeActivity.class);
         intent.putExtra("name", item);
         startActivity(intent);
+    }
+    public static void refreshRecipes() {
+        if (recipeListAdapter != null) {
+            recipeListAdapter.notifyDataSetChanged();
+        }
     }
 }

@@ -13,8 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.greenplate.R;
 import com.example.greenplate.models.Recipe;
+import com.example.greenplate.models.ShoppingListItem;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
 import com.example.greenplate.viewmodels.RecipeViewModel;
+import com.example.greenplate.viewmodels.ShoppingListViewModel;
 
 public class AddShoppingActivity extends AppCompatActivity {
     /**
@@ -66,9 +68,9 @@ public class AddShoppingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Recipe.recipeTab tab = RecipeViewModel.getRecipeTab();
                 Intent intent = new Intent(AddShoppingActivity.this,
-                        tab == Recipe.recipeTab.AtoZ ? RecipeActivityAtoZ.class : tab ==
-                                Recipe.recipeTab.ZtoA ? RecipeActivityZtoA.class :
-                                RecipeActivityCanCook.class);
+                        tab == Recipe.recipeTab.AtoZ ? RecipeActivityAtoZ.class : tab
+                                == Recipe.recipeTab.ZtoA ? RecipeActivityZtoA.class
+                                : RecipeActivityCanCook.class);
                 startActivity(intent);
             }
         });
@@ -108,45 +110,33 @@ public class AddShoppingActivity extends AppCompatActivity {
                 EditText nameEditText = findViewById(R.id.shoppingList_name_enter);
                 EditText quantityEditText = findViewById(R.id.shoppingList_quantity_enter);
                 EditText caloriesEditText = findViewById(R.id.shoppingList_calories_enter);
-
-                // Extract the text from each EditText
-                String name = nameEditText.getText().toString();
-                String quantityStr = quantityEditText.getText().toString();
-                String caloriesStr = caloriesEditText.getText().toString();
-
-                // Convert quantity and calories from String to int
-                int quantity = 0;
-                int calories = 0;
+                String name = nameEditText.getText().toString().trim();
+                String quantityStr = quantityEditText.getText().toString().trim();
+                String caloriesStr = caloriesEditText.getText().toString().trim();
+                if (name.isEmpty() || quantityStr.isEmpty() || caloriesStr.isEmpty()) {
+                    Toast.makeText(AddShoppingActivity.this, "All fields must be filled out.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                int quantity;
+                int calories;
                 try {
                     quantity = Integer.parseInt(quantityStr);
                     calories = Integer.parseInt(caloriesStr);
                 } catch (NumberFormatException e) {
-                    // Handle the case where either quantity or calories isn't a valid integer
-                    Toast.makeText(AddShoppingActivity.this, "Quantity and Calories "
-                            + "must be valid numbers.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddShoppingActivity.this, "Quantity and Calories must be valid numbers.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-                // Validate the input (e.g., check if name is empty, quantity is positive, etc.)
-                if (name.isEmpty() || quantity <= 0) {
-                    Toast.makeText(AddShoppingActivity.this, "Please fill out the "
-                                    + "name and make sure quantity is positive.",
-                            Toast.LENGTH_SHORT).show();
+                if (quantity <= 0) {
+                    Toast.makeText(AddShoppingActivity.this, "Quantity must be positive.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                //IngredientsViewModel.addIngredient(name, calories, quantity, expirationDate);
-
+                ShoppingListItem newItem = new ShoppingListItem(name, quantity); // Assuming calories are not used for ShoppingListItem
+                ShoppingListViewModel.addShoppingListItem(newItem);
                 nameEditText.setText("");
                 quantityEditText.setText("");
                 caloriesEditText.setText("");
-
-                Toast.makeText(AddShoppingActivity.this, "Item saved!",
-                        Toast.LENGTH_SHORT).show();
-                RecipeViewModel.fetchRecipes(FirebaseViewModel.getInstance().getUser());
+                Toast.makeText(AddShoppingActivity.this, "Item saved to shopping list!", Toast.LENGTH_SHORT).show();
             }
         });
-
-
-
     }
 }

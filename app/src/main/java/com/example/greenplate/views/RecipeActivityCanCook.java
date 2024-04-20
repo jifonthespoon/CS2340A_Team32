@@ -3,7 +3,6 @@ package com.example.greenplate.views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
@@ -16,7 +15,6 @@ import com.example.greenplate.viewmodels.FirebaseViewModel;
 import com.example.greenplate.viewmodels.RecipeViewModel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * RecipeActivity serves as the primary interface
@@ -31,7 +29,7 @@ import java.util.Arrays;
 
 public class RecipeActivityCanCook extends AppCompatActivity {
     private ListView mListview;
-    private RecipeListAdapter recipeListAdapter;
+    private static RecipeListAdapter recipeListAdapter;
 
     /**
      * Initializes the activity by setting
@@ -167,5 +165,10 @@ public class RecipeActivityCanCook extends AppCompatActivity {
         Intent intent = new Intent(RecipeActivityCanCook.this, ViewRecipeActivity.class);
         intent.putExtra("name", item);
         startActivity(intent);
+    }
+    public static void refreshRecipes() {
+        if (recipeListAdapter != null) {
+            recipeListAdapter.notifyDataSetChanged();
+        }
     }
 }
