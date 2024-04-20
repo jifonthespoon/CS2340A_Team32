@@ -49,10 +49,10 @@ public class ShoppingListItem {
 
     public void increaseQuantity() {
         quantity++;
-        ShoppingListViewModel.updateShoppingListItemQuantity(name, 0);
     }
     public void decreaseQuantity() {
-        quantity--;
-        ShoppingListViewModel.updateShoppingListItemQuantity(name, 0);
+        if (quantity > 0) {
+            quantity--;
+        }
     }
 }

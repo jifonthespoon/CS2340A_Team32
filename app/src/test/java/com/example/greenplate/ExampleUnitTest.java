@@ -10,20 +10,16 @@ import com.example.greenplate.models.Meal;
 import com.example.greenplate.models.ShoppingListItem;
 import com.example.greenplate.models.SortingStrategy;
 import com.example.greenplate.models.User;
-import com.example.greenplate.models.SortingStrategy;
-import com.example.greenplate.viewmodels.FirebaseViewModel;
 import com.example.greenplate.models.Recipe;
 import com.example.greenplate.models.Ingredient;
-import com.example.greenplate.viewmodels.SortByName;
-import com.example.greenplate.viewmodels.SortByReverseName;
-import com.example.greenplate.viewmodels.IngredientsViewModel;
+import com.example.greenplate.viewmodels.ShoppingListViewModel;
 import com.example.greenplate.viewmodels.SortByName;
 import com.example.greenplate.viewmodels.SortByReverseName;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -335,13 +331,51 @@ public class ExampleUnitTest {
     public void testShoppingListItemDecreaseQuantity() {
         ShoppingListItem item1 = new ShoppingListItem("Eggs", 12);
         item1.decreaseQuantity();
-        assertEquals(item1.getQuantity(), 11);
+        assertEquals(11, item1.getQuantity());
     }
 
     @Test
     public void testShoppingListItemIncreaseQuantity() {
         ShoppingListItem item1 = new ShoppingListItem("Eggs", 12);
         item1.increaseQuantity();
-        assertEquals(item1.getQuantity(), 13);
+        assertEquals(13, item1.getQuantity());
     }
+
+    // KUSHAL - SPRINT 4
+    @Test
+    public void testShoppingListItemConstructor() {
+        ShoppingListItem item = new ShoppingListItem("Apple", 3);
+        assertEquals("Apple", item.getName());
+        assertEquals(3, item.getQuantity());
+    }
+
+    @Test
+    public void testToMap() {
+        ShoppingListItem item = new ShoppingListItem("Orange", 5);
+        Map<String, Object> expectedMap = new HashMap<>();
+        expectedMap.put("name", "Orange");
+        expectedMap.put("quantity", 5);
+
+        assertEquals(expectedMap, item.toMap());
+    }
+
+    // DANIEL - SPRINT 4
+    @Test
+    public void testShoppingListItem_SetName() {
+        ShoppingListItem item = new ShoppingListItem("Milk", 1);
+        item.setName("Eggs");
+        assertEquals("Eggs", item.getName());
+    }
+    @Test
+    public void testShoppingListItem_ToMap() {
+        ShoppingListItem item = new ShoppingListItem("Milk", 2);
+
+        Map<String, Object> map = item.toMap();
+
+        // Check the map contains the correct values
+        assertEquals("Milk", map.get("name"));
+        assertEquals(2, map.get("quantity"));
+    }
+
+
 }

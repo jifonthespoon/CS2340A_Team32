@@ -130,8 +130,7 @@ public class AddShoppingActivity extends AppCompatActivity {
                     Toast.makeText(AddShoppingActivity.this, "Quantity must be positive.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                ShoppingListItem newItem = new ShoppingListItem(name, quantity); // Assuming calories are not used for ShoppingListItem
-                ShoppingListViewModel.addShoppingListItem(newItem);
+                ShoppingListViewModel.addShoppingListItem(name, quantity);
                 nameEditText.setText("");
                 quantityEditText.setText("");
                 caloriesEditText.setText("");
