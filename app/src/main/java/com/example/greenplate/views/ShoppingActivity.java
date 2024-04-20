@@ -4,6 +4,7 @@ import com.example.greenplate.R;
 import com.example.greenplate.models.ShoppingListAdapter;
 import com.example.greenplate.models.ShoppingListItem;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
+import com.example.greenplate.viewmodels.RecipeViewModel;
 import com.example.greenplate.viewmodels.ShoppingListViewModel;
 
 import android.content.Intent;
@@ -94,6 +95,12 @@ public class ShoppingActivity extends AppCompatActivity {
                     return;
                 }
                 ShoppingListViewModel.purchaseItems();
+                shoppingListAdapter.notifyDataSetChanged();
+                shoppingListAdapter.uncheckAllCheckboxes();
+                RecipeViewModel.fetchRecipes(FirebaseViewModel.getInstance().getUser());
+                RecipeActivityAtoZ.refreshRecipes();
+                RecipeActivityZtoA.refreshRecipes();
+                RecipeActivityCanCook.refreshRecipes();
             }
         });
 

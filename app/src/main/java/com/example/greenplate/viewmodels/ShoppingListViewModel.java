@@ -14,33 +14,33 @@ import java.util.List;
 public class ShoppingListViewModel extends ViewModel {
     private static Firebase firebase = Firebase.getInstance();
     private static User user = FirebaseViewModel.getInstance().getUser();
-    private static ArrayList<ShoppingListItem> selectedItems;
+    private static ArrayList<ShoppingListItem> selectedItems = new ArrayList<>();
 
-    public ShoppingListViewModel() {
-        selectedItems = new ArrayList<>();
-        this.user = FirebaseViewModel.getInstance().getUser();
-    }
+
     public static void addShoppingListItem(ShoppingListItem item) {
         DatabaseReference shoppingListRef = firebase.getDatabase().getReference()
                 .child("users").child(user.getUserId()).child("shoppingList").push();
         item.setId(shoppingListRef.getKey());
         shoppingListRef.setValue(item.toMap());
         user.addShoppingListItem(item);
-        selectedItems.add(item);
     }
     public static void updateShoppingListItemQuantity(String name, int quantity) {
         int newQuantity = quantity;
         String itemId = "";
+
         for (ShoppingListItem item : user.getShoppingList()) {
             if (item.getName().equals(name)) {
                 newQuantity += item.getQuantity();
                 itemId = item.getId();
             }
         }
+
         if (newQuantity <= 0) {
             firebase.getDatabase().getReference().child("users").child(user.getUserId())
                     .child("shoppingList").child(itemId).removeValue();
             user.removeShoppingListItem(itemId);
+        } else if (itemId.isEmpty()) {
+            addShoppingListItem(new ShoppingListItem(name, quantity));
         } else {
             firebase.getDatabase().getReference().child("users").child(user.getUserId())
                     .child("shoppingList").child(itemId).child("quantity").setValue(newQuantity);
@@ -81,10 +81,14 @@ public class ShoppingListViewModel extends ViewModel {
     }
 
     public static void selectItem(ShoppingListItem item) {
+        if (!selectedItems.contains(item)) {
+            selectedItems.add(item);
+        }
+    }
+
+    public static void unselectItem(ShoppingListItem item) {
         if (selectedItems.contains(item)) {
             selectedItems.remove(item);
-        } else {
-            selectedItems.add(item);
         }
     }
 

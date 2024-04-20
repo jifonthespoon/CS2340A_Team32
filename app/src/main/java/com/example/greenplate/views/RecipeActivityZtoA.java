@@ -36,7 +36,7 @@ import java.util.Arrays;
 public class RecipeActivityZtoA extends AppCompatActivity {
     private SortingStrategy sortingStrategy;
     private ListView mListview;
-    private RecipeListAdapter recipeListAdapter;
+    private static RecipeListAdapter recipeListAdapter;
 
     /**
      * Initializes the activity by setting
@@ -183,5 +183,10 @@ public class RecipeActivityZtoA extends AppCompatActivity {
         Intent intent = new Intent(RecipeActivityZtoA.this, ViewRecipeActivity.class);
         intent.putExtra("name", item);
         startActivity(intent);
+    }
+    public static void refreshRecipes() {
+        if (recipeListAdapter != null) {
+            recipeListAdapter.notifyDataSetChanged();
+        }
     }
 }

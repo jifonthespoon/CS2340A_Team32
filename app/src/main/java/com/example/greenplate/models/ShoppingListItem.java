@@ -1,5 +1,7 @@
 package com.example.greenplate.models;
 
+import com.example.greenplate.viewmodels.ShoppingListViewModel;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,8 +49,10 @@ public class ShoppingListItem {
 
     public void increaseQuantity() {
         quantity++;
+        ShoppingListViewModel.updateShoppingListItemQuantity(name, 0);
     }
     public void decreaseQuantity() {
         quantity--;
+        ShoppingListViewModel.updateShoppingListItemQuantity(name, 0);
     }
 }

@@ -29,7 +29,7 @@ import java.util.ArrayList;
 
 public class RecipeActivityCanCook extends AppCompatActivity {
     private ListView mListview;
-    private RecipeListAdapter recipeListAdapter;
+    private static RecipeListAdapter recipeListAdapter;
 
     /**
      * Initializes the activity by setting
@@ -165,5 +165,10 @@ public class RecipeActivityCanCook extends AppCompatActivity {
         Intent intent = new Intent(RecipeActivityCanCook.this, ViewRecipeActivity.class);
         intent.putExtra("name", item);
         startActivity(intent);
+    }
+    public static void refreshRecipes() {
+        if (recipeListAdapter != null) {
+            recipeListAdapter.notifyDataSetChanged();
+        }
     }
 }
