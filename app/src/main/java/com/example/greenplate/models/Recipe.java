@@ -8,7 +8,7 @@ public class Recipe implements Comparable<Recipe> {
     private HashMap<String, Integer> ingredients;
     private String id; // Unique identifier for the recipe
     private boolean canMake;
-    public enum recipeTab { AtoZ, ZtoA, CANCOOK };
+    public enum recipeTab { AtoZ, ZtoA, CANCOOK }
 
     public Recipe(String recipeName, HashMap<String, Integer> ingredients, String id,
                   boolean canMake) {
@@ -85,4 +85,8 @@ public class Recipe implements Comparable<Recipe> {
         canMake = ingredient.isAvailable();
     }
 
+    public static boolean isValidRecipeName(String recipeName) {
+        // Check if the recipe name contains any special characters
+        return recipeName.matches("[a-zA-Z0-9 ]+");
+    }
 }
