@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
@@ -14,10 +15,12 @@ import com.example.greenplate.R;
 import com.example.greenplate.viewmodels.ShoppingListViewModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ShoppingListAdapter extends BaseAdapter implements ListAdapter {
     private ArrayList<ShoppingListItem> list = new ArrayList<ShoppingListItem>();
     private Context context;
+    private HashMap<Integer, CheckBox> checkBoxMap = new HashMap<>();
 
     public ShoppingListAdapter(ArrayList<ShoppingListItem> list, Context context) {
         this.list = list;
@@ -52,12 +55,17 @@ public class ShoppingListAdapter extends BaseAdapter implements ListAdapter {
         TextView listQuantity = (TextView) view.findViewById(R.id.quantity);
         listQuantity.setText(String.valueOf(list.get(position).getQuantity()));
 
-        Button buyBox = (CheckBox) view.findViewById(R.id.myCheckbox);
+        CheckBox buyBox = (CheckBox) view.findViewById(R.id.myCheckbox);
+        checkBoxMap.put(position, buyBox);
 
         buyBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShoppingListViewModel.selectItem(list.get(position));
+                if (buyBox.isChecked()) {
+                    ShoppingListViewModel.selectItem(list.get(position));
+                } else {
+                    ShoppingListViewModel.unselectItem(list.get(position));
+                }
             }
         });
 
@@ -80,8 +88,15 @@ public class ShoppingListAdapter extends BaseAdapter implements ListAdapter {
             }
         });
 
-
-
         return view;
+    }
+
+    public void uncheckAllCheckboxes() {
+        for (CheckBox cb : checkBoxMap.values()) {
+            if (cb != null) {
+                cb.setChecked(false);
+            }
+        }
+        notifyDataSetChanged();  // Update the ListView
     }
 }

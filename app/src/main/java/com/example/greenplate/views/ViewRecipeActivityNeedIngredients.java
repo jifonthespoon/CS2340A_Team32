@@ -95,6 +95,8 @@ public class ViewRecipeActivityNeedIngredients extends AppCompatActivity {
                     ShoppingListViewModel.updateShoppingListItemQuantity(ingredientName,
                             missingIngredientsMap.get(ingredientName));
                 }
+                Intent intent = new Intent(ViewRecipeActivityNeedIngredients.this, ShoppingActivity.class);
+                startActivity(intent);
             }
         });
 
