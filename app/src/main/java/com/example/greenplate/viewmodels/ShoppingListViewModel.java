@@ -7,9 +7,8 @@ import com.example.greenplate.models.Ingredient;
 import com.example.greenplate.models.ShoppingListItem;
 import com.example.greenplate.models.User;
 import com.google.firebase.database.DatabaseReference;
-
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class ShoppingListViewModel extends ViewModel {
     private static Firebase firebase = Firebase.getInstance();
@@ -17,13 +16,27 @@ public class ShoppingListViewModel extends ViewModel {
     private static ArrayList<ShoppingListItem> selectedItems = new ArrayList<>();
 
 
-    public static void addShoppingListItem(ShoppingListItem item) {
-        DatabaseReference shoppingListRef = firebase.getDatabase().getReference()
-                .child("users").child(user.getUserId()).child("shoppingList").push();
-        item.setId(shoppingListRef.getKey());
-        shoppingListRef.setValue(item.toMap());
-        user.addShoppingListItem(item);
+    public static void addShoppingListItem(String item, int quantity) {
+        boolean found = false;
+        ShoppingListItem newShoppingListItem = new ShoppingListItem(item, quantity);
+
+        for (ShoppingListItem i : user.getShoppingList()) {
+            if (i.getName().equalsIgnoreCase(newShoppingListItem.getName())) {
+                updateShoppingListItemQuantity(item, quantity);
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            DatabaseReference ref = firebase.getDatabase().getReference()
+                    .child("users").child(user.getUserId()).child("shoppingList").push();
+            newShoppingListItem.setId(ref.getKey());
+            FirebaseViewModel.getInstance().getUser().addShoppingListItem(newShoppingListItem);
+            ref.setValue(newShoppingListItem.toMap());
+        }
     }
+
     public static void updateShoppingListItemQuantity(String name, int quantity) {
         int newQuantity = quantity;
         String itemId = "";
@@ -40,7 +53,7 @@ public class ShoppingListViewModel extends ViewModel {
                     .child("shoppingList").child(itemId).removeValue();
             user.removeShoppingListItem(itemId);
         } else if (itemId.isEmpty()) {
-            addShoppingListItem(new ShoppingListItem(name, quantity));
+            addShoppingListItem(name, quantity);
         } else {
             firebase.getDatabase().getReference().child("users").child(user.getUserId())
                     .child("shoppingList").child(itemId).child("quantity").setValue(newQuantity);
@@ -95,37 +108,7 @@ public class ShoppingListViewModel extends ViewModel {
     public static ArrayList<ShoppingListItem> getSelectedItems() {
         return selectedItems;
     }
-    /*    public static void purchaseItem(ShoppingListItem item) {
-        user.removeShoppingListItem(item.getId());
-        ArrayList<Ingredient> ingredients = user.getIngredients();
-        for (Ingredient ingredient : ingredients) {
-            if (ingredient.getName().equals(item.getName())) {
-                ingredient.setQuantity(ingredient.getQuantity() + item.getQuantity());
-                IngredientsViewModel.updateIngredient(ingredient);
-            }
-        }
-    }*/
 
-    private static void addOrUpdateIngredientInPantry(ShoppingListItem shoppingItem) {
-        List<Ingredient> pantry = user.getIngredients();
-        boolean found = false;
 
-        for (Ingredient ingredient : pantry) {
-            if (ingredient.getName().equalsIgnoreCase(shoppingItem.getName())) {
-                ingredient.setQuantity(ingredient.getQuantity() + shoppingItem.getQuantity());
-                IngredientsViewModel.updateIngredient(ingredient);
-                found = true;
-                break;
-            }
-        }
-
-        if (!found) {
-            Ingredient newIngredient = new Ingredient(shoppingItem.getName(),
-                    0, shoppingItem.getQuantity(), user.getUserId());
-            IngredientsViewModel.addIngredient(newIngredient.getName(),
-                    newIngredient.getCalories(), newIngredient.getQuantity(), "");
-            // Adjust this call based on the actual method signature
-        }
-    }
 }
 

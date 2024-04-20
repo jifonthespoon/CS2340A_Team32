@@ -61,12 +61,12 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ShoppingListViewModel slvm = new ShoppingListViewModel();
-                slvm.addShoppingListItem(new ShoppingListItem("Beef", 2));
-                slvm.addShoppingListItem(new ShoppingListItem("Eggs", 12));
-                slvm.addShoppingListItem(new ShoppingListItem("Apples", 3));
-                slvm.addShoppingListItem(new ShoppingListItem("Bread", 1));
-                slvm.addShoppingListItem(new ShoppingListItem("Avocados", 4));
-                slvm.addShoppingListItem(new ShoppingListItem("Chicken", 2));
+                slvm.addShoppingListItem("Beef", 2);
+                slvm.addShoppingListItem("Eggs", 12);
+                slvm.addShoppingListItem("Apples", 3);
+                slvm.addShoppingListItem("Bread", 1);
+                slvm.addShoppingListItem("Avocados", 4);
+                slvm.addShoppingListItem("Chicken", 2);
                 Intent intent = new Intent(HomeActivity.this,
                         HomeActivity.class);
                 startActivity(intent);
