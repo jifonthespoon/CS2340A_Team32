@@ -108,8 +108,8 @@ public class ViewRecipeActivityNeedIngredients extends AppCompatActivity {
         final TextView dishNameTextView = findViewById(R.id.dish_name_textView);
         final TextView ingredientTextView = findViewById(R.id.ingredient_textView);
         final TextView missingIngredientTextView = findViewById(R.id.missingIngredient_textView);
-        // to implement
-        
+        final TextView caloriesTextView = findViewById(R.id.calories_textView);
+
         ArrayList<Recipe> recipes = FirebaseViewModel.getInstance().getUser().getRecipes();
         Recipe recipeLookingFor = recipes.get(0);
         for (Recipe recipe : recipes) {
@@ -119,6 +119,8 @@ public class ViewRecipeActivityNeedIngredients extends AppCompatActivity {
         }
 
         dishNameTextView.setText(recipeLookingFor.getRecipeName());
+        caloriesTextView.setText(recipeLookingFor.getCalories());
+
         String ingredients = "";
         String missingIngredients = "";
         for (String ingredientName : recipeLookingFor.getIngredients().keySet()) {
