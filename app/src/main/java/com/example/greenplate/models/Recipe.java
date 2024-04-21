@@ -1,7 +1,5 @@
 package com.example.greenplate.models;
 
-import com.example.greenplate.viewmodels.FirebaseViewModel;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +23,10 @@ public class Recipe implements Comparable<Recipe> {
         this.recipeName = recipeName;
         this.ingredients = ingredients;
         this.calories = totalCalories;
+    }
+    public Recipe(String recipeName, HashMap<String, Integer> ingredients) {
+        this.recipeName = recipeName;
+        this.ingredients = ingredients;
     }
 
     // Getter for recipeName

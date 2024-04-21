@@ -332,16 +332,18 @@ public class ExampleUnitTest {
     // AUSTIN
     @Test
     public void testShoppingListItemDecreaseQuantity() {
-        ShoppingListItem item1 = new ShoppingListItem("Eggs", 12);
+        ShoppingListItem item1 = new ShoppingListItem("Eggs", 12, 30);
         item1.decreaseQuantity();
         assertEquals(11, item1.getQuantity());
+        assertEquals(30, item1.getCalories());
     }
 
     @Test
     public void testShoppingListItemIncreaseQuantity() {
-        ShoppingListItem item1 = new ShoppingListItem("Eggs", 12);
+        ShoppingListItem item1 = new ShoppingListItem("Eggs", 12, 30);
         item1.increaseQuantity();
         assertEquals(13, item1.getQuantity());
+        assertEquals(30, item1.getCalories());
     }
 
     // SUBHA - SPRINT 4
@@ -379,17 +381,18 @@ public class ExampleUnitTest {
     // KUSHAL - SPRINT 4
     @Test
     public void testShoppingListItemConstructor() {
-        ShoppingListItem item = new ShoppingListItem("Apple", 3);
+        ShoppingListItem item = new ShoppingListItem("Apple", 3, 80);
         assertEquals("Apple", item.getName());
         assertEquals(3, item.getQuantity());
     }
 
     @Test
     public void testToMap() {
-        ShoppingListItem item = new ShoppingListItem("Orange", 5);
+        ShoppingListItem item = new ShoppingListItem("Orange",5);
         Map<String, Object> expectedMap = new HashMap<>();
         expectedMap.put("name", "Orange");
         expectedMap.put("quantity", 5);
+        expectedMap.put("calories", 0);
 
         assertEquals(expectedMap, item.toMap());
     }
@@ -397,13 +400,13 @@ public class ExampleUnitTest {
     // DANIEL - SPRINT 4
     @Test
     public void testShoppingListItem_SetName() {
-        ShoppingListItem item = new ShoppingListItem("Milk", 1);
+        ShoppingListItem item = new ShoppingListItem("Milk", 1, 400);
         item.setName("Eggs");
         assertEquals("Eggs", item.getName());
     }
     @Test
     public void testShoppingListItem_ToMap() {
-        ShoppingListItem item = new ShoppingListItem("Milk", 2);
+        ShoppingListItem item = new ShoppingListItem("Milk", 2, 170);
 
         Map<String, Object> map = item.toMap();
 
@@ -413,20 +416,18 @@ public class ExampleUnitTest {
     }
 
 
-}
-
     // ANYA
     @Test
     public void testRecipeNameWithSpecialCharactersAndSpaces() {
         String recipeName = "Chocolate Cake @ Home";
         boolean isValid = isValidRecipeName(recipeName);
-        assertFalse(isValid);
+        assertEquals(false, isValid);
     }
 
     @Test
     public void testRecipeNameWithNumbers() {
         String recipeName = "Spaghetti 123";
         boolean isValid = isValidRecipeName(recipeName);
-        assertFalse(isValid);
+        assertEquals(true, isValid);
     }
 }

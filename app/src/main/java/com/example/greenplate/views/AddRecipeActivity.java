@@ -17,7 +17,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -85,7 +84,8 @@ public class AddRecipeActivity extends AppCompatActivity {
             }
         });
         // A HashMap to store the dish name and its corresponding ingredients and quantities
-        final HashMap<String, List<Pair<String, Pair<Integer, Integer>>>> dishIngredientsMap = new HashMap<>();
+        final HashMap<String, List<Pair<String, Pair<Integer, Integer>>>>
+                dishIngredientsMap = new HashMap<>();
         final ImageButton toAddIngredientPage = findViewById(R.id.to_add_ingredient_page);
         toAddIngredientPage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,90 +118,58 @@ public class AddRecipeActivity extends AppCompatActivity {
                     return;
                 }
                 // Add the ingredient and quantity to the list for this dish name in the map
-                List<Pair<String, Pair<Integer, Integer>>> ingredientsList = dishIngredientsMap.getOrDefault(dishName, new ArrayList<>());
-                ingredientsList.add(new Pair<>(ingredient, new Pair<>(quantity, calories))); // Store quantity and calories together
+                List<Pair<String, Pair<Integer, Integer>>> ingredientsList =
+                        dishIngredientsMap.getOrDefault(dishName, new ArrayList<>());
+                ingredientsList.add(new Pair<>(ingredient, new Pair<>(quantity, calories)));
                 dishIngredientsMap.put(dishName, ingredientsList);
 
                 ingredientEditText.setText("");
                 quantityEditText.setText("");
                 calorieEditText.setText(""); // Clear calorie input field
-                Toast.makeText(AddRecipeActivity.this, "Ingredient added", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddRecipeActivity.this, "Ingredient added",
+                        Toast.LENGTH_SHORT).show();
             }
         });
         final Button saveButton = findViewById(R.id.save);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Retrieve the dish name
-                /*EditText dishNameEditText = findViewById(R.id.ingredient_name_enter);
+                EditText dishNameEditText = findViewById(R.id.ingredient_name_enter);
                 String dishName = dishNameEditText.getText().toString().trim();
                 if (dishName.isEmpty()) {
-                    Toast.makeText(AddRecipeActivity.this,
-                            "Please enter a dish name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddRecipeActivity.this, "Please enter a dish name",
+                        Toast.LENGTH_SHORT).show();
                     return;
                 }
-                // Retrieve the list of ingredients (as pairs) for this dish
-                List<Pair<String, Integer>> ingredientsPairs = dishIngredientsMap.get(dishName);
+                List<Pair<String, Pair<Integer, Integer>>> ingredientsPairs =
+                    dishIngredientsMap.get(dishName);
                 if (ingredientsPairs == null || ingredientsPairs.isEmpty()) {
                     Toast.makeText(AddRecipeActivity.this,
-                            "No ingredients added for this dish", Toast.LENGTH_SHORT).show();
+                        "No ingredients added for this dish", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                // Convert the pairs to Ingredient objects
                 HashMap<String, Integer> ingredientsForThisDish = new HashMap<>();
-                for (Pair<String, Integer> pair : ingredientsPairs) {
-                    // Assuming the default constructor of Ingredient takes name,
-                    // quantity, and userId in that order
-                    // Also assuming 0 for calories and an empty string for the expiration date
-                    ingredientsForThisDish.put(pair.first, pair.second);
+                int totalCalories = 0;
+                for (Pair<String, Pair<Integer, Integer>> pair : ingredientsPairs) {
+                    ingredientsForThisDish.put(pair.first, pair.second.first);
+                    totalCalories += pair.second.first * pair.second.second;
+                    System.out.println("This is " + totalCalories); // Calculate total calories
                 }
-                // Create the Recipe object
-                Recipe newRecipe = new Recipe(dishName, ingredientsForThisDish);
-                // Use RecipeViewModel to add the recipe to the database
+
+                Recipe newRecipe = new Recipe(dishName, ingredientsForThisDish, totalCalories);
+
                 RecipeViewModel.addRecipe(newRecipe);
                 RecipeViewModel.fetchRecipes(FirebaseViewModel.getInstance().getUser());
-                // Clear the inputs and the ingredients list from the map
+
                 dishNameEditText.setText("");
                 dishIngredientsMap.remove(dishName);
                 Toast.makeText(AddRecipeActivity.this, "Recipe saved successfully",
                         Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(AddRecipeActivity.this, RecipeActivityAtoZ.class);
-                startActivity(intent);
-            }*/
-            EditText dishNameEditText = findViewById(R.id.ingredient_name_enter);
-            String dishName = dishNameEditText.getText().toString().trim();
-        if (dishName.isEmpty()) {
-                Toast.makeText(AddRecipeActivity.this, "Please enter a dish name", Toast.LENGTH_SHORT).show();
-                return;
+                    Intent intent = new Intent(AddRecipeActivity.this,
+                            RecipeActivityAtoZ.class);
+                    startActivity(intent);
             }
-
-            List<Pair<String, Pair<Integer, Integer>>> ingredientsPairs = dishIngredientsMap.get(dishName);
-        if (ingredientsPairs == null || ingredientsPairs.isEmpty()) {
-                Toast.makeText(AddRecipeActivity.this, "No ingredients added for this dish", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            HashMap<String, Integer> ingredientsForThisDish = new HashMap<>();
-            int totalCalories = 0;
-        for (Pair<String, Pair<Integer, Integer>> pair : ingredientsPairs) {
-                ingredientsForThisDish.put(pair.first, pair.second.first);
-                totalCalories += pair.second.first * pair.second.second;
-                System.out.println("This is " + totalCalories);// Calculate total calories
-            }
-
-            Recipe newRecipe = new Recipe(dishName, ingredientsForThisDish, totalCalories);
-
-        RecipeViewModel.addRecipe(newRecipe);
-        RecipeViewModel.fetchRecipes(FirebaseViewModel.getInstance().getUser());
-
-        dishNameEditText.setText("");
-        dishIngredientsMap.remove(dishName);
-        Toast.makeText(AddRecipeActivity.this, "Recipe saved successfully", Toast.LENGTH_SHORT).show();
-
-            Intent intent = new Intent(AddRecipeActivity.this, RecipeActivityAtoZ.class);
-            startActivity(intent);
-        }
         });
     }
 }

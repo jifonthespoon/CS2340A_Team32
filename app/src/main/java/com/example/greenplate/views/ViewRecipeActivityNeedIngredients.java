@@ -95,7 +95,8 @@ public class ViewRecipeActivityNeedIngredients extends AppCompatActivity {
                 User currentUser = FirebaseViewModel.getInstance().getUser();
                 for (String ingredientName : missingIngredientsMap.keySet()) {
                     ShoppingListViewModel.updateShoppingListItemQuantity(ingredientName,
-                            missingIngredientsMap.get(ingredientName), currentUser.findIngredientByName(ingredientName).getCalories());
+                            missingIngredientsMap.get(ingredientName),
+                            currentUser.findIngredientByName(ingredientName).getCalories());
                 }
                 Intent intent = new Intent(ViewRecipeActivityNeedIngredients.this,
                         ShoppingActivity.class);
