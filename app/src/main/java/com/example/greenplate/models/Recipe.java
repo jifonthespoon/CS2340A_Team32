@@ -19,12 +19,12 @@ public class Recipe implements Comparable<Recipe> {
         this.ingredients = ingredients;
         this.id = id;
         this.canMake = canMake;
-        this.calories = calculateCalories(ingredients);
     }
 
-    public Recipe(String recipeName, HashMap<String, Integer> ingredients) {
+    public Recipe(String recipeName, HashMap<String, Integer> ingredients, int totalCalories) {
         this.recipeName = recipeName;
         this.ingredients = ingredients;
+        this.calories = totalCalories;
     }
 
     // Getter for recipeName
@@ -88,7 +88,7 @@ public class Recipe implements Comparable<Recipe> {
         // Check if the ingredient is available and update recipe accordingly
         canMake = ingredient.isAvailable();
     }
-    public int calculateCalories(HashMap<String, Integer> ingredients) {
+    /*public int calculateCalories(HashMap<String, Integer> ingredients) {
         int totalCalories = 0;
         User user = FirebaseViewModel.getInstance().getUser();
         for (Map.Entry<String, Integer> entry : ingredients.entrySet()) {
@@ -98,13 +98,13 @@ public class Recipe implements Comparable<Recipe> {
             }
         }
         return totalCalories;
-    }
+    }*/
     public int getCalories() {
         return calories;
     }
 
     public void setCalories(int calories) {
-        this.calories = this.calculateCalories(this.ingredients);
+        this.calories = calories;
     }
 
 }
