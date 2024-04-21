@@ -14,6 +14,10 @@ public class ShoppingListItem {
         this.quantity = quantity;
         this.calories = itemCalories;
     }
+    public ShoppingListItem(String name, int quantity) {
+        this.name = name;
+        this.quantity = quantity;
+    }
 
     public ShoppingListItem(String id, String name, int quantity) {
         this.id = id;

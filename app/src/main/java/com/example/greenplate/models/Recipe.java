@@ -24,6 +24,10 @@ public class Recipe implements Comparable<Recipe> {
         this.ingredients = ingredients;
         this.calories = totalCalories;
     }
+    public Recipe(String recipeName, HashMap<String, Integer> ingredients) {
+        this.recipeName = recipeName;
+        this.ingredients = ingredients;
+    }
 
     // Getter for recipeName
     public String getRecipeName() {
