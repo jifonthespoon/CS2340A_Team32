@@ -72,7 +72,8 @@ public class RecipeViewModel {
                                     }
                                 }
                                 recipes.add(new Recipe((String) recipesMap.get(recipeId)
-                                        .get("recipeName"), ingredientMap, recipeId, canMake));
+                                        .get("recipeName"), ingredientMap, recipeId, canMake,
+                                        ((Long) recipesMap.get(recipeId).get("calories")).intValue()));
                             }
                             user.setRecipes(recipes);
                         }

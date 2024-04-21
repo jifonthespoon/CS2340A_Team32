@@ -12,11 +12,12 @@ public class Recipe implements Comparable<Recipe> {
     public enum RecipeTab { AtoZ, ZtoA, CANCOOK };
 
     public Recipe(String recipeName, HashMap<String, Integer> ingredients, String id,
-                  boolean canMake) {
+                  boolean canMake, int calories) {
         this.recipeName = recipeName;
         this.ingredients = ingredients;
         this.id = id;
         this.canMake = canMake;
+        this.calories = calories;
     }
 
     public Recipe(String recipeName, HashMap<String, Integer> ingredients, int totalCalories) {
