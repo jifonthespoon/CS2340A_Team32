@@ -42,8 +42,8 @@ import java.util.UUID;
  */
 
 public class InputActivity extends AppCompatActivity {
-    private int caloriesConsumed;
-    private int caloriesRecommended;
+    private static int caloriesConsumed;
+    private static int caloriesRecommended;
     /**
      * Initializes the activity, sets the content view
      * from the input_page layout, and configures
@@ -62,8 +62,9 @@ public class InputActivity extends AppCompatActivity {
      *                           as it was prior to being paused or stopped.
      */
 
-    private TextView dateLabel;
-    private Calendar calendar;
+    private static TextView dateLabel;
+    private static Calendar calendar;
+    private static BarChart mBarChart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +79,9 @@ public class InputActivity extends AppCompatActivity {
         userInfo.setText(fvm.getPersonalInformation());
         calorieGoal.setText(fvm.getCalorieGoal());
         caloriesRecommended = FirebaseViewModel.getInstance().getUser().getDailyCalorieIntake();
+
+        mBarChart = findViewById(R.id.barChart);
+
         toHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,6 +143,7 @@ public class InputActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         final ImageButton submit = findViewById(R.id.input_page_submit_button);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,6 +164,7 @@ public class InputActivity extends AppCompatActivity {
                     fvm.saveOrUpdateMeal(meal); // Use FirebaseViewModel to save the meal
                     mealNameInput.setText(""); //clears input boxes
                     caloriesInput.setText(""); //clears input boxes
+                    updateVisualization();
                 } else {
                     Toast.makeText(InputActivity.this,
                             "Please enter valid meal name and calories.",
@@ -175,8 +181,7 @@ public class InputActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        BarChart mBarChart;
-        mBarChart = findViewById(R.id.barChart);
+
 
         XAxis xAxis = mBarChart.getXAxis();  // Customize X-axis
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); // Position of X-axis labels
@@ -187,13 +192,13 @@ public class InputActivity extends AppCompatActivity {
                 new String[]{"Calories Consumed", "Calorie Goal"})); // Customizing labels
         dateLabel = findViewById(R.id.dayLabel);
         calendar = Calendar.getInstance();
-        updateVisualization(mBarChart);
+        updateVisualization();
         final ImageButton backwardsTime = findViewById(R.id.left_arrow_input_page);
         backwardsTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 calendar.add(Calendar.DAY_OF_MONTH, -1);
-                updateVisualization(mBarChart);
+                updateVisualization();
             }
         });
         final ImageButton forwardsTime = findViewById(R.id.right_arrow_input_page);
@@ -201,11 +206,11 @@ public class InputActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 calendar.add(Calendar.DAY_OF_MONTH, 1);
-                updateVisualization(mBarChart);
+                updateVisualization();
             }
         });
     }
-    private void updateVisualization(BarChart barChart) {
+    public static void updateVisualization() {
         SimpleDateFormat sdf = new SimpleDateFormat("MMM dd", Locale.getDefault());
         String formattedDate = sdf.format(calendar.getTime());
         dateLabel.setText(formattedDate);
@@ -223,7 +228,7 @@ public class InputActivity extends AppCompatActivity {
         BarDataSet dataSet = new BarDataSet(entries, "Calories");
         dataSet.setColors(ColorTemplate.rgb("#D64933")); // Setting color to red
         BarData barData = new BarData(dataSet);
-        barChart.setData(barData);
-        barChart.invalidate();
+        mBarChart.setData(barData);
+        mBarChart.invalidate();
     }
 }

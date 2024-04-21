@@ -45,9 +45,11 @@ import java.util.UUID;
 
 public class InputMonthlyActivity extends AppCompatActivity {
 
-    private TextView monthLabel;
-    private Calendar calendar;
-    private ArrayList<Entry> values = new ArrayList<>();
+    private static TextView monthLabel;
+    private static Calendar calendar;
+    private static ArrayList<Entry> values = new ArrayList<>();
+    static LineChart mChart;
+
 
 
     @Override
@@ -62,6 +64,7 @@ public class InputMonthlyActivity extends AppCompatActivity {
         TextView calorieGoal = findViewById(R.id.calorieGoalText);
         userInfo.setText(fvm.getPersonalInformation());
         calorieGoal.setText(fvm.getCalorieGoal());
+        LineChart mChart = findViewById(R.id.mpandroidchart1);
         toHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -152,7 +155,7 @@ public class InputMonthlyActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        LineChart mChart = findViewById(R.id.mpandroidchart1);
+
         mChart.setTouchEnabled(true);
         mChart.setPinchZoom(true);
         mChart.getDescription().setText("");
@@ -178,7 +181,7 @@ public class InputMonthlyActivity extends AppCompatActivity {
         }
         monthLabel = findViewById(R.id.monthLabel);
         calendar = Calendar.getInstance();
-        updateVisualization(mChart);
+        updateVisualization();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = dateFormat.format(calendar.getTime());
         final ImageButton backwardsTime = findViewById(R.id.left_arrow_input_monthly_page);
@@ -186,7 +189,7 @@ public class InputMonthlyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 calendar.add(Calendar.MONTH, -1); // Subtract one month
-                updateVisualization(mChart);
+                updateVisualization();
             }
         });
         final ImageButton forwardsTime = findViewById(R.id.right_arrow_input_monthly_page);
@@ -194,12 +197,12 @@ public class InputMonthlyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 calendar.add(Calendar.MONTH, 1); // Add one month
-                updateVisualization(mChart);
+                updateVisualization();
             }
         });
     }
 
-    private void updateVisualization(LineChart chart) {
+    public static void updateVisualization() {
         SimpleDateFormat sdf = new SimpleDateFormat("MMM yyyy", Locale.getDefault());
         String formattedDate = sdf.format(calendar.getTime());
         monthLabel.setText(formattedDate);
@@ -224,25 +227,8 @@ public class InputMonthlyActivity extends AppCompatActivity {
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(dataSet);
         LineData data = new LineData(dataSets);
-        chart.setData(data);
-        chart.invalidate();
-    }
-
-    private void addValues(ArrayList<Entry> values) {
-        values.add(new Entry(1, 2000));
-        values.add(new Entry(2, 1930));
-        values.add(new Entry(3, 1810));
-        values.add(new Entry(4, 2110));
-        values.add(new Entry(5, 2050));
-        values.add(new Entry(6, 1590));
-        values.add(new Entry(7, 1990));
-        values.add(new Entry(8, 2000));
-        values.add(new Entry(9, 1950));
-        values.add(new Entry(10, 1890));
-        values.add(new Entry(11, 2010));
-        values.add(new Entry(12, 2020));
-        values.add(new Entry(13, 1960));
-        values.add(new Entry(14, 1990));
+        mChart.setData(data);
+        mChart.invalidate();
     }
 
     private void configureSet(LineDataSet dataSet) {
