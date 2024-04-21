@@ -13,8 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.greenplate.R;
 import com.example.greenplate.models.Recipe;
-import com.example.greenplate.models.ShoppingListItem;
-import com.example.greenplate.viewmodels.FirebaseViewModel;
 import com.example.greenplate.viewmodels.RecipeViewModel;
 import com.example.greenplate.viewmodels.ShoppingListViewModel;
 
@@ -66,10 +64,10 @@ public class AddShoppingActivity extends AppCompatActivity {
         toRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Recipe.recipeTab tab = RecipeViewModel.getRecipeTab();
+                Recipe.RecipeTab tab = RecipeViewModel.getRecipeTab();
                 Intent intent = new Intent(AddShoppingActivity.this,
-                        tab == Recipe.recipeTab.AtoZ ? RecipeActivityAtoZ.class : tab
-                                == Recipe.recipeTab.ZtoA ? RecipeActivityZtoA.class
+                        tab == Recipe.RecipeTab.AtoZ ? RecipeActivityAtoZ.class : tab
+                                == Recipe.RecipeTab.ZtoA ? RecipeActivityZtoA.class
                                 : RecipeActivityCanCook.class);
                 startActivity(intent);
             }
@@ -114,7 +112,8 @@ public class AddShoppingActivity extends AppCompatActivity {
                 String quantityStr = quantityEditText.getText().toString().trim();
                 String caloriesStr = caloriesEditText.getText().toString().trim();
                 if (name.isEmpty() || quantityStr.isEmpty() || caloriesStr.isEmpty()) {
-                    Toast.makeText(AddShoppingActivity.this, "All fields must be filled out.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddShoppingActivity.this, "All fields must be filled"
+                            + " out.", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 int quantity;
@@ -123,18 +122,21 @@ public class AddShoppingActivity extends AppCompatActivity {
                     quantity = Integer.parseInt(quantityStr);
                     calories = Integer.parseInt(caloriesStr);
                 } catch (NumberFormatException e) {
-                    Toast.makeText(AddShoppingActivity.this, "Quantity and Calories must be valid numbers.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddShoppingActivity.this, "Quantity and Calories "
+                            + "must be valid numbers.", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (quantity <= 0) {
-                    Toast.makeText(AddShoppingActivity.this, "Quantity must be positive.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddShoppingActivity.this, "Quantity must be "
+                            + "positive.", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 ShoppingListViewModel.addShoppingListItem(name, quantity);
                 nameEditText.setText("");
                 quantityEditText.setText("");
                 caloriesEditText.setText("");
-                Toast.makeText(AddShoppingActivity.this, "Item saved to shopping list!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddShoppingActivity.this, "Item saved to shopping "
+                        + "list!", Toast.LENGTH_SHORT).show();
             }
         });
     }

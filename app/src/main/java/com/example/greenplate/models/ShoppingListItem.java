@@ -1,7 +1,5 @@
 package com.example.greenplate.models;
 
-import com.example.greenplate.viewmodels.ShoppingListViewModel;
-
 import java.util.HashMap;
 import java.util.Map;
 

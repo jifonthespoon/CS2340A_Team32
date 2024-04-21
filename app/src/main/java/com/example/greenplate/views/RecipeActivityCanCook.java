@@ -56,7 +56,7 @@ public class RecipeActivityCanCook extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_page_can_cook);
-        RecipeViewModel.setTab(Recipe.recipeTab.CANCOOK);
+        RecipeViewModel.setTab(Recipe.RecipeTab.CANCOOK);
         ArrayList<Recipe> recipes = FirebaseViewModel.getInstance().getUser().getRecipes();
         ArrayList<Recipe> canMakeRecipes = new ArrayList<>();
 

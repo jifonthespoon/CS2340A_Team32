@@ -48,10 +48,10 @@ public class AddRecipeActivity extends AppCompatActivity {
         toRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Recipe.recipeTab tab = RecipeViewModel.getRecipeTab();
+                Recipe.RecipeTab tab = RecipeViewModel.getRecipeTab();
                 Intent intent = new Intent(AddRecipeActivity.this,
-                        tab == Recipe.recipeTab.AtoZ ? RecipeActivityAtoZ.class : tab
-                                == Recipe.recipeTab.ZtoA ? RecipeActivityZtoA.class
+                        tab == Recipe.RecipeTab.AtoZ ? RecipeActivityAtoZ.class : tab
+                                == Recipe.RecipeTab.ZtoA ? RecipeActivityZtoA.class
                                 : RecipeActivityCanCook.class);
                 startActivity(intent);
             }

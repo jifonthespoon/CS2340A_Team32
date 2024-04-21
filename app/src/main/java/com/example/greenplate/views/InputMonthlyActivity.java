@@ -47,7 +47,7 @@ public class InputMonthlyActivity extends AppCompatActivity {
 
     private TextView monthLabel;
     private Calendar calendar;
-    ArrayList<Entry> values = new ArrayList<>();
+    private ArrayList<Entry> values = new ArrayList<>();
 
 
     @Override

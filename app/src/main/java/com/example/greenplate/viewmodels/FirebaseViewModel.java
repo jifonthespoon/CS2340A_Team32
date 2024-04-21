@@ -75,8 +75,9 @@ public class FirebaseViewModel extends ViewModel {
                                 for (String shoppingListItemId : childValues.keySet()) {
                                     //System.out.println(shoppingListItemId);
                                     shoppingListItems.add(new ShoppingListItem(shoppingListItemId,
-                                            (String) childValues.get(shoppingListItemId).get("name")
-                                            ,((Long) childValues.get(shoppingListItemId).
+                                            (String) childValues.get(shoppingListItemId)
+                                                    .get("name"), ((Long) childValues
+                                            .get(shoppingListItemId).
                                             get("quantity")).intValue()));
                                 }
                             } else {
@@ -92,25 +93,37 @@ public class FirebaseViewModel extends ViewModel {
                                 shoppingListItems);
                         IngredientsViewModel.fetchIngredients(user);
                         RecipeViewModel.fetchRecipes(user);
-                        firebase.getDatabase().getReference().child("meals").addListenerForSingleValueEvent(new ValueEventListener() {
+                        firebase.getDatabase().getReference().child("meals")
+                                .addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                         HashMap<String, Integer> dateMeals = new HashMap<>();
                                         HashMap<String, HashMap<String, Object>> childValues =
-                                                (HashMap<String, HashMap<String, Object>>) dataSnapshot.getValue();
+                                                (HashMap<String, HashMap<String, Object>>)
+                                                        dataSnapshot.getValue();
                                             System.out.println(childValues);
                                             for (String mealId : childValues.keySet()) {
                                                 System.out.println(mealId);
                                                 System.out.println(childValues.get(mealId));
-                                                if (user.getMealIds().contains((String) childValues.get(mealId).get("mealId"))) {
-                                                    if (dateMeals.containsKey((String) childValues.get(mealId).get("dateAdded"))) {
-                                                        dateMeals.put((String) childValues.get(mealId).get("dateAdded"),
-                                                                ((Long) childValues.get(mealId).get("calories")).intValue()
-                                                                        + dateMeals.get((String) childValues.get(mealId)
+                                                if (user.getMealIds().contains((String) childValues
+                                                        .get(mealId).get("mealId"))) {
+                                                    if (dateMeals.containsKey((String) childValues
+                                                            .get(mealId).get("dateAdded"))) {
+                                                        dateMeals.put((String) childValues
+                                                                        .get(mealId)
+                                                                        .get("dateAdded"),
+                                                                ((Long) childValues.get(mealId)
+                                                                        .get("calories")).intValue()
+                                                                        + dateMeals.get((String)
+                                                                        childValues.get(mealId)
                                                                         .get("dateAdded")));
                                                     } else {
-                                                        dateMeals.put((String) childValues.get(mealId).get("dateAdded"),
-                                                                ((Long) childValues.get(mealId).get("calories")).intValue());
+                                                        dateMeals.put((String) childValues
+                                                                        .get(mealId)
+                                                                        .get("dateAdded"),
+                                                                ((Long) childValues.get(mealId)
+                                                                        .get("calories"))
+                                                                        .intValue());
                                                     }
                                                 }
                                             }

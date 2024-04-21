@@ -14,7 +14,6 @@ import com.example.greenplate.models.Recipe;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
 import com.example.greenplate.viewmodels.IngredientsViewModel;
 import com.example.greenplate.viewmodels.RecipeViewModel;
-import com.example.greenplate.viewmodels.ShoppingListViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,7 +36,7 @@ public class ViewRecipeActivity extends AppCompatActivity {
         final ImageButton toShopping = findViewById(R.id.toShoppingPage);
         final ImageButton toPersonalInfo = findViewById(R.id.toPersonalPage);
 
-        Recipe.recipeTab tab = RecipeViewModel.getRecipeTab();
+        Recipe.RecipeTab tab = RecipeViewModel.getRecipeTab();
         HashMap<String, Integer> ingredientsMap = new HashMap<>();
 
         ArrayList<Recipe> recipes = FirebaseViewModel.getInstance().getUser().getRecipes();
@@ -47,10 +46,6 @@ public class ViewRecipeActivity extends AppCompatActivity {
                 recipeLookingFor = recipe;
             }
         }
-
-//        TextView ingredientsText = findViewById(R.id.ingredient_textView);
-//        String ingredientsString = "";
-//        for ingredientsText.setText();
 
         // Set onClickListeners for navigation buttons
         toHome.setOnClickListener(new View.OnClickListener() {
@@ -70,9 +65,9 @@ public class ViewRecipeActivity extends AppCompatActivity {
         toRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (tab == Recipe.recipeTab.AtoZ) {
+                if (tab == Recipe.RecipeTab.AtoZ) {
                     startActivity(new Intent(ViewRecipeActivity.this, RecipeActivityAtoZ.class));
-                } else if (tab == Recipe.recipeTab.ZtoA) {
+                } else if (tab == Recipe.RecipeTab.ZtoA) {
                     startActivity(new Intent(ViewRecipeActivity.this, RecipeActivityZtoA.class));
                 } else {
                     startActivity(new Intent(ViewRecipeActivity.this, RecipeActivityCanCook.class));
@@ -109,15 +104,18 @@ public class ViewRecipeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 for (String ingredientName : ingredientsMap.keySet()) {
-                    Ingredient ingredient = FirebaseViewModel.getInstance().getUser().findIngredient(ingredientName);
-                    ingredient.setQuantity(ingredient.getQuantity() - ingredientsMap.get(ingredientName));
+                    Ingredient ingredient = FirebaseViewModel.getInstance().getUser()
+                            .findIngredient(ingredientName);
+                    ingredient.setQuantity(ingredient.getQuantity() - ingredientsMap
+                            .get(ingredientName));
                     IngredientsViewModel.updateIngredient(ingredient);
                 }
 
                 Calendar calendar = Calendar.getInstance();
                 SimpleDateFormat firebaseDate = new SimpleDateFormat("YYYY-MM-dd");
                 String firebaseDateInput = firebaseDate.format(calendar.getTime());
-                Meal meal = new Meal(UUID.randomUUID().toString(), finalRecipeLookingFor.getRecipeName(), 200,
+                Meal meal = new Meal(UUID.randomUUID().toString(), finalRecipeLookingFor
+                        .getRecipeName(), 200,
                         firebaseDateInput);
                 FirebaseViewModel.getInstance().saveOrUpdateMeal(meal);
                 startActivity(new Intent(ViewRecipeActivity.this, IngredientsActivity.class));
@@ -135,7 +133,8 @@ public class ViewRecipeActivity extends AppCompatActivity {
         for (String ingredientName : recipeLookingFor.getIngredients().keySet()) {
             ingredients += ingredientName + " - "
                     + recipeLookingFor.getIngredients().get(ingredientName) + " \n";
-            ingredientsMap.put(ingredientName, recipeLookingFor.getIngredients().get(ingredientName));
+            ingredientsMap.put(ingredientName, recipeLookingFor.getIngredients()
+                    .get(ingredientName));
         }
         ingredientTextView.setText(ingredients);
 
