@@ -131,7 +131,7 @@ public class ViewRecipeActivity extends AppCompatActivity {
 
 
         dishNameTextView.setText(recipeLookingFor.getRecipeName());
-        caloriesTextView.setText(recipeLookingFor.getCalories());
+        caloriesTextView.setText(String.valueOf(recipeLookingFor.getCalories()));
 
         String ingredients = "";
         for (String ingredientName : recipeLookingFor.getIngredients().keySet()) {

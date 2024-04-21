@@ -131,7 +131,7 @@ public class AddShoppingActivity extends AppCompatActivity {
                             + "positive.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                ShoppingListViewModel.addShoppingListItem(name, quantity, itemCalories);
+                ShoppingListViewModel.addShoppingListItem(name, quantity);
                 nameEditText.setText("");
                 quantityEditText.setText("");
                 caloriesEditText.setText("");

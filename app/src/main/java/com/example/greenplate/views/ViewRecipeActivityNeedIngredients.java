@@ -95,8 +95,7 @@ public class ViewRecipeActivityNeedIngredients extends AppCompatActivity {
                 User currentUser = FirebaseViewModel.getInstance().getUser();
                 for (String ingredientName : missingIngredientsMap.keySet()) {
                     ShoppingListViewModel.updateShoppingListItemQuantity(ingredientName,
-                            missingIngredientsMap.get(ingredientName),
-                            currentUser.findIngredientByName(ingredientName).getCalories());
+                            missingIngredientsMap.get(ingredientName));
                 }
                 Intent intent = new Intent(ViewRecipeActivityNeedIngredients.this,
                         ShoppingActivity.class);
@@ -117,9 +116,11 @@ public class ViewRecipeActivityNeedIngredients extends AppCompatActivity {
                 recipeLookingFor = recipe;
             }
         }
-
+        if (recipeLookingFor == null) {
+            System.out.println(recipeName);
+        }
         dishNameTextView.setText(recipeLookingFor.getRecipeName());
-        caloriesTextView.setText(recipeLookingFor.getCalories());
+        caloriesTextView.setText(String.valueOf(recipeLookingFor.getCalories()));
 
         String ingredients = "";
         String missingIngredients = "";
