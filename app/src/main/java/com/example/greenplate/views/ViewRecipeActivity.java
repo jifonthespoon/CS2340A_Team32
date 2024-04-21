@@ -115,7 +115,7 @@ public class ViewRecipeActivity extends AppCompatActivity {
                 SimpleDateFormat firebaseDate = new SimpleDateFormat("YYYY-MM-dd");
                 String firebaseDateInput = firebaseDate.format(calendar.getTime());
                 Meal meal = new Meal(UUID.randomUUID().toString(), finalRecipeLookingFor
-                        .getRecipeName(), 200,
+                        .getRecipeName(), finalRecipeLookingFor.getCalories(),
                         firebaseDateInput);
                 FirebaseViewModel.getInstance().saveOrUpdateMeal(meal);
                 startActivity(new Intent(ViewRecipeActivity.this, IngredientsActivity.class));
