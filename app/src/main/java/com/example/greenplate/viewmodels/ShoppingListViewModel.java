@@ -16,13 +16,13 @@ public class ShoppingListViewModel extends ViewModel {
     private static ArrayList<ShoppingListItem> selectedItems = new ArrayList<>();
 
 
-    public static void addShoppingListItem(String item, int quantity) {
+    public static void addShoppingListItem(String item, int quantity, int itemCalories) {
         boolean found = false;
-        ShoppingListItem newShoppingListItem = new ShoppingListItem(item, quantity);
+        ShoppingListItem newShoppingListItem = new ShoppingListItem(item, quantity, itemCalories);
 
         for (ShoppingListItem i : user.getShoppingList()) {
             if (i.getName().equalsIgnoreCase(newShoppingListItem.getName())) {
-                updateShoppingListItemQuantity(item, quantity);
+                updateShoppingListItemQuantity(item, quantity, itemCalories);
                 found = true;
                 break;
             }
@@ -37,7 +37,7 @@ public class ShoppingListViewModel extends ViewModel {
         }
     }
 
-    public static void updateShoppingListItemQuantity(String name, int quantity) {
+    public static void updateShoppingListItemQuantity(String name, int quantity, int itemCalories) {
         int newQuantity = quantity;
         String itemId = "";
 
@@ -45,6 +45,7 @@ public class ShoppingListViewModel extends ViewModel {
             if (item.getName().equals(name)) {
                 newQuantity += item.getQuantity();
                 itemId = item.getId();
+                item.setCalories(item.getCalories());
             }
         }
 
@@ -53,7 +54,7 @@ public class ShoppingListViewModel extends ViewModel {
                     .child("shoppingList").child(itemId).removeValue();
             user.removeShoppingListItem(itemId);
         } else if (itemId.isEmpty()) {
-            addShoppingListItem(name, quantity);
+            addShoppingListItem(name, quantity, itemCalories);
         } else {
             firebase.getDatabase().getReference().child("users").child(user.getUserId())
                     .child("shoppingList").child(itemId).child("quantity").setValue(newQuantity);
@@ -78,7 +79,7 @@ public class ShoppingListViewModel extends ViewModel {
                 existingIngredient.setQuantity(existingIngredient.getQuantity() + shoppingItem.getQuantity());
                 databaseReference.child("pantry").child(existingIngredient.getId()).setValue(existingIngredient.getMap());
             } else {
-                Ingredient newIngredient = new Ingredient(shoppingItem.getName(), 0, shoppingItem.getQuantity(), user.getUserId());
+                Ingredient newIngredient = new Ingredient(shoppingItem.getName(), shoppingItem.getCalories(), shoppingItem.getQuantity(), user.getUserId());
                 DatabaseReference newIngredientRef = databaseReference.child("pantry").push();
                 String newIngredientId = newIngredientRef.getKey();
                 newIngredient.setId(newIngredientId);

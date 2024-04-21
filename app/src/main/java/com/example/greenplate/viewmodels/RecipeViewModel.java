@@ -25,6 +25,8 @@ public class RecipeViewModel {
     public static void addRecipe(Recipe recipe) {
         DatabaseReference recipesRef = firebase.getDatabase().getReference()
                 .child("cookbook").push();
+        int recipeCalories = recipe.calculateCalories(recipe.getIngredients());
+        recipe.setCalories(recipeCalories);
         recipesRef.setValue(recipe.toMap());
         recipe.setId(recipesRef.getKey());
     }
