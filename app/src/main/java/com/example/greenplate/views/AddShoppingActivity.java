@@ -118,10 +118,10 @@ public class AddShoppingActivity extends AppCompatActivity {
                     return;
                 }
                 int quantity;
-                int calories;
+                int itemCalories;
                 try {
                     quantity = Integer.parseInt(quantityStr);
-                    calories = Integer.parseInt(caloriesStr);
+                    itemCalories = Integer.parseInt(caloriesStr);
                 } catch (NumberFormatException e) {
                     Toast.makeText(AddShoppingActivity.this, "Quantity and Calories must be valid numbers.", Toast.LENGTH_SHORT).show();
                     return;
@@ -130,7 +130,7 @@ public class AddShoppingActivity extends AppCompatActivity {
                     Toast.makeText(AddShoppingActivity.this, "Quantity must be positive.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                ShoppingListViewModel.addShoppingListItem(name, quantity);
+                ShoppingListViewModel.addShoppingListItem(name, quantity, itemCalories);
                 nameEditText.setText("");
                 quantityEditText.setText("");
                 caloriesEditText.setText("");

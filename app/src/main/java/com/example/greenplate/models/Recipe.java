@@ -1,5 +1,7 @@
 package com.example.greenplate.models;
 
+import com.example.greenplate.viewmodels.FirebaseViewModel;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,6 +9,7 @@ public class Recipe implements Comparable<Recipe> {
     private String recipeName;
     private HashMap<String, Integer> ingredients;
     private String id; // Unique identifier for the recipe
+    private int calories;
     private boolean canMake;
     public enum recipeTab { AtoZ, ZtoA, CANCOOK }
 
@@ -18,9 +21,10 @@ public class Recipe implements Comparable<Recipe> {
         this.canMake = canMake;
     }
 
-    public Recipe(String recipeName, HashMap<String, Integer> ingredients) {
+    public Recipe(String recipeName, HashMap<String, Integer> ingredients, int totalCalories) {
         this.recipeName = recipeName;
         this.ingredients = ingredients;
+        this.calories = totalCalories;
     }
 
     // Getter for recipeName
@@ -63,7 +67,7 @@ public class Recipe implements Comparable<Recipe> {
             ingredientsMap.put(ingredient, String.valueOf(ingredients.get(ingredient)));
         }
         recipeMap.put("ingredients", ingredientsMap);
-
+        recipeMap.put("calories", calories);
         return recipeMap;
     }
 
@@ -83,6 +87,24 @@ public class Recipe implements Comparable<Recipe> {
     public void update(Ingredient ingredient) {
         // Check if the ingredient is available and update recipe accordingly
         canMake = ingredient.isAvailable();
+    }
+    /*public int calculateCalories(HashMap<String, Integer> ingredients) {
+        int totalCalories = 0;
+        User user = FirebaseViewModel.getInstance().getUser();
+        for (Map.Entry<String, Integer> entry : ingredients.entrySet()) {
+            Ingredient ingredient = user.findIngredientByName(entry.getKey());
+            if (ingredient != null) {
+                totalCalories += ingredient.getCalories() * entry.getValue();
+            }
+        }
+        return totalCalories;
+    }*/
+    public int getCalories() {
+        return calories;
+    }
+
+    public void setCalories(int calories) {
+        this.calories = calories;
     }
 
     public static boolean isValidRecipeName(String recipeName) {
