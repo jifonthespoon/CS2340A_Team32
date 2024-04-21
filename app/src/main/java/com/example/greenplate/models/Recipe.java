@@ -11,7 +11,7 @@ public class Recipe implements Comparable<Recipe> {
     private String id; // Unique identifier for the recipe
     private int calories;
     private boolean canMake;
-    public enum recipeTab { AtoZ, ZtoA, CANCOOK }
+    public enum RecipeTab { AtoZ, ZtoA, CANCOOK };
 
     public Recipe(String recipeName, HashMap<String, Integer> ingredients, String id,
                   boolean canMake) {

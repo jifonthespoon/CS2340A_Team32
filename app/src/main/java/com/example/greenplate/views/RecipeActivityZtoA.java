@@ -69,7 +69,7 @@ public class RecipeActivityZtoA extends AppCompatActivity {
         SortingStrategyFactory factory = new SortByReverseNameStrategyFactory();
         sortingStrategy = factory.createFactorySortingStrategy();
 
-        RecipeViewModel.setTab(Recipe.recipeTab.ZtoA);
+        RecipeViewModel.setTab(Recipe.RecipeTab.ZtoA);
         sortingStrategy = new SortByReverseName();
         Recipe[] recipeListUnsorted = new Recipe[recipes.size()];
         for (int i = 0; i < recipes.size(); i++) {

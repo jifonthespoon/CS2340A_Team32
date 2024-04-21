@@ -76,17 +76,21 @@ public class ShoppingListViewModel extends ViewModel {
             Ingredient existingIngredient = user.findIngredient(shoppingItem.getName());
 
             if (existingIngredient != null) {
-                existingIngredient.setQuantity(existingIngredient.getQuantity() + shoppingItem.getQuantity());
-                databaseReference.child("pantry").child(existingIngredient.getId()).setValue(existingIngredient.getMap());
+                existingIngredient.setQuantity(existingIngredient.getQuantity()
+                        + shoppingItem.getQuantity());
+                databaseReference.child("pantry").child(existingIngredient.getId())
+                        .setValue(existingIngredient.getMap());
             } else {
-                Ingredient newIngredient = new Ingredient(shoppingItem.getName(), shoppingItem.getCalories(), shoppingItem.getQuantity(), user.getUserId());
+                Ingredient newIngredient = new Ingredient(shoppingItem.getName(), 0,
+                        shoppingItem.getQuantity(), user.getUserId());
                 DatabaseReference newIngredientRef = databaseReference.child("pantry").push();
                 String newIngredientId = newIngredientRef.getKey();
                 newIngredient.setId(newIngredientId);
                 newIngredientRef.setValue(newIngredient.getMap());
                 user.addIngredient(newIngredient);
             }
-            databaseReference.child("users").child(user.getUserId()).child("shoppingList").child(shoppingItem.getId()).removeValue();
+            databaseReference.child("users").child(user.getUserId())
+                    .child("shoppingList").child(shoppingItem.getId()).removeValue();
             user.removeShoppingListItem(shoppingItem.getId());
         }
 

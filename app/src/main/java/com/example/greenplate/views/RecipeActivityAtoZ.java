@@ -66,7 +66,7 @@ public class RecipeActivityAtoZ extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_page_a_to_z);
-        RecipeViewModel.setTab(Recipe.recipeTab.AtoZ);
+        RecipeViewModel.setTab(Recipe.RecipeTab.AtoZ);
         RecipeViewModel.fetchRecipes(FirebaseViewModel.getInstance().getUser());
         ArrayList<Recipe> recipes = FirebaseViewModel.getInstance().getUser().getRecipes();
 

@@ -42,8 +42,8 @@ import java.util.UUID;
  */
 
 public class InputActivity extends AppCompatActivity {
-    int caloriesConsumed;
-    int caloriesRecommended;
+    private int caloriesConsumed;
+    private int caloriesRecommended;
     /**
      * Initializes the activity, sets the content view
      * from the input_page layout, and configures
@@ -212,7 +212,8 @@ public class InputActivity extends AppCompatActivity {
         SimpleDateFormat firebaseDate = new SimpleDateFormat("YYYY-MM-dd");
         String firebaseDateInput = firebaseDate.format(calendar.getTime());
         System.out.println(firebaseDateInput);
-        caloriesConsumed = FirebaseViewModel.getInstance().getUser().getCaloriesForDay(firebaseDateInput);
+        caloriesConsumed = FirebaseViewModel.getInstance().getUser()
+                .getCaloriesForDay(firebaseDateInput);
         //FirebaseViewModel.getInstance().queryMealsByDateCalories(firebaseDateInput);
         System.out.println(caloriesConsumed);
         ArrayList<BarEntry> entries = new ArrayList<>();

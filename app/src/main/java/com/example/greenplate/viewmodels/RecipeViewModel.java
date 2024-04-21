@@ -16,9 +16,9 @@ import java.util.HashMap;
 
 public class RecipeViewModel {
     private static Firebase firebase = Firebase.getInstance();
-    private static Recipe.recipeTab recipeTab = Recipe.recipeTab.AtoZ;
+    private static Recipe.RecipeTab recipeTab = Recipe.RecipeTab.AtoZ;
 
-    public static Recipe.recipeTab getRecipeTab() {
+    public static Recipe.RecipeTab getRecipeTab() {
         return recipeTab;
     }
 
@@ -29,7 +29,7 @@ public class RecipeViewModel {
         recipe.setId(recipesRef.getKey());
     }
 
-    public static void setTab(Recipe.recipeTab newTab) {
+    public static void setTab(Recipe.RecipeTab newTab) {
         recipeTab = newTab;
     }
 

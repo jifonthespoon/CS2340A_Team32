@@ -73,7 +73,6 @@ public class User {
         for (String meal : meals) {
             mealIds.add(meal);
         }
-
         shoppingList = shoppingListItems;
     }
 

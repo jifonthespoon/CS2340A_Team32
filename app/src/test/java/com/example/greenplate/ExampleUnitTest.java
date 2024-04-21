@@ -344,6 +344,38 @@ public class ExampleUnitTest {
         assertEquals(13, item1.getQuantity());
     }
 
+    // SUBHA - SPRINT 4
+    @Test
+    public void testGetCaloriesForDay() {
+        User user = new User("John Doe", 180, "Male", 72, "123456", "john.doe@example.com");
+        user.addCalories("2024-04-01", 2000);
+        user.addCalories("2024-04-02", 2200);
+        user.addCalories("2024-04-03", 1800);
+        user.addCalories("2024-04-04", 2500);
+        assertEquals(2000, user.getCaloriesForDay("2024-04-01"));
+        assertEquals(2200, user.getCaloriesForDay("2024-04-02"));
+        assertEquals(1800, user.getCaloriesForDay("2024-04-03"));
+        assertEquals(2500, user.getCaloriesForDay("2024-04-04"));
+    }
+
+    @Test
+    public void testGetCaloriesForMonth() {
+        User user = new User("John Doe", 180, "Male", 72, "123456", "john.doe@example.com");
+        user.addCalories("2024-04-01", 2000);
+        user.addCalories("2024-04-02", 2200);
+        user.addCalories("2024-04-03", 1800);
+        user.addCalories("2024-04-04", 2500);
+        HashMap<Integer, Integer> expectedCalories = new HashMap<>();
+        expectedCalories.put(1, 2000);
+        expectedCalories.put(2, 2200);
+        expectedCalories.put(3, 1800);
+        expectedCalories.put(4, 2500);
+
+        assertEquals(expectedCalories, user.getCaloriesForMonth("04", "2024"));
+    }
+
+
+
     // KUSHAL - SPRINT 4
     @Test
     public void testShoppingListItemConstructor() {

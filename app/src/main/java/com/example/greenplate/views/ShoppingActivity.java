@@ -84,14 +84,18 @@ public class ShoppingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (FirebaseViewModel.getInstance().getUser() == null) {
                     // User is null, handle this situation
-                    Toast.makeText(ShoppingActivity.this, "User data is not loaded yet. Please wait.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ShoppingActivity.this,
+                            "User data is not loaded yet. Please wait.",
+                            Toast.LENGTH_SHORT).show();
                     // Consider returning, redirecting to a login screen, or retrying the data load
                     return;
                 }
 
                 // Check if the selectedItems list is null or empty
-                if (ShoppingListViewModel.getSelectedItems() == null || ShoppingListViewModel.getSelectedItems().isEmpty()) {
-                    Toast.makeText(ShoppingActivity.this, "No items selected to purchase.", Toast.LENGTH_SHORT).show();
+                if (ShoppingListViewModel.getSelectedItems() == null || ShoppingListViewModel
+                        .getSelectedItems().isEmpty()) {
+                    Toast.makeText(ShoppingActivity.this,
+                            "No items selected to purchase.", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 ShoppingListViewModel.purchaseItems();

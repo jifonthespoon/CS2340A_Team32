@@ -33,7 +33,7 @@ public class ViewRecipeActivityNeedIngredients extends AppCompatActivity {
         final ImageButton toShopping = findViewById(R.id.toShoppingPage);
         final ImageButton toPersonalInfo = findViewById(R.id.toPersonalPage);
 
-        Recipe.recipeTab tab = RecipeViewModel.getRecipeTab();
+        Recipe.RecipeTab tab = RecipeViewModel.getRecipeTab();
 
         // Set onClickListeners for navigation buttons
         toHome.setOnClickListener(new View.OnClickListener() {
@@ -53,10 +53,10 @@ public class ViewRecipeActivityNeedIngredients extends AppCompatActivity {
         toRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (tab == Recipe.recipeTab.AtoZ) {
+                if (tab == Recipe.RecipeTab.AtoZ) {
                     startActivity(new Intent(ViewRecipeActivityNeedIngredients.this,
                             RecipeActivityAtoZ.class));
-                } else if (tab == Recipe.recipeTab.ZtoA) {
+                } else if (tab == Recipe.RecipeTab.ZtoA) {
                     startActivity(new Intent(ViewRecipeActivityNeedIngredients.this,
                             RecipeActivityZtoA.class));
                 } else {
@@ -97,7 +97,8 @@ public class ViewRecipeActivityNeedIngredients extends AppCompatActivity {
                     ShoppingListViewModel.updateShoppingListItemQuantity(ingredientName,
                             missingIngredientsMap.get(ingredientName), currentUser.findIngredientByName(ingredientName).getCalories());
                 }
-                Intent intent = new Intent(ViewRecipeActivityNeedIngredients.this, ShoppingActivity.class);
+                Intent intent = new Intent(ViewRecipeActivityNeedIngredients.this,
+                        ShoppingActivity.class);
                 startActivity(intent);
             }
         });
