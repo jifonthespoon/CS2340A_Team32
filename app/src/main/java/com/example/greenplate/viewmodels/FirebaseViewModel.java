@@ -4,6 +4,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import com.example.greenplate.models.Meal;
 import com.example.greenplate.models.ShoppingListItem;
+import com.example.greenplate.views.InputActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -240,6 +241,7 @@ public class FirebaseViewModel extends ViewModel {
                             if (task.isSuccessful()) {
                                 addMealToUser(meal.getMealId());
                                 user.addCalories(meal.getMealDateAdded(), meal.getCalories());
+                                InputActivity.updateVisualization();
                                 Log.d("Meal Save", "Meal successfully saved to Firebase");
                             } else {
                                 Log.d("Meal Save", "Failed to save meal to Firebase");
