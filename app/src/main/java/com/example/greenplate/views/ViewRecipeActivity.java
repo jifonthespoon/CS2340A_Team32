@@ -127,10 +127,14 @@ public class ViewRecipeActivity extends AppCompatActivity {
         // Retrieve EditTexts
         final TextView dishNameTextView = findViewById(R.id.dish_name_textView);
         final TextView ingredientTextView = findViewById(R.id.ingredient_textView);
+        final TextView caloriesTextView = findViewById(R.id.calories_textView);
+
 
 
 
         dishNameTextView.setText(recipeLookingFor.getRecipeName());
+        caloriesTextView.setText(recipeLookingFor.getCalories());
+
         String ingredients = "";
         for (String ingredientName : recipeLookingFor.getIngredients().keySet()) {
             ingredients += ingredientName + " - "
