@@ -7,11 +7,12 @@ public class ShoppingListItem {
     private String id;
     private String name;
     private int quantity;
+    private int calories;
 
-
-    public ShoppingListItem(String name, int quantity) {
+    public ShoppingListItem(String name, int quantity, int itemCalories) {
         this.name = name;
         this.quantity = quantity;
+        this.calories = itemCalories;
     }
 
     public ShoppingListItem(String id, String name, int quantity) {
@@ -19,6 +20,21 @@ public class ShoppingListItem {
         this.name = name;
         this.quantity = quantity;
     }
+    public ShoppingListItem(String id, String name, int quantity, int itemCalories) {
+        this.id = id;
+        this.name = name;
+        this.quantity = quantity;
+        this.calories = itemCalories; // Initialize with given calories
+    }
+    public int getCalories() {
+        return calories;
+    }
+
+    public void setCalories(int calories) {
+        this.calories = calories;
+    }
+
+
 
     public String getId() {
         return id;
@@ -38,12 +54,6 @@ public class ShoppingListItem {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-    public Map<String, Object> toMap() {
-        HashMap<String, Object> result = new HashMap<>();
-        result.put("name", name);
-        result.put("quantity", quantity);
-        return result;
-    }
 
     public void increaseQuantity() {
         quantity++;
@@ -52,5 +62,12 @@ public class ShoppingListItem {
         if (quantity > 0) {
             quantity--;
         }
+    }
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("name", name);
+        result.put("quantity", quantity);
+        result.put("calories", calories);
+        return result;
     }
 }

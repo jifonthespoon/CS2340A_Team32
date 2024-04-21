@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.greenplate.R;
 import com.example.greenplate.models.Recipe;
+import com.example.greenplate.models.User;
 import com.example.greenplate.viewmodels.FirebaseViewModel;
 import com.example.greenplate.viewmodels.RecipeViewModel;
 import com.example.greenplate.viewmodels.ShoppingListViewModel;
@@ -91,9 +92,10 @@ public class ViewRecipeActivityNeedIngredients extends AppCompatActivity {
         missingShoppingList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                User currentUser = FirebaseViewModel.getInstance().getUser();
                 for (String ingredientName : missingIngredientsMap.keySet()) {
                     ShoppingListViewModel.updateShoppingListItemQuantity(ingredientName,
-                            missingIngredientsMap.get(ingredientName));
+                            missingIngredientsMap.get(ingredientName), currentUser.findIngredientByName(ingredientName).getCalories());
                 }
                 Intent intent = new Intent(ViewRecipeActivityNeedIngredients.this,
                         ShoppingActivity.class);

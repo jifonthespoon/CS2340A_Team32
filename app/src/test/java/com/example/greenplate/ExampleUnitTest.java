@@ -1,5 +1,6 @@
 package com.example.greenplate;
 
+import static com.example.greenplate.models.Recipe.isValidRecipeName;
 import static com.example.greenplate.views.LoginActivity.checkInput;
 
 import org.junit.Test;
@@ -302,7 +303,9 @@ public class ExampleUnitTest {
         assertEquals(ingredients, recipe.getIngredients());
     }
 
-    //NATHAN Sprint 4
+    // SPRINT 4
+
+    // NATHAN
     @Test
     public void testObserverSetAvailable() {
         Ingredient testIngredient = new Ingredient("test ingredient");
@@ -326,7 +329,7 @@ public class ExampleUnitTest {
         testRecipe.addIngredients(testIngredient);
         assertEquals(testRecipe.getIngredients(), map2);
     }
-    // AUSTIN - Sprint 4
+    // AUSTIN
     @Test
     public void testShoppingListItemDecreaseQuantity() {
         ShoppingListItem item1 = new ShoppingListItem("Eggs", 12);
@@ -410,4 +413,20 @@ public class ExampleUnitTest {
     }
 
 
+}
+
+    // ANYA
+    @Test
+    public void testRecipeNameWithSpecialCharactersAndSpaces() {
+        String recipeName = "Chocolate Cake @ Home";
+        boolean isValid = isValidRecipeName(recipeName);
+        assertFalse(isValid);
+    }
+
+    @Test
+    public void testRecipeNameWithNumbers() {
+        String recipeName = "Spaghetti 123";
+        boolean isValid = isValidRecipeName(recipeName);
+        assertFalse(isValid);
+    }
 }

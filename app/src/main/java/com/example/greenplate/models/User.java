@@ -246,4 +246,12 @@ public class User {
             dailyCalories.put(date, calories);
         }
     }
+    public Ingredient findIngredientByName(String ingredientName) {
+        for (Ingredient ingredient : ingredients) {
+            if (ingredient.getName().equalsIgnoreCase(ingredientName)) {
+                return ingredient;
+            }
+        }
+        return null;
+    }
 }
