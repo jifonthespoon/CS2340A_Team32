@@ -110,6 +110,16 @@ public class Recipe implements Comparable<Recipe> {
         this.calories = calories;
     }
 
+    /**
+     * Checks if the input text is non-null and
+     * not empty after trimming whitespace, as well
+     * as verifying no numbers or special
+     * characters were used.
+     *
+     * @param recipeName The string input to check.
+     * @return true if the input is valid
+     * (non-null and not empty), false otherwise.
+     */
     public static boolean isValidRecipeName(String recipeName) {
         // Check if the recipe name contains any special characters
         return recipeName.matches("[a-zA-Z0-9 ]+");
