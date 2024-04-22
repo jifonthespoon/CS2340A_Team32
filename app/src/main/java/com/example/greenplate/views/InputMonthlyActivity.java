@@ -25,12 +25,10 @@ import com.example.greenplate.viewmodels.FirebaseViewModel;
 
 import com.github.mikephil.charting.charts.LineChart;
 
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 
@@ -47,8 +45,9 @@ public class InputMonthlyActivity extends AppCompatActivity {
 
     private static TextView monthLabel;
     private static Calendar calendar;
-    private static ArrayList<Entry> values = new ArrayList<>();
-    static LineChart mChart;
+    //private static ArrayList<Entry> values = new ArrayList<>();
+    private static LineChart mChart;
+    //private static LineDataSet dataSet;
 
 
 
@@ -64,7 +63,8 @@ public class InputMonthlyActivity extends AppCompatActivity {
         TextView calorieGoal = findViewById(R.id.calorieGoalText);
         userInfo.setText(fvm.getPersonalInformation());
         calorieGoal.setText(fvm.getCalorieGoal());
-        LineChart mChart = findViewById(R.id.mpandroidchart1);
+        mChart = findViewById(R.id.mpandroidchart1);
+
         toHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -159,31 +159,14 @@ public class InputMonthlyActivity extends AppCompatActivity {
         mChart.setTouchEnabled(true);
         mChart.setPinchZoom(true);
         mChart.getDescription().setText("");
-        ArrayList<Entry> values = new ArrayList<>();
+        //ArrayList<Entry> values = new ArrayList<>();
         //addValues(values);
-        LineDataSet dataSet;
-        if (mChart.getData() != null && mChart.getData().getDataSetCount() > 0) {
-            dataSet = (LineDataSet) mChart.getData().getDataSetByIndex(0);
-            dataSet.setValues(values);
-            dataSet.setDrawValues(false);
-            mChart.getData().notifyDataChanged();
-            mChart.notifyDataSetChanged();
-        } else {
-            dataSet = new LineDataSet(values, "Calories per Day");
-            configureSet(dataSet);
-
-            ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-            dataSets.add(dataSet);
-            LineData data = new LineData(dataSets);
-            mChart.setData(data);
-            YAxis leftAxis = mChart.getAxisLeft();
-            String caloriesGoalString = calorieGoal.getText().toString();
-        }
         monthLabel = findViewById(R.id.monthLabel);
         calendar = Calendar.getInstance();
         updateVisualization();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String formattedDate = dateFormat.format(calendar.getTime());
+        //SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        //String formattedDate = dateFormat.format(calendar.getTime());
+
         final ImageButton backwardsTime = findViewById(R.id.left_arrow_input_monthly_page);
         backwardsTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -217,27 +200,28 @@ public class InputMonthlyActivity extends AppCompatActivity {
                 FirebaseViewModel.getInstance().getUser().
                         getCaloriesForMonth(monthText, yearText);
 
-        values = new ArrayList<>();
-        for (int day : caloriesPerDay.keySet()) {
-            values.add(new Entry(day, caloriesPerDay.get(day)));
+        ArrayList<Entry> values = new ArrayList<>();
+        for (int i = 0; i < 33; i++) {
+            if (caloriesPerDay.containsKey(i)) {
+                values.add(new Entry(i, caloriesPerDay.get(i)));
+            }
         }
-        LineDataSet dataSet = new LineDataSet(values, "Calories per Day");
-        dataSet.setValues(values);
-        dataSet.setColors(ColorTemplate.rgb("#D64933"));
-        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-        dataSets.add(dataSet);
-        LineData data = new LineData(dataSets);
-        mChart.setData(data);
+
+
+        LineDataSet simpleDataSet = new LineDataSet(values, "Calories per Day");
+        simpleDataSet.setColors(ColorTemplate.rgb("#D64933"));
+        configureSet(simpleDataSet);
+        mChart.setData(new LineData(simpleDataSet));
         mChart.invalidate();
     }
 
-    private void configureSet(LineDataSet dataSet) {
+    private static void configureSet(LineDataSet dataSet) {
         dataSet.setDrawIcons(false);
         dataSet.setDrawValues(false);
         dataSet.enableDashedLine(10f, 5f, 0f);
         dataSet.enableDashedHighlightLine(10f, 5f, 0f);
         dataSet.setColor(Color.DKGRAY);
-        dataSet.setCircleColor(Color.DKGRAY);
+        dataSet.setCircleColor(Color.BLACK);
         dataSet.setLineWidth(1f);
         dataSet.setCircleRadius(3f);
         dataSet.setDrawCircleHole(false);
