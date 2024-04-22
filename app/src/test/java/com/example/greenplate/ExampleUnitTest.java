@@ -305,7 +305,7 @@ public class ExampleUnitTest {
 
     // SPRINT 4
 
-    // NATHAN
+    // NATHAN - SPRINT 4
     @Test
     public void testObserverSetAvailable() {
         Ingredient testIngredient = new Ingredient("test ingredient");
@@ -329,7 +329,7 @@ public class ExampleUnitTest {
         testRecipe.addIngredients(testIngredient);
         assertEquals(testRecipe.getIngredients(), map2);
     }
-    // AUSTIN
+    // AUSTIN - SPRINT 4
     @Test
     public void testShoppingListItemDecreaseQuantity() {
         ShoppingListItem item1 = new ShoppingListItem("Eggs", 12, 30);
@@ -416,7 +416,15 @@ public class ExampleUnitTest {
     }
 
 
-    // ANYA
+    // ANYA - SPRINT 4
+
+    @Test
+    public void testRecipeNameWithSpecialCharacters() {
+        String recipeName = "Chicken Curry!";
+        boolean isValid = isValidRecipeName(recipeName);
+        assertFalse(isValid);
+    }
+
     @Test
     public void testRecipeNameWithSpecialCharactersAndSpaces() {
         String recipeName = "Chocolate Cake @ Home";
