@@ -88,9 +88,9 @@ public class FirebaseViewModel extends ViewModel {
 
                         }
                         user = new User(userInfo.get("name"),
-                                Integer.valueOf(userInfo.get("weight")),
+                                new int[] {Integer.valueOf(userInfo.get("heightInInches")),
+                                        Integer.valueOf(userInfo.get("weight"))},
                                 userInfo.get("gender"),
-                                Integer.valueOf(userInfo.get("heightInInches")),
                                 userInfo.get("userId"), userInfo.get("email"), mealIds,
                                 shoppingListItems);
                         IngredientsViewModel.fetchIngredients(user);

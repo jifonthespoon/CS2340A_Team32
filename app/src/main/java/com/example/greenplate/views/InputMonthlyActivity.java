@@ -18,7 +18,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-import com.anychart.core.annotations.Line;
 import com.example.greenplate.R;
 
 import com.example.greenplate.models.Meal;
@@ -26,12 +25,10 @@ import com.example.greenplate.viewmodels.FirebaseViewModel;
 
 import com.github.mikephil.charting.charts.LineChart;
 
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 
@@ -164,24 +161,6 @@ public class InputMonthlyActivity extends AppCompatActivity {
         mChart.getDescription().setText("");
         //ArrayList<Entry> values = new ArrayList<>();
         //addValues(values);
-
-//        if (mChart.getData() != null && mChart.getData().getDataSetCount() > 0) {
-//            dataSet = (LineDataSet) mChart.getData().getDataSetByIndex(0);
-//            dataSet.setValues(values);
-//            dataSet.setDrawValues(false);
-//            mChart.getData().notifyDataChanged();
-//            mChart.notifyDataSetChanged();
-//        } else {
-//            dataSet = new LineDataSet(values, "Calories per Day");
-//            configureSet(dataSet);
-//
-//            ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-//            dataSets.add(dataSet);
-//            LineData data = new LineData(dataSets);
-//            mChart.setData(data);
-//            //YAxis leftAxis = mChart.getAxisLeft();
-//            //String caloriesGoalString = calorieGoal.getText().toString();
-//        }
         monthLabel = findViewById(R.id.monthLabel);
         calendar = Calendar.getInstance();
         updateVisualization();
@@ -227,19 +206,10 @@ public class InputMonthlyActivity extends AppCompatActivity {
                 values.add(new Entry(i, caloriesPerDay.get(i)));
             }
         }
-//        for (int day : caloriesPerDay.keySet()) {
-//            System.out.println(day);
-//            System.out.println(caloriesPerDay.get(day));
-//            values.add(new Entry(day, caloriesPerDay.get(day)));
-//        }
-
-        //LineDataSet dataSet = new LineDataSet(values, "Calories per Day");
-        //dataSet.setValues(values);
-        //dataSet.setColors(ColorTemplate.rgb("#D64933"));
-        //configureSet(dataSet);
 
 
         LineDataSet simpleDataSet = new LineDataSet(values, "Calories per Day");
+        simpleDataSet.setColors(ColorTemplate.rgb("#D64933"));
         configureSet(simpleDataSet);
         mChart.setData(new LineData(simpleDataSet));
         mChart.invalidate();
@@ -260,18 +230,5 @@ public class InputMonthlyActivity extends AppCompatActivity {
         dataSet.setFormLineWidth(1f);
         dataSet.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
         dataSet.setFormSize(15.f);
-//        dataSet.setDrawIcons(false);
-//        dataSet.setDrawValues(true); // Enable drawing values on the chart
-//        dataSet.enableDashedLine(0f, 0f, 0f); // Disable dashed line for better visibility
-//        dataSet.enableDashedHighlightLine(0f, 0f, 0f); // Disable dashed highlight line
-//        dataSet.setColor(ColorTemplate.getHoloBlue()); // Set a more visible line color
-//        dataSet.setCircleColor(Color.RED); // Set a bright circle color
-//        dataSet.setLineWidth(2f); // Increase line width for better visibility
-//        dataSet.setCircleRadius(5f); // Increase circle radius to make dots larger
-//        dataSet.setDrawCircleHole(false);
-//        dataSet.setValueTextSize(9f);
-//        dataSet.setDrawFilled(true); // Optionally fill below the line
-//        dataSet.setFormLineWidth(1f);
-//        dataSet.setFormSize(15.f);
     }
 }

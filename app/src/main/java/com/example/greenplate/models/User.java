@@ -60,13 +60,13 @@ public class User {
         }
     }
 
-    public User(String name, int weight, String gender, int heightInInches, String id,
+    public User(String name, int[] heightweight, String gender, String id,
                 String email, ArrayList<String> meals,
                 ArrayList<ShoppingListItem> shoppingListItems) {
         this.name = name;
         this.gender = gender;
-        this.weight = weight;
-        this.heightInInches = heightInInches;
+        this.weight = heightweight[1];
+        this.heightInInches = heightweight[0];
         userId = id;
         this.email = email;
         mealIds = new ArrayList<>();
