@@ -254,4 +254,11 @@ public class User {
         }
         return null;
     }
+    public HashMap<String, Integer> getShoppingListQuantities() {
+        HashMap<String, Integer> quantities = new HashMap<>();
+        for (ShoppingListItem item : shoppingList) {
+            quantities.put(item.getName(), item.getQuantity());
+        }
+        return quantities;
+    }
 }
