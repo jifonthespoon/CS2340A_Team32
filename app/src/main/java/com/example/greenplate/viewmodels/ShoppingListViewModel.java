@@ -17,6 +17,12 @@ public class ShoppingListViewModel extends ViewModel {
 
 
     public static void addShoppingListItem(String item, int quantity) {
+        for (ShoppingListItem existingItem : user.getShoppingList()) {
+            if (existingItem.getName().equalsIgnoreCase(item)) {
+                updateShoppingListItemQuantity(item, existingItem.getQuantity() + quantity);
+                return;
+            }
+        }
         boolean found = false;
         ShoppingListItem newShoppingListItem = new ShoppingListItem(item, quantity);
 
@@ -38,6 +44,23 @@ public class ShoppingListViewModel extends ViewModel {
     }
 
     public static void updateShoppingListItemQuantity(String name, int quantity) {
+        ShoppingListItem existingItem = null;
+        for (ShoppingListItem item : user.getShoppingList()) {
+            if (item.getName().equalsIgnoreCase(name)) {
+                existingItem = item;
+                break;
+            }
+        }
+
+        if (existingItem != null) {
+            existingItem.setQuantity(quantity);
+            firebase.getDatabase().getReference().child("users").child(user.getUserId())
+                    .child("shoppingList").child(existingItem.getId())
+                    .child("quantity").setValue(quantity);
+            return;
+        } else {
+            addShoppingListItem(name, quantity);
+        }
         int newQuantity = quantity;
         String itemId = "";
 
