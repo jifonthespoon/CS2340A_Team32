@@ -93,13 +93,15 @@ public class ViewRecipeActivityNeedIngredients extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 User currentUser = FirebaseViewModel.getInstance().getUser();
-                HashMap<String, Integer> shoppingListQuantities = currentUser.getShoppingListQuantities();
+                HashMap<String, Integer> shoppingListQuantities =
+                        currentUser.getShoppingListQuantities();
                 for (String ingredientName : missingIngredientsMap.keySet()) {
                     int neededQuantity = missingIngredientsMap.get(ingredientName);
                     if (shoppingListQuantities.containsKey(ingredientName)) {
                         //int existingQuantity = shoppingListQuantities.get(ingredientName);
                         int totalQuantityNeeded = neededQuantity;
-                        ShoppingListViewModel.updateShoppingListItemQuantity(ingredientName, totalQuantityNeeded);
+                        ShoppingListViewModel.updateShoppingListItemQuantity(ingredientName,
+                                totalQuantityNeeded);
                     } else {
                         ShoppingListViewModel.addShoppingListItem(ingredientName, neededQuantity);
                     }
